@@ -1,0 +1,22 @@
+---
+layout: styled
+
+---
+<div class="p-2 white-link">
+	{% include navbar.html %}
+</div>
+
+<div id="content">
+	{% include content_renderer.html %}
+</div>
+
+<!--<div class="mt-4"></div>-->
+<div id="footer">
+	{% include footer.html %}
+</div>
+<script>
+	window.onresize = function(event){
+		footerFixedPosition($("#footer")[0], event);
+	}
+	window.onresize();
+</script>

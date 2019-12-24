@@ -1,0 +1,26 @@
+# Resource
+# https://jekyllrb.com/docs/configuration/
+
+# build setting
+plugins:
+  - jekyll-feed
+  - jekyll-octicons
+
+# site setting
+baseurl: ""
+url: ""
+
+# site meta
+theme_background: "#ECEFF1"
+theme_basecolor: "#202020"
+theme_textcolor: white
+
+title: FarhanMS123
+favicon: "/assets/card.png"
+logo: "/assets/Card_transparant.png"
+description: Software Engineer and Scientist
+
+# author biodata
+author_name: Farhan MS
+author_email: animationfar@gmail.com
+author_github: FarhanMS123

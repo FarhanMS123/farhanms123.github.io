@@ -1,0 +1,16 @@
+<div class="text-center p-2">
+	<span class="d-inline-block" style="transform: translateY(0.08em);">{% octicon code %}</span> with <span class="px-1">{% octicon heart %}</span> by <!--<br />
+	<a href="https://github.com/carbon4" class="btn-link"><b style="letter-spacing: 0.05em;">Carbon</b></a>
+	<span class="px-1 position-relative" style="top:0.1em;">{% octicon x %}</span>-->
+	<a href="https://github.com/farhanms123" class="btn-link"><b style="letter-spacing: 0.05em;">FarhanMS123</b></a>
+</div>
+
+<script>
+	function footerFixedPosition(el, ev){ //JQuery
+		if($("body").outerHeight() <= window.innerHeight){
+			$(el).addClass("position-fixed").css({"bottom":"0px", "width":"100%"});
+		}else{
+			$(el).removeClass("position-fixed").css({"bottom":"auto", "width":"auto"});
+		}
+	}
+</script>

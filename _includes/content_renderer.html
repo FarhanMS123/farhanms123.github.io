@@ -1,0 +1,6 @@
+{% assign page_path = page.path | downcase%}
+{% if page_path contains ".md" or page_path contains ".markdown" %} 
+    {{ content | markdownify}}
+{% else %}
+    {{ content }}
+{% endif %}

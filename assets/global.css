@@ -1,0 +1,21 @@
+body{font-family:'Roboto', sans-serif; overflow-x: hidden; background: #202020; color: white;}
+
+.list-group-item{background: transparent;}
+.transition{transition: right 1s ease-out;}
+.navCollapse{right:-0.1em !important;}
+.card img{max-width:100% !important;}
+.octicon-heart{position: relative;top:0.1em}
+.tab{width:2em; display: inline-block;}
+.carousel-item{width:100%;height:100%;}
+
+.white-link a{color:white;}
+.white-link a:hover{color:white;}
+.black-link a{color:black;}
+.black-link a:hover{color:black;}
+
+.row-normal.row,.row-normal.row>*{margin:0; padding:0}
+
+/* https://codepen.io/MathieuRichard/pen/HAgnm */
+.google-scrollbar::-webkit-scrollbar{width: 5px;}
+.google-scrollbar::-webkit-scrollbar-thumb {background: #ddd;}
+.google-scrollbar::-webkit-scrollbar-track {background: #666;}

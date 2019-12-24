@@ -1,0 +1,12 @@
+---
+layout: blank
+---
+<html>
+	<head>
+		<title>{% if page.title %}{{page.title}} - {% endif %}{{ site.title }}</title>
+		{% include header.html  %}
+	</head>
+	<body>
+		{% include content_renderer.html %}
+	</body>
+</html>

@@ -1,0 +1,39 @@
+---
+layout: blog
+---
+
+{% include menu_list.html %}
+{% include navbar.html %}
+
+<div id="footer">
+	{% include footer.html %}
+</div>
+
+<script>
+	window.onresize = function(event){
+		footerFixedPosition($("#footer")[0], event);
+	}
+	window.onresize();
+</script>
+
+{% if page.theme_textcolor %}
+	THIS IS SETTED
+{% else %}
+	NOT SETTED
+{% endif %}
+
+{% if page.theme_textcolor %}
+	{{page.theme_textcolor}}
+{% elsif site.theme_textcolor%}
+	{{site.theme_textcolor}}
+{% else %}
+	black
+{% endif %}
+
+{% if page.theme_textcolor %}{{page.theme_textcolor}}{% elsif site.theme_textcolor%}{{site.theme_textcolor}}{% else %}white{% endif %}
+
+{% if page.theme_basecolor %}{{page.theme_basecolor}}{% elsif site.theme_basecolor %}{{site.theme_basecolor}}{% else %}#202020{% endif %}
+
+/////////////
+
+{{site.themed.theme_background}}

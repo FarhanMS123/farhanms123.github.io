@@ -1,0 +1,26 @@
+<div class="card-body">
+	<h3 class="card-title"><a class="text-dark" href="{{ post.url }}">{{ page.title }}</a></h3>
+	{% assign bc_path_split = page.url | split:"/" %}
+	{% assign bc_path = "" %}
+	{% assign id = 0 %}
+
+	<small class="d-inline-block" style="margin-top: -1em;">
+			<a href="https://carbon4.github.io">carbon4</a>
+		{% for ps in bc_path_split %}
+			{% if id == 1 %}
+				{% assign bc_path = bc_path | append: "/" | append: ps %}
+				> <a href="{{ bc_path }}">{{ps}}</a>
+			{% else %}
+				{% assign id = 1 %}
+			{% endif %}
+		{% endfor %}
+	</small>
+	<p class="mb-4 mt-2">
+		<small class="text-muted">by {{ page.author }}</small>
+		<small class="text-muted float-right">{{ page.date | date: "%A, %d %b %Y %H:%M:%S"}}</small>
+	</p>
+	<div class="border-bottom mb-3"></div>
+	<p class="card-text">
+		{% include content_renderer.html %}
+	</p>
+</div>
