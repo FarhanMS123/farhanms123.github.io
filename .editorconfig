@@ -15,7 +15,7 @@ indent_size = 4
 indent_size = 2
 
 # Templating
-[*.{jsx.tsx}]
+[*.{jsx,tsx}]
 indent_size = 2
 
 [*.{js,ts,c,cpp,java}]

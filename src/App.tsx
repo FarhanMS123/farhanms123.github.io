@@ -1,9 +1,14 @@
-import '@styles/App.css'
+import '@styles/App.css';
+import { RouterProvider } from 'react-router-dom';
+import { router } from '@utils/router';
+import { FluentProvider, teamsDarkTheme } from '@fluentui/react-components';
 
 function App() {
   return (
-    <h1>Hello, world!</h1>
+    <FluentProvider theme={teamsDarkTheme}>
+      <RouterProvider router={router} />
+    </FluentProvider>
   )
 }
 
-export default App
+export default App;
