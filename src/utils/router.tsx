@@ -5,7 +5,7 @@ import Home from '@/pages/Home';
 
 export const routes: RouteObject[] = [
   {
-    path: "/",
+    path: ERoutes.HOME,
     element: (<Home />)
   }
 ];
