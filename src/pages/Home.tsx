@@ -1,14 +1,15 @@
-import Style from '@/styles/Home';
-import { Button } from '@fluentui/react-components';
+import { tokens } from '@fluentui/react-components';
 
 export default function Home() {
+  window.location.replace('https://github.com/FarhanMS123');
+
   return (
     <>
-      <Style />
-      Hello world!
-      <Button appearance="primary">
-        Primary
-      </Button>
+      <p style={{
+        fontSize: tokens.fontSizeHero800, 
+        fontWeight: tokens.fontWeightSemibold, 
+        textAlign:'center',
+        marginTop:'8rem'}}>FarhanMS123</p>
     </>
   );
 }

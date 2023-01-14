@@ -1,12 +1,15 @@
 import ERoutes from '@/consts/ERoutes';
-import { createHashRouter, RouteObject } from 'react-router-dom';
-
 import Home from '@/pages/Home';
+import Tools from '@/pages/Tools';
+import { createHashRouter, RouteObject } from 'react-router-dom';
 
 export const routes: RouteObject[] = [
   {
     path: ERoutes.HOME,
-    element: (<Home />)
+    element: (<Home />),
+  }, {
+    path: ERoutes.TOOLS,
+    element: (<Tools />),
   }
 ];
 
