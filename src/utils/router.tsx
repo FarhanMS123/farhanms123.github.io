@@ -49,8 +49,6 @@ export const routes: RouteObject[] = [
   },
 ];
 
-console.log([import.meta]);
-
 export const router = createHashRouter(routes);
 
 export { ERoutes };
