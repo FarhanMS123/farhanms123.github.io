@@ -1,5 +1,6 @@
-import { INavLinkGroup, IStackItemProps, IStackItemStyles, Nav, Stack } from "@fluentui/react";
+import { INavLinkGroup, IStackItemProps, IStackItemStyles, Stack } from "@fluentui/react";
 import { tokens } from "@fluentui/react-components";
+import Nav from "./Nav";
 
 export const panelStyles: IStackItemStyles = {
   root: {

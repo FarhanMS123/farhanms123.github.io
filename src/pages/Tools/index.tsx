@@ -1,5 +1,5 @@
 import Preview from "@/components/Preview";
-import ERoutes from "@/consts/ERoutes";
+import ERoutes, { ETools } from "@/consts/ERoutes";
 import { INavLinkGroup } from "@fluentui/react";
 
 const links: INavLinkGroup[] = [
@@ -9,15 +9,35 @@ const links: INavLinkGroup[] = [
     links: [
       {
         name: "ANSI",
-        url: `${ERoutes.TOOLS}/1`
+        url: ETools.ANSI
       },
       {
-        name: "AJAX2Write",
-        url: `${ERoutes.TOOLS}/3`
+        name: "AJAX2Write (PHP)",
+        url: ETools.ajax2write
       },
       {
         name: "Determinan",
-        url: `${ERoutes.TOOLS}/1`
+        url: ETools.determinan
+      },
+      {
+        name: "For Ever Loop",
+        url: ETools.forEverLoop
+      },
+      {
+        name: "HTML Editor",
+        url: ETools.htmlEditor
+      },
+      {
+        name: "HTML Editor 2",
+        url: ETools.htmlEditor2
+      },
+      {
+        name: "MLG",
+        url: ETools.mlg
+      },
+      {
+        name: "PitungJS",
+        url: ETools.pitung
       },
     ],
   }

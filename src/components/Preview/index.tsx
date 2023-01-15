@@ -1,5 +1,6 @@
 import { Depths, getTheme, INavLinkGroup, IStackItemProps, IStackItemStyles, IStackStyles, IStackTokens, Stack } from "@fluentui/react";
 import { tokens } from "@fluentui/react-components";
+import { Outlet } from "react-router-dom";
 import Panel from "./Panel";
 
 export const layoutStackTokens: IStackTokens = {
@@ -16,7 +17,7 @@ export const stackStyles: IStackStyles = {
 
 export const viewStyles: IStackItemStyles = {
   root: {
-    background: tokens.colorNeutralForeground2BrandHover,
+    background: tokens.colorNeutralBackground1,
   }
 };
 
@@ -29,7 +30,9 @@ export default function Preview({ navGroups, ...props }: TPreviewProps){
   return (
     <Stack {...props} theme={theme} horizontal enableScopedSelectors styles={stackStyles} tokens={layoutStackTokens}>
       <Panel navGroups={navGroups} />
-      <Stack.Item grow styles={viewStyles}>Hello</Stack.Item>
+      <Stack.Item grow styles={viewStyles}>
+        <Outlet />
+      </Stack.Item>
     </Stack>
   );
 }

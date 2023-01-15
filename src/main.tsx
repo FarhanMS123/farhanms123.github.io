@@ -12,9 +12,9 @@ import { router } from '@/utils/router';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ThemeProvider style={{height:'100%', overflow:'auto', display: 'block'}}>
     <FluentProvider theme={teamsDarkTheme} style={{height:'100%', overflow:'auto'}}>
-      <PortalCompatProvider>
+      {/* <PortalCompatProvider> */}
         <RouterProvider router={router} />
-      </PortalCompatProvider>
+      {/* </PortalCompatProvider> */}
     </FluentProvider>
   </ThemeProvider>
 );

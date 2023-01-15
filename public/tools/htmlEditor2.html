@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<title>IFrame</title>
+		<style>
+			body{margin:0px;padding:0px;overflow:hidden;}
+			.ifrm{width:100%;height:100%;border:black solid 1px;}
+		</style>
+	</head>
+	<body>
+		<div id="hdl"><iframe id="ifrm" class="ifrm"></iframe></div>
+		<script>
+			var win, dt;
+			
+			dt = "\u003chtml\u003e\n	\u003chead\u003e\n		\u003ctitle\u003eEditor\u003c/title\u003e\n		\u003cstyle\u003e\n			body{margin:0px;padding:0px;overflow:hidden;}\n			#ta{min-width:100%;max-width:100%;min-height:calc(100% - 30px);max-height:calc(100% - 30px);}\n		\u003c/style\u003e\n	\u003c/head\u003e\n	\u003cbody\u003e\n		\u003ctextarea id=\"ta\"\u003e\u003c/textarea\u003e\n		\u003cinput type=\"checkbox\" id=\"chk\" checked\u003eauto render\u003c/input\u003e\n		\u003cbutton onclick=\"render();\"\u003eRender\u003c/button\u003e\n		\n		\u003cscript\u003e\n			var dt=\"\";\n			function render(){\n				var ifr = document.createElement(\"iframe\");\n				ifr.setAttribute(\"class\", \"ifrm\");\n				var hdl = window.opener.window.document.getElementById(\"hdl\");\n				hdl.innerHTML = \"\";\n				hdl.appendChild(ifr);\n				var ifrw = (ifr.contentWindow) ? ifr.contentWindow : (ifr.contentDocument.document) ? ifr.contentDocument.document : ifr.contentDocument;\n				ifrw.document.open();\n				ifrw.document.write(document.getElementById(\"ta\").value);\n				ifrw.document.close();\n				if (ifrw.document.body && !ifrw.document.body.isContentEditable) {\n					ifrw.document.body.contentEditable = true;\n					ifrw.document.body.contentEditable = false;\n				}\n			}\n			var tm = setInterval(function(){\n				try{\n					if(document.getElementById(\"chk\").checked == true){\n						if(document.getElementById(\"ta\").value != dt){\n							render();\n							dt = document.getElementById(\"ta\").value;\n						}\n					}\n				}catch(e){\n					parent.close();\n				}\n			}, 100);\n		\u003c/script\u003e\n	\u003c/body\u003e\n\u003c/html\u003e"
+			win = window.open("", "", "width=600,height=300");
+			setInterval(function(){
+				if(win.closed){
+					win = window.open("", "", "width=600,height=300");
+					win.document.write(dt);
+				}
+			}, 1);
+			win.document.write(dt);
+		</script>
+	</body>
+</html>
