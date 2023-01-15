@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title>MLG Browser</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta id="tc" name="theme-color" content="hsl(0, 100%, 50%)">
+		
+		<script>
+			function showInfo(){alert("MLG Browser \nPowered by \nmeta:theme-color API \nby Farhan MS and RR \n\nThis project will work in Android and IOS by Chrome 39+ And NOT WORK for another browser");}
+			showInfo()
+			var tm, change=false, x=0, y=100, z=50;
+			tm = setInterval(function(){
+				document.getElementById("tc").setAttribute("content", "hsl(" + x + ", " + y + "%, " + z + "%)")
+				if(document.getElementById("bm").checked == true){
+					document.getElementById("body").style.background = "hsl(" + x + ", " + y + "%, " + z + "%)";
+					if((x < 24 || x > 204) && z < 68){
+						document.getElementById("body").style.color = "white";
+					}else{
+						document.getElementById("body").style.color = "black";
+					}
+				}else{
+					document.getElementById("body").style.background = "#fff";
+					document.getElementById("body").style.color = "black";
+				}
+				x = document.getElementById("xs").value; document.getElementById("x").innerHTML = x;
+				y = document.getElementById("ys").value; document.getElementById("y").innerHTML = y;
+				z = document.getElementById("zs").value; document.getElementById("z").innerHTML = z;
+				if(change==true){
+					document.getElementById("xs").value = parseFloat(document.getElementById("xs").value) + 1
+					x = document.getElementById("xs").value;
+					if(x >= 360){x=0;}
+					document.getElementById("xs").value = x
+				}
+			}, 1);
+		</script>
+		<style>
+			body{padding:10px;}
+		</style>
+	</head>
+	<body id="body">
+		<h1>MLG Browser</h1>
+		<h3>By FarhanMS</h3>
+		hue (<span id="x">0</span>deg) : <input id="xs" type="range" min="0" max="360" value="0"> <br>
+		sat (<span id="y">0</span>%) : <input id="ys" type="range" min="0" max="100" value="100"> <br>
+		li (<span id="z">0</span>%) : <input id="zs" type="range" min="0" max="100" value="50"> <br>
+		<input id="bm" type="checkbox"> <label for="bm">Target Body</label> <br>
+		<button onclick="change=true;">Play</button> <button onclick="change=false;">Stop</button> <button onclick="showInfo();">Info</button>
+	</body>
+</html>
