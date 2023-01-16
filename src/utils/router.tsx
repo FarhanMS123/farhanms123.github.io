@@ -1,18 +1,22 @@
+import Executor from '@/components/Executor';
 import IFrame from '@/components/Preview/IFrame';
 import ERoutes, { ETools } from '@/consts/ERoutes';
-import Home from '@/pages/Home';
 import Tools from '@/pages/Tools';
-import { createHashRouter, RouteObject } from 'react-router-dom';
+import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 
 export const routes: RouteObject[] = [
   {
     path: ERoutes.HOME,
-    element: (<Home />),
+    element: (<Executor func={() => window.location.replace('https://github.com/FarhanMS123')} />),
   }, 
   {
     path: ERoutes.TOOLS,
     element: (<Tools />),
     children: [
+      {
+        path: ERoutes.TOOLS,
+        element: (<Navigate to={ETools.determinan} />),
+      },
       {
         path: ETools.ANSI,
         element: (<IFrame url={new URL(ETools.ANSI + '.html', import.meta.url).href} source='' />),
