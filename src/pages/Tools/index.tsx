@@ -1,5 +1,5 @@
 import Preview from "@/components/Preview";
-import ERoutes, { ETools } from "@/consts/ERoutes";
+import { ETools } from "@/consts/ERoutes";
 import { INavLinkGroup } from "@fluentui/react";
 
 const links: INavLinkGroup[] = [

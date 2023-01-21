@@ -1,13 +1,15 @@
 enum ERoutes{
     HOME = "/",
-    DEMO = "/demos",
+    DEMOS = "/demos",
     TOOLS = "/tools"
 }
 
 export default ERoutes;
 
 export enum EDemos {
-
+    blank = "/demos/blank",
+    GBCS = "/demos/GBCS",
+    micecho = "/demos/micecho",
 }
 
 export enum ETools {

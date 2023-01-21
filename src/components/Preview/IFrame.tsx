@@ -33,7 +33,7 @@ const CustomCompoundButton = (props: any) =>
     as="a"
     style={{margin: '0px 0.5rem'}} {...props}></CompoundButton>
 
-export default function IFrame({ url, source, docs }: IFrameProps) {
+export default function IFrame({ url, source }: IFrameProps) {
   return (
     <div style={wh100}>
       <iframe src={url} style={wh100}></iframe>

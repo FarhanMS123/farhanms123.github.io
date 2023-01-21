@@ -1,6 +1,7 @@
 import Executor from '@/components/Executor';
 import IFrame from '@/components/Preview/IFrame';
-import ERoutes, { ETools } from '@/consts/ERoutes';
+import ERoutes, { EDemos, ETools } from '@/consts/ERoutes';
+import Demos from '@/pages/Demos';
 import Tools from '@/pages/Tools';
 import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 
@@ -48,6 +49,28 @@ export const routes: RouteObject[] = [
       {
         path: ETools.pitung,
         element: (<IFrame url={new URL(ETools.pitung + '.js', import.meta.url).href} source='https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages/tools/pitung.js' />),
+      },
+    ],
+  },
+  {
+    path: ERoutes.DEMOS,
+    element: (<Demos />),
+    children: [
+      {
+        path: ERoutes.DEMOS,
+        element: (<Navigate to={EDemos.blank} />),
+      },
+      {
+        path: EDemos.blank,
+        element: (<IFrame url={new URL(EDemos.blank + '.html', import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${EDemos.blank}.html`} />),
+      },
+      {
+        path: EDemos.GBCS,
+        element: (<IFrame url={new URL(EDemos.GBCS + '.html', import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${EDemos.GBCS}.html`} />),
+      },
+      {
+        path: EDemos.micecho,
+        element: (<IFrame url={new URL(EDemos.micecho + '.html', import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${EDemos.micecho}.html`} />),
       },
     ],
   },
