@@ -8,7 +8,6 @@ export const panelStyles: IStackItemStyles = {
     height: '100%',
     width: '320px',
     maxWidth: '100%',
-    // boxShadow: Depths.depth8,
   }
 };
 
