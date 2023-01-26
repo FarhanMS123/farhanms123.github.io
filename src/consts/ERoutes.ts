@@ -28,6 +28,13 @@ export enum ELibs {
     README = "/libs/README.md",
     buried = "/libs/buried.png",
     project = "/libs/project.png",
+    pitung = "/libs/pitung.js",
     ifLine = "/libs/ifLine.js",
     inRange = "/libs/inRange.js",
+    kickMid_arr = "/libs/kickMid_arr.js",
+    range = "/libs/range.js",
+    range2 = "/libs/range2.js",
+    time = "/libs/time.js",
+    txt2args = "/libs/txt2args.js",
+    txt2meta = "/libs/txt2meta.js",
 }

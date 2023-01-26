@@ -27,6 +27,7 @@ export type TPreviewPanelProps = IStackItemProps & {
 };
 
 function forAppearance(match: string){
+  const location = useLocation();
   return location.pathname.indexOf(match) >= 0 ? 'primary' : 'subtle';
 }
 
@@ -35,15 +36,16 @@ type ToolbarOverflowButtonProps = {
   name: string
 };
 
-function CustomToolbarButton({ route, name }: ToolbarOverflowButtonProps){
+function CustomToolbarButton({ route, name, ...props }: ToolbarOverflowButtonProps){
+  console.log({route, name, props})
   return (
-    <ToolbarButton as="a" href={`#${route}`} appearance={forAppearance(route)}>{name}</ToolbarButton>
+    <Link to={route} type="button" role="button" style={{textDecoration: 'none'}}>
+      <ToolbarButton as="a" href={`#${route}`} appearance={forAppearance(route)} {...props}>{name}</ToolbarButton>
+    </Link>
   );
 }
 
 export default function Panel({ navGroups, ...props }: TPreviewPanelProps) {
-  const location = useLocation();
-
   return (
     <Stack.Item {...props} shrink styles={panelStyles}>
       <p style={titleStyles}>FarhanMS123</p>

@@ -82,7 +82,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: ERoutes.LIBS,
-        element: (<Navigate to={ELibs.README} />),
+        element: (<Navigate to={ELibs.ifLine} />),
       },
       {
         path: ELibs.README,
@@ -97,13 +97,40 @@ export const routes: RouteObject[] = [
         element: (<IFrame url={new URL(ELibs.project, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.project}`} />),
       },
       {
+        path: ELibs.pitung,
+        element: <Codeview url={new URL(ELibs.pitung, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.pitung}`} />,
+      },
+      {
         path: ELibs.ifLine,
         element: <Codeview url={new URL(ELibs.ifLine, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.ifLine}`} />,
       },
       {
         path: ELibs.inRange,
-        // element: (<></>),
         element: (<Codeview url={new URL(ELibs.inRange, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.inRange}`} />),
+      },
+      {
+        path: ELibs.kickMid_arr,
+        element: (<Codeview url={new URL(ELibs.kickMid_arr, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.kickMid_arr}`} />),
+      },
+      {
+        path: ELibs.range,
+        element: (<Codeview url={new URL(ELibs.range, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.range}`} />),
+      },
+      {
+        path: ELibs.range2,
+        element: (<Codeview url={new URL(ELibs.range2, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.range2}`} />),
+      },
+      {
+        path: ELibs.time,
+        element: (<Codeview url={new URL(ELibs.time, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.time}`} />),
+      },
+      {
+        path: ELibs.txt2args,
+        element: (<Codeview url={new URL(ELibs.txt2args, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.txt2args}`} />),
+      },
+      {
+        path: ELibs.txt2meta,
+        element: (<Codeview url={new URL(ELibs.txt2meta, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.txt2meta}`} />),
       },
     ],
   },
