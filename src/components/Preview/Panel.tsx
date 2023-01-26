@@ -25,6 +25,10 @@ export type TPreviewPanelProps = IStackItemProps & {
   navGroups: INavLinkGroup[] | null,
 };
 
+function forAppearance(match: string){
+  return location.pathname.indexOf(match) >= 0 ? 'primary' : 'subtle';
+}
+
 export default function Panel({ navGroups, ...props }: TPreviewPanelProps) {
   const location = useLocation();
 
@@ -33,15 +37,9 @@ export default function Panel({ navGroups, ...props }: TPreviewPanelProps) {
       <p style={titleStyles}>FarhanMS123</p>
       <Toolbar style={{width: '100%'}}>
         <ToolbarButton as="a" href="https://github.com/FarhanMS123">Github</ToolbarButton>
-        <Link to={ERoutes.TOOLS} type="button" role="button" style={{textDecoration: 'none'}}>
-          <ToolbarButton appearance={location.pathname.indexOf(ERoutes.TOOLS) >= 0 ? 'primary' : 'subtle'}>Tools</ToolbarButton>
-        </Link>
-        <Link to={ERoutes.DEMOS} type="button" role="button" style={{textDecoration: 'none'}}>
-          <ToolbarButton appearance={location.pathname.indexOf(ERoutes.DEMOS) >= 0 ? 'primary' : 'subtle'}>Demos</ToolbarButton>
-        </Link>
-        <Link to={ERoutes.LIBS} type="button" role="button" style={{textDecoration: 'none'}}>
-          <ToolbarButton appearance={location.pathname.indexOf(ERoutes.LIBS) >= 0 ? 'primary' : 'subtle'}>Libs</ToolbarButton>
-        </Link>
+        <ToolbarButton as="a" href={`#${ERoutes.TOOLS}`} appearance={forAppearance(ERoutes.TOOLS)}>Tools</ToolbarButton>
+        <ToolbarButton as="a" href={`#${ERoutes.DEMOS}`} appearance={forAppearance(ERoutes.DEMOS)}>Demos</ToolbarButton>
+        <ToolbarButton as="a" href={`#${ERoutes.LIBS}`} appearance={forAppearance(ERoutes.LIBS)}>Libs</ToolbarButton>
       </Toolbar>
       <Nav groups={navGroups} />
     </Stack.Item>

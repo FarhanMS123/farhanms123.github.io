@@ -22,20 +22,6 @@ const wh100: React.CSSProperties = {
   overflow: 'hidden',
 };
 
-// const whPre: React.CSSProperties = {
-//   width: 'fit-content',
-//   height: 'fit-content',
-//   minWidth: 'calc(100% - 2rem)',
-//   minHeight: '100%',
-//   margin: 0,
-// };
-
-// const whCode: React.CSSProperties = {
-//   width: '100%',
-//   height: '100%',
-//   padding: '1rem'
-// };
-
 const whPre: React.CSSProperties = {
   width: '100%',
   height: '100%',
