@@ -2,6 +2,7 @@ import ERoutes from '@/consts/ERoutes';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import 'highlight.js/styles/base16/equilibrium-dark.css';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 import { useMemo } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { FAB } from "./FAB";
@@ -44,7 +45,7 @@ export default function Codeview({ url, source }: CodeviewProps) {
 
   return (
     <div style={wh100}>
-      <pre style={whPre}>
+      <pre className='code-container' style={whPre}>
         <code className="hljs" style={whCode} dangerouslySetInnerHTML={{__html: parsed.value}} />
       </pre>
       <FAB url={url} source={source} />

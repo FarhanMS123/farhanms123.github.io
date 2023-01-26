@@ -7,17 +7,25 @@ import { ThemeProvider } from '@fluentui/react';
 import { PortalCompatProvider } from '@fluentui/react-portal-compat';
 
 import '@/styles/main.css';
+import 'overlayscrollbars/overlayscrollbars.css';
 import { router } from '@/utils/router';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <ThemeProvider style={{height:'100%', overflow:'auto', display: 'block'}}>
-    <FluentProvider theme={teamsDarkTheme} style={{height:'100%', overflow:'auto'}}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </FluentProvider>
-  </ThemeProvider>
+  <>
+    {/* <OverlayScrollbarsComponent
+      options={{ scrollbars: { autoHide: 'scroll' } }}
+      defer
+    /> */}
+    <ThemeProvider style={{height:'100%', overflow:'auto', display: 'block'}}>
+      <FluentProvider theme={teamsDarkTheme} style={{height:'100%', overflow:'auto'}}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </FluentProvider>
+    </ThemeProvider>
+  </>
 );

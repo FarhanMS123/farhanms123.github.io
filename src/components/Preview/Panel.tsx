@@ -1,6 +1,7 @@
 import ERoutes from "@/consts/ERoutes";
 import { INavLinkGroup, IStackItemProps, IStackItemStyles, Stack } from "@fluentui/react";
-import { tokens, Toolbar, ToolbarButton } from "@fluentui/react-components";
+import { Overflow, OverflowItem, tokens, Toolbar, ToolbarButton, useOverflowMenu } from "@fluentui/react-components";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { Link, useLocation } from "react-router-dom";
 import Nav from "./Nav";
 
@@ -29,18 +30,31 @@ function forAppearance(match: string){
   return location.pathname.indexOf(match) >= 0 ? 'primary' : 'subtle';
 }
 
+type ToolbarOverflowButtonProps = {
+  route: string;
+  name: string
+};
+
+function CustomToolbarButton({ route, name }: ToolbarOverflowButtonProps){
+  return (
+    <ToolbarButton as="a" href={`#${route}`} appearance={forAppearance(route)}>{name}</ToolbarButton>
+  );
+}
+
 export default function Panel({ navGroups, ...props }: TPreviewPanelProps) {
   const location = useLocation();
 
   return (
     <Stack.Item {...props} shrink styles={panelStyles}>
       <p style={titleStyles}>FarhanMS123</p>
-      <Toolbar style={{width: '100%'}}>
-        <ToolbarButton as="a" href="https://github.com/FarhanMS123">Github</ToolbarButton>
-        <ToolbarButton as="a" href={`#${ERoutes.TOOLS}`} appearance={forAppearance(ERoutes.TOOLS)}>Tools</ToolbarButton>
-        <ToolbarButton as="a" href={`#${ERoutes.DEMOS}`} appearance={forAppearance(ERoutes.DEMOS)}>Demos</ToolbarButton>
-        <ToolbarButton as="a" href={`#${ERoutes.LIBS}`} appearance={forAppearance(ERoutes.LIBS)}>Libs</ToolbarButton>
-      </Toolbar>
+      <OverlayScrollbarsComponent defer options={{scrollbars: {autoHide: 'scroll'}}}>
+        <Toolbar>
+          <ToolbarButton as="a" href="https://github.com/FarhanMS123">Github</ToolbarButton>
+          <CustomToolbarButton route={ERoutes.TOOLS} name="Tools" />
+          <CustomToolbarButton route={ERoutes.DEMOS} name="Demos" />
+          <CustomToolbarButton route={ERoutes.LIBS} name="Libs" />
+        </Toolbar>
+      </OverlayScrollbarsComponent>
       <Nav groups={navGroups} />
     </Stack.Item>
   );
