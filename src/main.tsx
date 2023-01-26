@@ -16,10 +16,6 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <>
-    {/* <OverlayScrollbarsComponent
-      options={{ scrollbars: { autoHide: 'scroll' } }}
-      defer
-    /> */}
     <ThemeProvider style={{height:'100%', overflow:'auto', display: 'block'}}>
       <FluentProvider theme={teamsDarkTheme} style={{height:'100%', overflow:'auto'}}>
         <QueryClientProvider client={queryClient}>

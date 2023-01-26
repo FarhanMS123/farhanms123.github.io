@@ -47,7 +47,7 @@ export default function Panel({ navGroups, ...props }: TPreviewPanelProps) {
   return (
     <Stack.Item {...props} shrink styles={panelStyles}>
       <p style={titleStyles}>FarhanMS123</p>
-      <OverlayScrollbarsComponent defer options={{scrollbars: {autoHide: 'scroll'}}}>
+      <OverlayScrollbarsComponent defer options={{scrollbars: {autoHide: 'leave', theme: 'os-theme-light'}}}>
         <Toolbar>
           <ToolbarButton as="a" href="https://github.com/FarhanMS123">Github</ToolbarButton>
           <CustomToolbarButton route={ERoutes.TOOLS} name="Tools" />

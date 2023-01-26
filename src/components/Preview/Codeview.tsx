@@ -2,8 +2,9 @@ import ERoutes from '@/consts/ERoutes';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
 import 'highlight.js/styles/base16/equilibrium-dark.css';
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
-import { useMemo } from 'react';
+import { InitializationTarget } from 'overlayscrollbars';
+import { OverlayScrollbarsComponent, useOverlayScrollbars } from 'overlayscrollbars-react';
+import { LegacyRef, useEffect, useMemo, useRef } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { FAB } from "./FAB";
 
@@ -43,9 +44,17 @@ export default function Codeview({ url, source }: CodeviewProps) {
   const {data, isSuccess} = useQuery(url ?? ERoutes.LIBS, () => fetch(url).then(res => res.text()) );
   const parsed = useMemo(() => hljs.highlightAuto(data ?? ''), [data]);
 
+  const ref = useRef<HTMLPreElement>(null);
+  const [initialize, instance] = useOverlayScrollbars({defer: true, options: { scrollbars: { theme: 'os-theme-light' } }});
+
+  useEffect(() => {
+    /// @ts-ignore
+    initialize(ref.current);
+  }, [initialize]);
+
   return (
     <div style={wh100}>
-      <pre className='code-container' style={whPre}>
+      <pre ref={ref} className='code-container' style={whPre}>
         <code className="hljs" style={whCode} dangerouslySetInnerHTML={{__html: parsed.value}} />
       </pre>
       <FAB url={url} source={source} />
