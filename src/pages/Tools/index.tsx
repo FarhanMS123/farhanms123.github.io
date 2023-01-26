@@ -12,10 +12,6 @@ const links: INavLinkGroup[] = [
         url: ETools.ANSI
       },
       {
-        name: "AJAX2Write (PHP)",
-        url: ETools.ajax2write
-      },
-      {
         name: "Determinan",
         url: ETools.determinan
       },
@@ -34,10 +30,6 @@ const links: INavLinkGroup[] = [
       {
         name: "MLG",
         url: ETools.mlg
-      },
-      {
-        name: "PitungJS",
-        url: ETools.pitung
       },
     ],
   }

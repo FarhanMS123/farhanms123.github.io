@@ -8,13 +8,16 @@ import { PortalCompatProvider } from '@fluentui/react-portal-compat';
 
 import '@/styles/main.css';
 import { router } from '@/utils/router';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <ThemeProvider style={{height:'100%', overflow:'auto', display: 'block'}}>
     <FluentProvider theme={teamsDarkTheme} style={{height:'100%', overflow:'auto'}}>
-      {/* <PortalCompatProvider> */}
+      <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-      {/* </PortalCompatProvider> */}
+      </QueryClientProvider>
     </FluentProvider>
   </ThemeProvider>
 );

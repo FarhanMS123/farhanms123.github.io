@@ -1,7 +1,9 @@
 import Executor from '@/components/Executor';
+import Codeview from '@/components/Preview/Codeview';
 import IFrame from '@/components/Preview/IFrame';
-import ERoutes, { EDemos, ETools } from '@/consts/ERoutes';
+import ERoutes, { EDemos, ELibs, ETools } from '@/consts/ERoutes';
 import Demos from '@/pages/Demos';
+import Libs from '@/pages/Libs';
 import Tools from '@/pages/Tools';
 import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 
@@ -71,6 +73,37 @@ export const routes: RouteObject[] = [
       {
         path: EDemos.micecho,
         element: (<IFrame url={new URL(EDemos.micecho + '.html', import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${EDemos.micecho}.html`} />),
+      },
+    ],
+  },
+  {
+    path: ERoutes.LIBS,
+    element: <Libs />,
+    children: [
+      {
+        path: ERoutes.LIBS,
+        element: (<Navigate to={ELibs.README} />),
+      },
+      {
+        path: ELibs.README,
+        element: <></>,
+      },
+      {
+        path: ELibs.buried,
+        element: (<IFrame url={new URL(ELibs.buried, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.buried}`} />),
+      },
+      {
+        path: ELibs.project,
+        element: (<IFrame url={new URL(ELibs.project, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.project}`} />),
+      },
+      {
+        path: ELibs.ifLine,
+        element: <Codeview url={new URL(ELibs.ifLine, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.ifLine}`} />,
+      },
+      {
+        path: ELibs.inRange,
+        // element: (<></>),
+        element: (<Codeview url={new URL(ELibs.inRange, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.inRange}`} />),
       },
     ],
   },

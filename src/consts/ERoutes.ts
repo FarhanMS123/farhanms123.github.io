@@ -1,7 +1,8 @@
-enum ERoutes{
+enum ERoutes {
     HOME = "/",
     DEMOS = "/demos",
-    TOOLS = "/tools"
+    TOOLS = "/tools",
+    LIBS = "/libs",
 }
 
 export default ERoutes;
@@ -21,4 +22,12 @@ export enum ETools {
     htmlEditor2 = "/tools/htmlEditor2",
     mlg         = "/tools/mlg",
     pitung      = "/tools/pitung",
+}
+
+export enum ELibs {
+    README = "/libs/README.md",
+    buried = "/libs/buried.png",
+    project = "/libs/project.png",
+    ifLine = "/libs/ifLine.js",
+    inRange = "/libs/inRange.js",
 }

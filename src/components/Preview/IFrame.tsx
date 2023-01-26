@@ -1,5 +1,4 @@
-import { CompoundButton, tokens } from "@fluentui/react-components";
-import { CodeFilled, WindowNewFilled } from "@fluentui/react-icons";
+import { FAB } from "./FAB";
 
 export type IFrameProps = {
   url: string | undefined,
@@ -15,32 +14,11 @@ const wh100: React.CSSProperties = {
   position: 'relative',
 };
 
-const FAB: React.CSSProperties = {
-  position: 'absolute',
-  right: '1rem',
-  bottom: '1rem',
-  background: tokens.colorNeutralBackground1,
-  boxShadow: tokens.shadow8,
-  borderRadius: tokens.borderRadiusMedium,
-  padding: tokens.spacingVerticalS,
-};
-
-const CustomCompoundButton = (props: any) =>
-  <CompoundButton 
-    appearance="transparent" 
-    target="blank" 
-    size="small" 
-    as="a"
-    style={{margin: '0px 0.5rem'}} {...props}></CompoundButton>
-
 export default function IFrame({ url, source }: IFrameProps) {
   return (
     <div style={wh100}>
       <iframe src={url} style={wh100}></iframe>
-      <div style={FAB}>
-        <CustomCompoundButton  icon={<WindowNewFilled />} href={url}></CustomCompoundButton>
-        <CustomCompoundButton icon={<CodeFilled />} href={source}></CustomCompoundButton>
-      </div>
+      <FAB url={url} source={source} />
     </div>
   )
 }
