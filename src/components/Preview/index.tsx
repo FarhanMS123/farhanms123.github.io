@@ -17,7 +17,9 @@ export const stackStyles: IStackStyles = {
 
 export const viewStyles: IStackItemStyles = {
   root: {
+    width: '100%',
     background: tokens.colorNeutralBackground1,
+    minWidth: 0,
   }
 };
 
@@ -30,7 +32,7 @@ export default function Preview({ navGroups, ...props }: TPreviewProps){
   return (
     <Stack {...props} theme={theme} horizontal enableScopedSelectors styles={stackStyles} tokens={layoutStackTokens}>
       <Panel navGroups={navGroups} />
-      <Stack.Item grow styles={viewStyles}>
+      <Stack.Item styles={viewStyles}>
         <Outlet />
       </Stack.Item>
     </Stack>
