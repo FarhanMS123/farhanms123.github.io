@@ -82,11 +82,11 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: ERoutes.LIBS,
-        element: (<Navigate to={ELibs.ifLine} />),
+        element: (<Navigate to={ELibs.README} />),
       },
       {
         path: ELibs.README,
-        element: <></>,
+        element: (<Codeview url={new URL(ELibs.README, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.README}`} />),
       },
       {
         path: ELibs.buried,

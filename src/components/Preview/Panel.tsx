@@ -37,7 +37,6 @@ type ToolbarOverflowButtonProps = {
 };
 
 function CustomToolbarButton({ route, name, ...props }: ToolbarOverflowButtonProps){
-  console.log({route, name, props})
   return (
     <Link to={route} type="button" role="button" style={{textDecoration: 'none'}}>
       <ToolbarButton as="a" href={`#${route}`} appearance={forAppearance(route)} {...props}>{name}</ToolbarButton>

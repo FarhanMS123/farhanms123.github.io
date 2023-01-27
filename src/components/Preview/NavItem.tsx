@@ -12,7 +12,6 @@ export default function NavItem({ navLinks, key, ...props }: TNavItemProps){
   const navigate = useNavigate();
 
   function onTabSelect(e: SelectTabEvent, data: SelectTabData){
-    console.log(e, data, data.value);
     navigate(data.value as string);
   }
   
