@@ -1,6 +1,7 @@
 import Executor from '@/components/Executor';
 import Codeview from '@/components/Preview/Codeview';
 import IFrame from '@/components/Preview/IFrame';
+import Markdown from '@/components/Preview/Markdown';
 import ERoutes, { EDemos, ELibs, ETools } from '@/consts/ERoutes';
 import Demos from '@/pages/Demos';
 import Libs from '@/pages/Libs';
@@ -86,7 +87,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: ELibs.README,
-        element: (<Codeview url={new URL(ELibs.README, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.README}`} />),
+        element: (<Markdown url={new URL(ELibs.README, import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${ELibs.README}`} />),
       },
       {
         path: ELibs.buried,

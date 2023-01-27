@@ -1,21 +1,19 @@
 import ERoutes from '@/consts/ERoutes';
-import hljs from 'highlight.js/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript';
-import markdown from 'highlight.js/lib/languages/markdown';
-import 'highlight.js/styles/base16/equilibrium-dark.css';
-import { InitializationTarget } from 'overlayscrollbars';
-import { OverlayScrollbarsComponent, useOverlayScrollbars } from 'overlayscrollbars-react';
-import { LegacyRef, useEffect, useMemo, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { useOverlayScrollbars } from 'overlayscrollbars-react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import { FAB } from "./FAB";
-
-hljs.registerLanguage('javascript', javascript);
-hljs.registerLanguage('markdown', markdown);
+import { NormalComponents } from 'react-markdown/lib/complex-types';
+import { SpecialComponents } from 'react-markdown/lib/ast-to-react';
+import { Link, Toolbar, ToolbarButton, ToolbarGroup } from '@fluentui/react-components';
+import { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, TableCellLayout } from '@fluentui/react-components/unstable';
+import { WindowNewFilled } from '@fluentui/react-icons';
 
 export type CodeviewProps = {
   url: string,
   source: string,
-  docs?: string,
 };
 
 const wh100: React.CSSProperties = {
@@ -36,17 +34,43 @@ const whPre: React.CSSProperties = {
 const whCode: React.CSSProperties = {
   height: 'fit-content',
   width: 'fit-content',
-  minWidth: 'calc(100% - 2rem)',
+  minWidth: 'calc(100% - 4rem)',
   minHeight: 'calc(100% - 2rem)',
-  padding: '1rem',
+  padding: '0rem 2rem 1rem 2rem',
+  marginTop: '-1.5rem',
 };
 
-export default function Codeview({ url, source }: CodeviewProps) {
+const components: Partial<Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents> | undefined = {
+  a ({node, children, ...props}) {
+    return <Link inline={true} as="a" {...props}>{children}</Link>
+  },
+  table ({node, children, ...props}) {
+    return <Table {...props}>{children}</Table>
+  },
+  thead ({node, children, ...props}) {
+    return <TableHeader {...props}>{children}</TableHeader>
+  },
+  tbody ({node, children, ...props}) {
+    return <TableBody {...props}>{children}</TableBody>
+  },
+  tr ({node, children, ...props}) {
+    return <TableRow {...props}>{children}</TableRow>
+  },
+  th ({node, children, ...props}) {
+    return <TableHeaderCell>{children}</TableHeaderCell>
+  },
+  td ({node, children, ...props}) {
+    return <TableCell {...props}>
+      <TableCellLayout >{children}</TableCellLayout>
+    </TableCell>
+  },
+}
+
+export default function Markdown({ url, source }: CodeviewProps) {
   const queryClient = useQueryClient();
   const {data, isSuccess} = useQuery(url ?? ERoutes.LIBS, () => fetch(url).then(res => res.text()) );
-  const parsed = useMemo(() => hljs.highlightAuto(data ?? ''), [data]);
 
-  const ref = useRef<HTMLPreElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [initialize, instance] = useOverlayScrollbars({defer: true, options: { scrollbars: { theme: 'os-theme-light' } }});
 
   useEffect(() => {
@@ -56,10 +80,16 @@ export default function Codeview({ url, source }: CodeviewProps) {
 
   return (
     <div style={wh100}>
-      <pre ref={ref} className='code-container' style={whPre}>
-        <code className="hljs" style={whCode} dangerouslySetInnerHTML={{__html: parsed.value}} />
-      </pre>
-      <FAB url={url} source={source} />
+      <div ref={ref} className='code-container' style={whPre}>
+        <Toolbar style={{justifyContent: 'end', marginTop: '1rem', marginRight: '2rem'}}>
+          <ToolbarGroup>
+            <ToolbarButton as="a" target="_blank" href={source} icon={<WindowNewFilled />}>Open in new tab</ToolbarButton>
+          </ToolbarGroup>
+        </Toolbar>
+        <div style={whCode}>
+          <ReactMarkdown children={data ?? ''} remarkPlugins={[remarkGfm]} components={components} />
+        </div>
+      </div>
     </div>
   )
 }
