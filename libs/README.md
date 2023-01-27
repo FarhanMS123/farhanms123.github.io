@@ -16,6 +16,8 @@ I made many utilities scripts to help myself. But at that moment I never search 
 - MomentJS
 - MathJS
 - OpenCV JS
+- AlpineJS
+- HTMX
 
 ## App
 
