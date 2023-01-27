@@ -15,12 +15,24 @@ I made many utilities scripts to help myself. But at that moment I never search 
 - Lodash
 - MomentJS
 - MathJS
+- OpenCV JS
 
 ## App
 
-PitungJS, it is an exploit (or Trojan my little me called it). It is not really usefull, so you could use BeEF instead.
+**PitungJS**, it is an exploit (or Trojan my little me called it). It is not really usefull, so you could use BeEF instead.
 
 - BeEF (The Browser Exploitation Framework)
+- Metasploit
+
+**Determinan** is a matrix calculator. You could use this instead:
+- https://matrixcalc.org/
+- https://www.desmos.com/
+- https://www.geogebra.org/
+
+**HTML Editor**, at first, I want to build it looks like Codepen and the editor could be disattached to a new window. But, I failed. So use this instead:
+- **Instant Code Editor:** Codepen, JSFiddle, jsBin
+- **Runtime & Compiler:** Repl.it, Codesandbox, Stackblitz, Jupyter Notebook
+- **Cloud IDE:** VSCode Dev, Github Dev, Codespace, Gitpod, Coder
 
 ## Resources
 
@@ -40,3 +52,5 @@ This is some list of CDN and packages you could use for many of your projects.
 - https://lawsofux.com/
 - https://www.nngroup.com/articles/usability-101-introduction-to-usability/
 - https://www.nngroup.com/articles/ten-usability-heuristics/
+- https://web.dev/
+- https://developer.mozilla.org/en-US/
