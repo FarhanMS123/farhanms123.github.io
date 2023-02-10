@@ -4,13 +4,11 @@ import ReactDOM from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom';
 import { FluentProvider, teamsDarkTheme } from '@fluentui/react-components';
 import { ThemeProvider } from '@fluentui/react';
-import { PortalCompatProvider } from '@fluentui/react-portal-compat';
 
 import '@/styles/main.css';
 import 'overlayscrollbars/overlayscrollbars.css';
 import { router } from '@/utils/router';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 const queryClient = new QueryClient();
 
