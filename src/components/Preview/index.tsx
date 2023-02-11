@@ -1,4 +1,4 @@
-import { getTheme, INavLinkGroup, IStackItemProps, IStackTokens, Stack } from "@fluentui/react";
+import { getTheme, IStackItemProps, IStackTokens, Stack } from "@fluentui/react";
 import { makeStyles, shorthands, tokens } from "@fluentui/react-components";
 import { Outlet } from "react-router-dom";
 import Panel from "./Panel";
@@ -20,8 +20,16 @@ export const usePreviewStyles = makeStyles({
   }
 });
 
+export type INavLink = {
+  name: string,
+  links: {
+    name: string,
+    url: string,
+  }[],
+};
+
 export type TPreviewProps = IStackItemProps & {
-  navGroups: INavLinkGroup[] | null,
+  navGroups: INavLink[] | null,
 };
 
 export default function Preview({ navGroups, ...props }: TPreviewProps){

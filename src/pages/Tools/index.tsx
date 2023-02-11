@@ -1,11 +1,9 @@
-import Preview from "@/components/Preview";
+import Preview, { INavLink } from "@/components/Preview";
 import { ETools } from "@/consts/ERoutes";
-import { INavLinkGroup } from "@fluentui/react";
 
-const links: INavLinkGroup[] = [
+const links: INavLink[] = [
   {
     name: "Legacy",
-    isExpanded: true,
     links: [
       {
         name: "ANSI",

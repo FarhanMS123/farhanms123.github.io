@@ -1,8 +1,9 @@
 import ERoutes from "@/consts/ERoutes";
-import { INavLinkGroup, Stack } from "@fluentui/react";
+import { Stack } from "@fluentui/react";
 import { makeStyles, shorthands, tokens, Toolbar, ToolbarButton, useOverflowMenu } from "@fluentui/react-components";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { Link, useLocation } from "react-router-dom";
+import { INavLink } from ".";
 import Nav from "./Nav";
 
 export const usePanelStyles = makeStyles({
@@ -45,7 +46,7 @@ function CustomToolbarButton({ route, name }: ToolbarOverflowButtonProps){
 }
 
 export type TPreviewPanelProps = {
-  navGroups: INavLinkGroup[] | null,
+  navGroups: INavLink[] | null,
 };
 
 export default function Panel({ navGroups }: TPreviewPanelProps) {
