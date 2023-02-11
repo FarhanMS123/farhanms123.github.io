@@ -1,14 +1,12 @@
-import { getTheme, IStackItemProps, IStackTokens, Stack } from "@fluentui/react";
 import { makeStyles, shorthands, tokens } from "@fluentui/react-components";
 import { Outlet } from "react-router-dom";
 import Panel from "./Panel";
 
-export const layoutStackTokens: IStackTokens = {
-  childrenGap: 0
-};
-
 export const usePreviewStyles = makeStyles({
   stack: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    flexDirection: 'row',
     width: '100%',
     height: '100%',
     ...(shorthands.overflow('hidden')),
@@ -17,6 +15,8 @@ export const usePreviewStyles = makeStyles({
     width: '100%',
     backgroundColor: tokens.colorNeutralBackground1,
     minWidth: 0,
+    flexBasis: 'auto',
+    flexShrink: 1,
   }
 });
 
@@ -28,20 +28,19 @@ export type INavLink = {
   }[],
 };
 
-export type TPreviewProps = IStackItemProps & {
+export type TPreviewProps = {
   navGroups: INavLink[] | null,
 };
 
-export default function Preview({ navGroups, ...props }: TPreviewProps){
-  const theme = getTheme();
+export default function Preview({ navGroups }: TPreviewProps){
   const classes = usePreviewStyles();
 
   return (
-    <Stack {...props} theme={theme} horizontal enableScopedSelectors className={classes.stack} tokens={layoutStackTokens}>
+    <div className={classes.stack}>
       <Panel navGroups={navGroups} />
-      <Stack.Item className={classes.view}>
+      <div className={classes.view}>
         <Outlet />
-      </Stack.Item>
-    </Stack>
+      </div>
+    </div>
   );
 }

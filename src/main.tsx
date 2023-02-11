@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 
 import { RouterProvider } from 'react-router-dom';
 import { FluentProvider, teamsDarkTheme } from '@fluentui/react-components';
-import { ThemeProvider } from '@fluentui/react';
 
 import '@/styles/main.css';
 import 'overlayscrollbars/overlayscrollbars.css';
@@ -14,12 +13,10 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <>
-    <ThemeProvider style={{height:'100%', overflow:'auto', display: 'block'}}>
-      <FluentProvider theme={teamsDarkTheme} style={{height:'100%', overflow:'auto'}}>
+      <FluentProvider theme={teamsDarkTheme} style={{height:'100%', overflow:'auto', display: 'block'}}>
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
         </QueryClientProvider>
       </FluentProvider>
-    </ThemeProvider>
   </>
 );

@@ -1,5 +1,4 @@
 import ERoutes from "@/consts/ERoutes";
-import { Stack } from "@fluentui/react";
 import { makeStyles, shorthands, tokens, Toolbar, ToolbarButton, useOverflowMenu } from "@fluentui/react-components";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { Link, useLocation } from "react-router-dom";
@@ -12,6 +11,8 @@ export const usePanelStyles = makeStyles({
     height: '100%',
     width: '320px',
     maxWidth: '100%',
+    flexBasis: 'auto',
+    flexShrink: 1,
   },
   linkNoDecoration: {
     textDecorationLine: 'none',
@@ -53,7 +54,7 @@ export default function Panel({ navGroups }: TPreviewPanelProps) {
   const classes = usePanelStyles();
 
   return (
-    <Stack.Item shrink className={classes.root}>
+    <div className={classes.root}>
       <p className={classes.title}>FarhanMS123</p>
       <OverlayScrollbarsComponent defer options={{scrollbars: {autoHide: 'leave', theme: 'os-theme-light'}}}>
         <Toolbar>
@@ -64,6 +65,6 @@ export default function Panel({ navGroups }: TPreviewPanelProps) {
         </Toolbar>
       </OverlayScrollbarsComponent>
       <Nav groups={navGroups} />
-    </Stack.Item>
+    </div>
   );
 }
