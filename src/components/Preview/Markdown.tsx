@@ -6,8 +6,8 @@ import { useEffect, useRef } from 'react';
 import { useQuery } from 'react-query';
 import { NormalComponents } from 'react-markdown/lib/complex-types';
 import { SpecialComponents } from 'react-markdown/lib/ast-to-react';
-import { Link, makeStyles, shorthands, tokens, Toolbar, ToolbarButton, ToolbarGroup } from '@fluentui/react-components';
-import { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, TableCellLayout } from '@fluentui/react-components/unstable';
+import { Link, makeStyles, shorthands, tokens, Toolbar, ToolbarButton, ToolbarGroup, Table, 
+        TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, TableCellLayout } from '@fluentui/react-components';
 import { WindowNewFilled } from '@fluentui/react-icons';
 
 export const useMarkdownStyles = makeStyles({
