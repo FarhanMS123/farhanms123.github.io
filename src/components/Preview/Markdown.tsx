@@ -2,43 +2,42 @@ import ERoutes from '@/consts/ERoutes';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useOverlayScrollbars } from 'overlayscrollbars-react';
-import { useEffect, useMemo, useRef } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
-import { FAB } from "./FAB";
+import { useEffect, useRef } from 'react';
+import { useQuery } from 'react-query';
 import { NormalComponents } from 'react-markdown/lib/complex-types';
 import { SpecialComponents } from 'react-markdown/lib/ast-to-react';
-import { Link, Toolbar, ToolbarButton, ToolbarGroup } from '@fluentui/react-components';
+import { Link, makeStyles, shorthands, tokens, Toolbar, ToolbarButton, ToolbarGroup } from '@fluentui/react-components';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderCell, TableCell, TableCellLayout } from '@fluentui/react-components/unstable';
 import { WindowNewFilled } from '@fluentui/react-icons';
 
-export type CodeviewProps = {
-  url: string,
-  source: string,
-};
-
-const wh100: React.CSSProperties = {
-  width: '100%', 
-  height: '100%',
-  border: '0px', 
-  position: 'relative',
-  overflow: 'hidden',
-};
-
-const whPre: React.CSSProperties = {
-  width: '100%',
-  height: '100%',
-  overflow: 'auto',
-  margin: 0,
-};
-
-const whCode: React.CSSProperties = {
-  height: 'fit-content',
-  width: 'fit-content',
-  minWidth: 'calc(100% - 4rem)',
-  minHeight: 'calc(100% - 2rem)',
-  padding: '0rem 2rem 1rem 2rem',
-  marginTop: '-1.5rem',
-};
+export const useMarkdownStyles = makeStyles({
+  root: {
+    width: '100%', 
+    height: '100%',
+    ...(shorthands.border('0px')),
+    position: 'relative',
+    ...(shorthands.overflow('hidden')),
+  },
+  toolbar: {
+    justifyContent: 'end', 
+    marginTop: '1rem', 
+    marginRight: '2rem'
+  },
+  container: {
+    width: '100%',
+    height: '100%',
+    ...(shorthands.overflow('auto')),
+    ...(shorthands.margin(tokens.spacingVerticalNone, tokens.spacingHorizontalNone))
+  },
+  view: {
+    height: 'fit-content',
+    width: 'fit-content',
+    minWidth: 'calc(100% - 4rem)',
+    minHeight: 'calc(100% - 2rem)',
+    ...(shorthands.padding(tokens.spacingVerticalNone, '2rem', '1rem', '2rem')),
+    marginTop: '-1.5rem',
+  },
+});
 
 const components: Partial<Omit<NormalComponents, keyof SpecialComponents> & SpecialComponents> | undefined = {
   a ({node, children, ...props}) {
@@ -66,12 +65,18 @@ const components: Partial<Omit<NormalComponents, keyof SpecialComponents> & Spec
   },
 }
 
-export default function Markdown({ url, source }: CodeviewProps) {
-  const queryClient = useQueryClient();
-  const {data, isSuccess} = useQuery(url ?? ERoutes.LIBS, () => fetch(url).then(res => res.text()) );
+export type MarkdownProps = {
+  url: string,
+  source: string,
+};
+
+export default function Markdown({ url, source }: MarkdownProps) {
+  const {data} = useQuery(url ?? ERoutes.LIBS, () => fetch(url).then(res => res.text()) );
+
+  const classes = useMarkdownStyles();
 
   const ref = useRef<HTMLDivElement>(null);
-  const [initialize, instance] = useOverlayScrollbars({defer: true, options: { scrollbars: { theme: 'os-theme-light' } }});
+  const [initialize] = useOverlayScrollbars({defer: true, options: { scrollbars: { theme: 'os-theme-light' } }});
 
   useEffect(() => {
     /// @ts-ignore
@@ -79,14 +84,14 @@ export default function Markdown({ url, source }: CodeviewProps) {
   }, [initialize]);
 
   return (
-    <div style={wh100}>
-      <div ref={ref} className='code-container' style={whPre}>
-        <Toolbar style={{justifyContent: 'end', marginTop: '1rem', marginRight: '2rem'}}>
+    <div className={classes.root}>
+      <div ref={ref} className={classes.container}>
+        <Toolbar className={classes.toolbar}>
           <ToolbarGroup>
             <ToolbarButton as="a" target="_blank" href={source} icon={<WindowNewFilled />}>Open in new tab</ToolbarButton>
           </ToolbarGroup>
         </Toolbar>
-        <div style={whCode}>
+        <div className={classes.view}>
           <ReactMarkdown children={data ?? ''} remarkPlugins={[remarkGfm]} components={components} />
         </div>
       </div>

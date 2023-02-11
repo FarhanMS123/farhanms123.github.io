@@ -1,30 +1,27 @@
 import ERoutes from "@/consts/ERoutes";
-import { INavLinkGroup, IStackItemProps, IStackItemStyles, Stack } from "@fluentui/react";
-import { Overflow, OverflowItem, tokens, Toolbar, ToolbarButton, useOverflowMenu } from "@fluentui/react-components";
+import { INavLinkGroup, Stack } from "@fluentui/react";
+import { makeStyles, shorthands, tokens, Toolbar, ToolbarButton, useOverflowMenu } from "@fluentui/react-components";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import { Link, useLocation } from "react-router-dom";
 import Nav from "./Nav";
 
-export const panelStyles: IStackItemStyles = {
+export const usePanelStyles = makeStyles({
   root: {
-    background: tokens.colorNeutralBackground2,
+    backgroundColor: tokens.colorNeutralBackground2,
     height: '100%',
     width: '320px',
     maxWidth: '100%',
+  },
+  linkNoDecoration: {
+    textDecorationLine: 'none',
+  },
+  title: {
+    fontSize: tokens.fontSizeBase500,
+    fontWeight: tokens.fontWeightSemibold,
+    textAlign: 'center',
+    ...(shorthands.margin('2rem', '1rem', '1rem', '1rem')),
   }
-};
-
-export const titleStyles: React.CSSProperties = {
-  fontSize: tokens.fontSizeBase500,
-  fontWeight: tokens.fontWeightSemibold,
-  textAlign: 'center',
-  margin: '2rem 1rem 1rem 1rem',
-
-};
-
-export type TPreviewPanelProps = IStackItemProps & {
-  navGroups: INavLinkGroup[] | null,
-};
+});
 
 function forAppearance(match: string){
   const location = useLocation();
@@ -36,18 +33,27 @@ type ToolbarOverflowButtonProps = {
   name: string
 };
 
-function CustomToolbarButton({ route, name, ...props }: ToolbarOverflowButtonProps){
+function CustomToolbarButton({ route, name }: ToolbarOverflowButtonProps){
+  const classes = usePanelStyles();
+  const appearance = forAppearance(route);
+
   return (
-    <Link to={route} type="button" role="button" style={{textDecoration: 'none'}}>
-      <ToolbarButton as="a" href={`#${route}`} appearance={forAppearance(route)} {...props}>{name}</ToolbarButton>
+    <Link to={route} className={classes.linkNoDecoration}>
+      <ToolbarButton as="button" appearance={appearance}>{name}</ToolbarButton>
     </Link>
   );
 }
 
-export default function Panel({ navGroups, ...props }: TPreviewPanelProps) {
+export type TPreviewPanelProps = {
+  navGroups: INavLinkGroup[] | null,
+};
+
+export default function Panel({ navGroups }: TPreviewPanelProps) {
+  const classes = usePanelStyles();
+
   return (
-    <Stack.Item {...props} shrink styles={panelStyles}>
-      <p style={titleStyles}>FarhanMS123</p>
+    <Stack.Item shrink className={classes.root}>
+      <p className={classes.title}>FarhanMS123</p>
       <OverlayScrollbarsComponent defer options={{scrollbars: {autoHide: 'leave', theme: 'os-theme-light'}}}>
         <Toolbar>
           <ToolbarButton as="a" href="https://github.com/FarhanMS123">Github</ToolbarButton>
