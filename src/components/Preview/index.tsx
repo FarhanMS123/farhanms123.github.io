@@ -14,9 +14,14 @@ export const usePreviewStyles = makeStyles({
   view: {
     width: '100%',
     backgroundColor: tokens.colorNeutralBackground1,
-    minWidth: 0,
+    minWidth: '480px',
+    position: 'relative',
     flexBasis: 'auto',
     flexShrink: 1,
+  },
+  full: {
+    minWidth: '0px',
+    maxWidth: '320px',
   }
 });
 

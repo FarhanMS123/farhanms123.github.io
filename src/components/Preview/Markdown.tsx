@@ -16,7 +16,10 @@ export const useMarkdownStyles = makeStyles({
     height: '100%',
     ...(shorthands.border('0px')),
     position: 'relative',
-    ...(shorthands.overflow('hidden')),
+    // ...(shorthands.overflow('hidden')),
+    ...(shorthands.overflow('auto')),
+    ...(shorthands.margin(tokens.spacingVerticalNone, tokens.spacingHorizontalNone))
+
   },
   toolbar: {
     justifyContent: 'end', 
@@ -24,10 +27,10 @@ export const useMarkdownStyles = makeStyles({
     marginRight: '2rem'
   },
   container: {
-    width: '100%',
-    height: '100%',
-    ...(shorthands.overflow('auto')),
-    ...(shorthands.margin(tokens.spacingVerticalNone, tokens.spacingHorizontalNone))
+    // width: '100%',
+    // height: '100%',
+    // ...(shorthands.overflow('auto')),
+    // ...(shorthands.margin(tokens.spacingVerticalNone, tokens.spacingHorizontalNone))
   },
   view: {
     height: 'fit-content',
@@ -84,16 +87,14 @@ export default function Markdown({ url, source }: MarkdownProps) {
   }, [initialize]);
 
   return (
-    <div className={classes.root}>
-      <div ref={ref} className={classes.container}>
-        <Toolbar className={classes.toolbar}>
-          <ToolbarGroup>
-            <ToolbarButton as="a" target="_blank" href={source} icon={<WindowNewFilled />}>Open in new tab</ToolbarButton>
-          </ToolbarGroup>
-        </Toolbar>
-        <div className={classes.view}>
-          <ReactMarkdown children={data ?? ''} remarkPlugins={[remarkGfm]} components={components} />
-        </div>
+    <div ref={ref} className={classes.root}>
+      <Toolbar className={classes.toolbar}>
+        <ToolbarGroup>
+          <ToolbarButton as="a" target="_blank" href={source} icon={<WindowNewFilled />}>Open in new tab</ToolbarButton>
+        </ToolbarGroup>
+      </Toolbar>
+      <div className={classes.view}>
+        <ReactMarkdown children={data ?? ''} remarkPlugins={[remarkGfm]} components={components} />
       </div>
     </div>
   )

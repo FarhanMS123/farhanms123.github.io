@@ -12,7 +12,7 @@ export const usePanelStyles = makeStyles({
     width: '320px',
     maxWidth: '100%',
     flexBasis: 'auto',
-    flexShrink: 1,
+    flexShrink: 0,
   },
   linkNoDecoration: {
     textDecorationLine: 'none',
