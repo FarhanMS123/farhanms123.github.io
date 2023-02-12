@@ -1,8 +1,8 @@
 # Library
 
-Many of scripts listed here actually some old projects which I never research first for "did this ever exists?". I just wanna invent something and ... reinvent the wheel again with 4~42% quality. It is too bad if I just throw off all my creations, I give a lot of eefort for them and that time. Just imaging a 12-16 years boy making script which professional has been done.
+Many of scripts listed here actually some old projects which I never research first for "did this ever exists?". I just wanna invent something and ... reinvent the wheel again with 4~42% quality. It is too bad if I just throw off all my creations, I give a lot of effort and time on them. Just imagine a 12-16 years boy making script which professional has been done.
 
-So... I just wanna appreciate my little me for the journey he has been made these far. For you, please research first. Do not reinvent the wheel. I also give you some alternative what my scripts listed here exist as a stable modules.
+So... I just wanna appreciate my little me for the journey he has been made these far. For you, please research first. Do not reinvent the wheel. I also give you some alternative what stable alternative for my scripts over all my github.
 
 ## Images
 
@@ -10,7 +10,7 @@ So... I just wanna appreciate my little me for the journey he has been made thes
 
 ## Utilities
 
-I made many utilities scripts to help myself. But at that moment I never search any utilities libraries, which is Lodash should really help me at that time. So for you, please reference to this.
+I made much utilities scripts to help myself. But at that moment I never search any utilities libraries, which is Lodash should really help me at that time. So for you, please reference to this.
 
 - Lodash
 - MomentJS
@@ -18,6 +18,8 @@ I made many utilities scripts to help myself. But at that moment I never search 
 - OpenCV JS
 - AlpineJS
 - HTMX
+- GPGPU js (General Purpose GPU)
+- ThreeJS
 
 ## App
 
