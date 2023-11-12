@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.1/dist/es-module-shims.js"></script>
+    <!-- Load Babel -->
+    <!-- v6 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- https://generator.jspm.io/ -->
+    <script type="importmap"></script>
+    <script type="esms-options">
+        {
+            
+        }
+    </script>
+    <script>
+        // https://github.com/guybedford/es-module-shims#init-options
+        // https://github.com/guybedford/es-module-shims#polyfill-features
+        window.esmsInitOptions = {
+            // polyfillEnable: ['css-modules', 'json-modules']
+        };
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <script type="module">
+        console.log("hello");
+    </script>
+    <script type="text/babel" data-type="module" data-presets="env,react,typescript">
+        console.log("hello");
+    </script>
+</body>
+</html>
