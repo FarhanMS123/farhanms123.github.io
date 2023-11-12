@@ -21,7 +21,10 @@ indent_size = 2
 [*.{js,ts,c,cpp,java}]
 indent_size = 4
 
-[*.{json,yaml,yml}]
+[*.json]
+indent_size = 4
+
+[*.{yaml,yml}]
 indent_size = 2
 
 [*.config.{ts,js}]
