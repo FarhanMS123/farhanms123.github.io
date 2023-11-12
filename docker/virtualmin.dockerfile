@@ -5,8 +5,10 @@ RUN echo 'root:root' | chpasswd
 # RUN HOSTNAME=$HOSTNAME.local
 
 RUN apt update -y
+RUN apt install -y screen nano
 RUN apt upgrade -y
 RUN apt install -y ca-certificates curl wget iproute2 net-tools --install-recommends
+RUN dpkg --configure -a
 
 WORKDIR /home/download
 
