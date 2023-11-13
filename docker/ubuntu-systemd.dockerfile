@@ -11,7 +11,7 @@ RUN apt update -y
 RUN apt upgrade -y
 RUN apt install -y ca-certificates curl wget iproute2 net-tools --install-recommends
 RUN apt install -y apt-utils build-essential locales software-properties-common --install-recommends
-RUN apt install -y rsyslog systemd systemd-sysv systemd-cron sudo --install-recommends
+RUN echo "1" | apt install -y rsyslog systemd systemd-sysv systemd-cron sudo --install-recommends
 RUN apt update -y
 RUN apt upgrade -y
 RUN dpkg --configure -a
