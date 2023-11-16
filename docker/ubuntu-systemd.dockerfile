@@ -17,10 +17,16 @@ RUN echo 'root:root' | chpasswd
 RUN sed -i 's/# deb/deb/g' /etc/apt/sources.list
 
 RUN apt update -y
+RUN apt install -y resolvconf nano
+RUN rm /etc/resolv.conf
+RUN ln -s /run/resolvconf/resolv.conf /etc/resolv.conf
+
 RUN apt upgrade -y
 RUN apt install -y ca-certificates curl wget iproute2 net-tools --install-recommends
 RUN apt install -y apt-utils build-essential locales software-properties-common --install-recommends
 RUN apt install -yqq rsyslog systemd systemd-sysv systemd-cron sudo --install-recommends
+RUN apt-get install iptables-persistent
+
 RUN apt update -y
 RUN apt upgrade -y
 RUN dpkg --configure -a
@@ -33,4 +39,4 @@ RUN rm -f /lib/systemd/system/systemd*udev* \
     && rm -f /lib/systemd/system/getty.target
 
 VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
-CMD ["/lib/systemd/systemd"]
+CMD ["/lib/systemd/systemd", "--user"]
