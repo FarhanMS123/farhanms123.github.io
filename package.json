@@ -1,0 +1,19 @@
+{
+  "name": "collections",
+  "version": "1.0.0",
+  "description": "I have many sample or test case which did not need a full solid project management. Sometimes, it just need  some HTML, CSS, JS, and compiled on-fly. Even though, sometime I made a backend or kernel code which need be compiled on-premise. But still, it just a single file which not need a dedicated repository. It conclude I want to make them centralized. So, here in the README would explain the technology used. Also, you could refer further more in [template](template/README.md). Later, this documents can be shown in my website [farhanms123.github.io](https://farhanms123.github.io).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FarhanMS123/collections.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/FarhanMS123/collections/issues"
+  },
+  "homepage": "https://github.com/FarhanMS123/collections#readme"
+}

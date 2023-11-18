@@ -8,7 +8,7 @@ to compile. In that case, here are some technology stack I use (and hope it coul
 
 - Polyfill, BabelJS, RequireJS, Browserify,
 - ES Module Shims, Typescript, JSX (React), 
-- CSS Module, CSS Preprocessor (Postcss/SASS), Blob Import,
+- CSS Module, CSS Preprocessor (Postcss/SASS/LESS/Stylus), Blob Import,
 - TailwindCSS, Daisy UI, JQuery, RxJS, Underscore, Zod,
 - Highlighter, Monaco, Codemirror, Litegraph
 - VanJS, Lit Element, VueJS
