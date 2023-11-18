@@ -17,7 +17,7 @@ RUN echo 'root:root' | chpasswd
 RUN sed -i 's/# deb/deb/g' /etc/apt/sources.list
 
 RUN apt update -y
-RUN apt install -y resolvconf nano
+RUN apt install -y resolvconf nano screen
 RUN rm /etc/resolv.conf
 RUN ln -s /run/resolvconf/resolv.conf /etc/resolv.conf
 
