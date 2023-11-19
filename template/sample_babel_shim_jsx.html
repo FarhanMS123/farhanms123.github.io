@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Babel, ES Module Shim, and JSX</title>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+        const presets = ["react", "typescript"].map(pre => typeof pre == "string" ? Babel.availablePresets[pre] : [Babel.availablePresets[pre[0]], pre[1]]);
+        const plugins = ['syntax-import-meta', ['syntax-import-attributes', { deprecatedAssertSyntax: true, }], 'syntax-import-reflection']
+            .map(plug => typeof plug == "string" ? Babel.availablePlugins[plug] : [Babel.availablePlugins[plug[0]], plug[1]]);
+        Babel.registerPreset("base", {
+            presets,
+            plugins,
+        });
+    </script>
+
+    <script>
+    window.esmsInitOptions = {
+        "polyfillEnable": ["css-modules"]
+    }
+    </script>
+    <script type="importmap-shim" src="./sample_babel_shim_jsx.importmap.json"></script>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.2/dist/es-module-shims.js"></script>
+</head>
+<body>
+    <main id="root"></main>
+
+    <!-- <script type="text/babel" data-type="module-shim" data-presets="react,typescript" data-plugins="syntax-import-meta,syntax-import-attributes,syntax-import-reflection"> -->
+    <script type="text/babel" data-type="module-shim" data-presets="base">
+        import React from 'react';
+        import ReactDOM from 'react-dom/client.js';
+        import { Typography } from '@mui/material';
+
+        import r300 from '@fontsource/roboto/300.css' assert { type: 'css' };
+        import r400 from '@fontsource/roboto/400.css' assert { type: 'css' };
+        import r500 from '@fontsource/roboto/500.css' assert { type: 'css' };
+        import r700 from '@fontsource/roboto/700.css' assert { type: 'css' };
+        
+        var style = document.createElement("style");
+        for( const importedStyle of [r300, r400, r500, r700] )
+            for( const rule of importedStyle.cssRules ) style.innerHTML += `\n${rule.cssText}`;
+        document.head.append(style);
+
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <>
+                <h1>Hello</h1>
+                <Typography>Hi.</Typography>
+            </>
+        );
+    </script>
+</body>
+</html>
