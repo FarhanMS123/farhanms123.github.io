@@ -49,3 +49,17 @@ Finally, here are some resume:
 - The compiled file should be as minimal as possible
 - The .html and .js would stay as it is without compiling.
 - The problem occurs to differentiate a component as a library (.tsx -> .js) and a component as page (.tsx -> .html)
+
+
+I already have solution.
+- To differentiate, we can add `.lib` before extention. For example: `sample.lib.tsx` would be \
+  converted as `sample.lib.js`.
+- This could also compiling vanilla javascript which require to be compiled such as `some.lib.js`.
+- But it could occurse some problem, what if there is some name such as
+  - `sample.html`, `sample.tsx`, `sample.vue`
+  - `sample.ts`, `sample.lib.ts`, `sample.js`, `sample.lib.js`
+- The problem above could be akward, but it would compiled randomly, the last lucky file would be compiled to be `.js`.
+- But there is a problem still occures. What if there is some module who refers to other module? There are three solution
+  - Compile as single file, others module would be compiled as is. So one file, can have accumulated size of other required file
+  - Do reference, but it would be problem renaming the import
+  - Would import the compiled name instead. The could lead to unrecognized typing intellisense.
