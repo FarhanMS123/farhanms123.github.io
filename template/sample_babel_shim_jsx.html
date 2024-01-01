@@ -15,17 +15,19 @@
     <script type="importmap-shim" src="./sample_babel_shim_jsx.importmap.json"></script>
     <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.2/dist/es-module-shims.js"></script>
 
-    <script type="module-shim">
-        // import emotion from "@emotion/babel-plugin";
+    <!-- <script sync> -->
+    <!-- i think i should using vite instead. -->
+    <script type="module-shim" sync>
+        import emotion from "@emotion/babel-plugin";
+
+        Babel.availablePlugins["@emotion"] = emotion;
 
         const presets = ["react", "typescript"].map(pre => typeof pre == "string" ? Babel.availablePresets[pre] : [Babel.availablePresets[pre[0]], pre[1]]);
-        const plugins = ['syntax-import-meta', ['syntax-import-attributes', { deprecatedAssertSyntax: true, }], 'syntax-import-reflection', "@emotion"]
+        // const plugins = ['syntax-import-meta', ['syntax-import-attributes', { deprecatedAssertSyntax: true, }], 'syntax-import-reflection', "@emotion"]
+        const plugins = ['syntax-import-meta', ['syntax-import-attributes', { deprecatedAssertSyntax: true, }], 'syntax-import-reflection']
             .map(plug => {
                 const name = typeof plug == "string" ? plug : plug[0];
                 const opt = typeof plug == "string" ? {} : plug[1];
-
-                // Babel.availablePlugins["@emotion"] = emotion;
-
                 if (name in Babel.availablePlugins) return [Babel.availablePlugins[name], opt];
             });
         Babel.registerPreset("base", {
