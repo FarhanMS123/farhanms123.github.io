@@ -22,9 +22,12 @@ export const beFolderNoConflict: InputFunc = ({ config, current, out, script_src
     if (existsSync(join(config.root!, current.out))) current.out += `_${ext}`;
 
     if (existsSync(join(config.root!, current.out))) {
-        const max = Math.ceil(100 * Math.random());
+        const max = Math.ceil(40 * Math.random());
         for (let i = 2; i <= max; i++) {
-            if (existsSync(join(config.root!, `${current.out}_${i}`))) continue;
+            if (existsSync(join(config.root!, `${current.out}_${i}`))) {
+                if (i == max) current.out = out;
+                else continue;
+            }
             current.out += `_${i}`;
             break;
         }
