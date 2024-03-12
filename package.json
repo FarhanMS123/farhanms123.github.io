@@ -27,6 +27,7 @@
     "glob": "^10.3.10",
     "micromatch": "^4.0.5",
     "typescript": "^5.2.2",
-    "vite": "^5.1.4"
+    "vite": "^5.1.4",
+    "vite-multiple-assets": "^1.2.10"
   }
 }
