@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/// @ts-ignore
 import { createApp } from 'vue';
 
 /// @ts-ignore

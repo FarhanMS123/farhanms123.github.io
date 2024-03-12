@@ -79,8 +79,10 @@ export const virtualRouter = async (opts?: Option) => {
                     };
 
                     /**
-                     * current can use to modify _input without need 
+                     * `current` can use to modify _input without need 
                      * to return, which would continue to execute.
+                     * `config` can also be modified by users without
+                     * creating new plugins.
                      */
 
                     let v: ReturnType<InputFunc> = null;
