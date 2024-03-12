@@ -50,7 +50,7 @@ export const loadHtml: InputFunc = ({ input, script_src }) => {
 }
 
 export const pattern_vue = "**.page.vue";
-export const script_vue = readFileSync("../utils/main_vue.tsx").toString();
+export const script_vue = readFileSync(join(__dirname, "../utils/main_vue.ts")).toString();
 export const loadVue: InputFunc = ({ input, script_src, out, raw }) => {
     const _input: InputValue = {
         raw: script_vue,

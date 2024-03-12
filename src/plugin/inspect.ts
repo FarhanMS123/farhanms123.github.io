@@ -1,4 +1,4 @@
-import { type PluginOption } from 'vite'
+import { UserConfig, type PluginOption } from 'vite'
 import process from "process";
 import { writeFileSync, existsSync, mkdirSync } from "fs";
 import { inspect } from "util";
@@ -42,3 +42,11 @@ export default function createInspect(order: "post" | "pre") {
         },
     } as PluginOption;
 }
+
+export const showConfig = [{
+    name: "vite-show-config",
+    config(config, env) {
+        const c = {...config, plugins: []} as UserConfig;
+        console.log(inspect(c, true, Infinity));
+    },
+}] as PluginOption;

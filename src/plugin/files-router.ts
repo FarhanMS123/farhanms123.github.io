@@ -34,7 +34,7 @@ export type Option = {
 export const PREFIX = "\0virtual-router-prefix:" as const;
 /// @ts-ignore
 export const symNull = Symbol(null);
-export const html = readFileSync("../template/minimal.html").toString();
+export const html = readFileSync(join(__dirname, "../template/minimal.html")).toString();
 
 export const virtualRouter = async (opts?: Option) => {
     opts ??= {};
