@@ -8,8 +8,8 @@ import { showConfig } from './src/plugin/inspect'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    showConfig,
-    // DynamicPublicDirectory(["public"], {}),
+    // showConfig,
+    DynamicPublicDirectory(["public"], {}),
     showConfig,
     /* virtualRouter({
       scanDir: ".",
@@ -21,13 +21,16 @@ export default defineConfig({
 
   build: {
     rollupOptions: {
-      external: [/node_modules/ig, /\.git/ig, /\.local/ig, /dist/ig],
+      external: (id, parentId, isResolved) => {
+        console.log(id, parentId, isResolved);
+        return false;
+      },
     },
     outDir: "dist",
     assetsDir: "chunks",
   },
 
   root: process.cwd(),
-  publicDir: ".",
+  publicDir: false,
   base: "/",
 })
