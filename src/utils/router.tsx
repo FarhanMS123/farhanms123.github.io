@@ -6,6 +6,7 @@ import ERoutes, { EDemos, ELibs, ETools } from '@/consts/ERoutes';
 import Demos from '@/pages/Demos';
 import Libs from '@/pages/Libs';
 import Tools from '@/pages/Tools';
+import ChatParser from '@/pages/Tools/chat-parser';
 import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 
 export const routes: RouteObject[] = [
@@ -53,7 +54,15 @@ export const routes: RouteObject[] = [
         path: ETools.pitung,
         element: (<IFrame url={new URL(ETools.pitung + '.js', import.meta.url).href} source='https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages/tools/pitung.js' />),
       },
+      {
+        path: ETools.chatParser,
+        element: (<ChatParser />),
+      },
     ],
+  },
+  {
+    path: '/app' + ETools.chatParser,
+    element: (<ChatParser />),
   },
   {
     path: ERoutes.DEMOS,

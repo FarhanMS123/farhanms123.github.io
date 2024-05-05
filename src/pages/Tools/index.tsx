@@ -29,6 +29,10 @@ const links: INavLink[] = [
         name: "MLG",
         url: ETools.mlg
       },
+      {
+        name: "Chat Parser",
+        url: ETools.chatParser
+      },
     ],
   }
 ];

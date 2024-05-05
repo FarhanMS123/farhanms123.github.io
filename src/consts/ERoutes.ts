@@ -22,6 +22,7 @@ export enum ETools {
     htmlEditor2 = "/tools/htmlEditor2",
     mlg         = "/tools/mlg",
     pitung      = "/tools/pitung",
+    chatParser  = "/tools/chat-parser"
 }
 
 export enum ELibs {
