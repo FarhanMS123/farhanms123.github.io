@@ -209,21 +209,24 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
                 }
             }
             if (pos_i < 0 || pos_i > 0) {
-                parsing.push({role: "", content: text.slice(0, pos_i > 0 ? pos_i : text.length)});
-                text = text.slice(pos_i > 0 ? pos_i : text.length);
+                parsing.push({role: "", content: text.slice(0, pos_i < 0 ? text.length : pos_i)});
+                text = text.slice(pos_i < 0 ? text.length : pos_i);
             } else {
-                const part1 = template!.format.search("{{prompt}}");
-                const part2 = template!.format.search("{{prompt}}") + "{{prompt}}".length;
-                // const 
+                const part1 = template!.format.slice(0,template!.format.search("{{prompt}}"));
+                const part2 = template!.format.slice(part1.length + "{{prompt}}".length);
+                parsing.push({ role: template!.role, content: text.slice(part1.length, text.search(part2)) });
+                text = text.slice(text.search(part2) + part2.length);
             }
         }
+
+        return parsing;
     }
 
     return (
         <div className={styles.chatContainer}>
             <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" value={parsed} onChange={(ev, data) => setParsed(data.value)} />
             <div className={styles.bubbleAddRoleContainer}>
-                <Button appearance="primary">Parse</Button>
+                <Button appearance="primary" onClick={() => console.log(parse())}>Parse</Button>
             </div>
         </div>
     );
