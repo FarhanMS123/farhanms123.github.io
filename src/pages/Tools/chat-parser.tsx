@@ -92,8 +92,20 @@ export const PanelChat = ({ styles, chat, setChat, roles }: {
                         )}
                     </Dropdown>
                     <div>
-                        {/* <Button icon={<ArrowSortUpFilled />} size="small" />
-                        <Button icon={<ArrowSortDownFilled />} size="small" /> */}
+                        <Button icon={<ArrowSortUpFilled />} size="small" onClick={() => setChat(c => {
+                            if (i == 0) return c;
+                            const t = c[i-1];
+                            c[i-1] = c[i];
+                            c[i] = t;
+                            return [...c];
+                        })} />
+                        <Button icon={<ArrowSortDownFilled />} size="small" onClick={() => setChat(c => {
+                            if (i == c.length - 1) return c;
+                            const t = c[i+1];
+                            c[i+1] = c[i];
+                            c[i] = t;
+                            return [...c];
+                        })} />
                         <Button icon={<DeleteRegular />} size="small" className="del" onClick={() => {
                             setChat(c => c.filter((c, j) => j != i))
                         }} />
