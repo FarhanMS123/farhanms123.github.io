@@ -1,5 +1,5 @@
 import { Button, Divider, Dropdown, Input, Option, Tab, TabList, Textarea, makeStyles } from "@fluentui/react-components";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ArrowSortUpFilled, ArrowSortDownFilled, DeleteRegular } from "@fluentui/react-icons";
 
 export const useChatParserStyles = makeStyles({
@@ -27,6 +27,9 @@ export const useChatParserStyles = makeStyles({
     },
     bubbleTextarea: {
         width: "100%",
+        "& textarea": {
+            maxHeight: "none !important",
+        },
     },
     bubbleDivider: {
         padding: "1rem 0rem"
@@ -68,7 +71,7 @@ export default function ChatParser() {
                 <Tab value="json">JSON Role</Tab>
             </TabList>
             { rightPanel == "raw" && <PanelRaw {...{chat, setChat, styles, roles}} /> }
-            { rightPanel == "json" && <PanelJsonRole {...{chat, setChat, styles, roles}} /> }
+            { rightPanel == "json" && <PanelJsonRole {...{chat, setChat, styles}} /> }
         </div>
     </div>;
 }
@@ -173,25 +176,77 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
     chat: ChatFormat[];
     setChat: Dispatch<SetStateAction<ChatFormat[]>>;
     roles: RoleFormat[];
-}) => (
-    <div className={styles.chatContainer}>
-        <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" />
-        <div className={styles.bubbleAddRoleContainer}>
-            <Button appearance="primary">Parse</Button>
-        </div>
-    </div>
-);
+}) => {
+    const [parsed, setParsed] = useState(combine());
+    useEffect(() => {
+        // if (JSON.stringify(chat) != JSON.stringify(JSON.parse(parsed))) 
+            setParsed(combine());
+    }, [chat]);
 
-export const PanelJsonRole = ({ styles, chat, setChat, roles }: {
+    function combine() {
+        const r: Record<string, RoleFormat> = {};
+        for(const role of roles) r[role.role] = role;
+
+        let text = "";
+        for(const msg of chat)
+            text += r[msg.role].format.replace("{{prompt}}", msg.content);
+
+        return text;
+    }
+
+    function parse() {
+        let text = parsed;
+        const parsing: ChatFormat[] = [];
+        
+        while (text.length > 0) {
+            let pos_i = -1;
+            let template: RoleFormat | null = null;
+            for (const role of roles) {
+                const temp_i = text.search(RegExp(role.format.replace("{{prompt}}", ".*")))
+                if (temp_i >= 0 && pos_i >= 0 && temp_i < pos_i) {
+                    pos_i = temp_i;
+                    template = role;
+                }
+            }
+            if (pos_i < 0 || pos_i > 0) {
+                parsing.push({role: "", content: text.slice(0, pos_i > 0 ? pos_i : text.length)});
+                text = text.slice(pos_i > 0 ? pos_i : text.length);
+            } else {
+                const part1 = template!.format.search("{{prompt}}");
+                const part2 = template!.format.search("{{prompt}}") + "{{prompt}}".length;
+                // const 
+            }
+        }
+    }
+
+    return (
+        <div className={styles.chatContainer}>
+            <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" value={parsed} onChange={(ev, data) => setParsed(data.value)} />
+            <div className={styles.bubbleAddRoleContainer}>
+                <Button appearance="primary">Parse</Button>
+            </div>
+        </div>
+    );
+}
+
+export const PanelJsonRole = ({ styles, chat, setChat }: {
     styles: ReturnType<typeof useChatParserStyles>;
     chat: ChatFormat[];
     setChat: Dispatch<SetStateAction<ChatFormat[]>>;
-    roles: RoleFormat[];
-}) => (
-    <div className={styles.chatContainer}>
-        <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" />
-        <div className={styles.bubbleAddRoleContainer}>
-            <Button appearance="primary">Parse</Button>
+}) => {
+    const [parsed, setParsed] = useState(JSON.stringify(chat, null, 2));
+
+    useEffect(() => {
+        if (JSON.stringify(chat) != JSON.stringify(JSON.parse(parsed))) 
+            setParsed(JSON.stringify(chat, null, 2));
+    }, [chat]);
+
+    return (
+        <div className={styles.chatContainer}>
+            <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" value={parsed} onChange={(ev, data) => setParsed(data.value)} />
+            <div className={styles.bubbleAddRoleContainer}>
+                <Button appearance="primary" onClick={() => setChat(JSON.parse(parsed))}>Parse</Button>
+            </div>
         </div>
-    </div>
-);
+    );
+}
