@@ -1,6 +1,7 @@
 import { Button, Divider, Dropdown, Input, Option, Tab, TabList, Textarea, makeStyles } from "@fluentui/react-components";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ArrowSortUpFilled, ArrowSortDownFilled, DeleteRegular } from "@fluentui/react-icons";
+import normRE from "@/utils";
 
 export const useChatParserStyles = makeStyles({
     root: {
@@ -125,7 +126,7 @@ export const PanelChat = ({ styles, chat, setChat, roles }: {
         <Divider className={styles.bubbleDivider} />
         <div className={styles.bubbleAddRoleContainer}>
             {roles.map(x => 
-                <Button appearance="primary" size="small" onClick={() => {
+                <Button key={x.role} appearance="primary" size="small" onClick={() => {
                     setChat(c => {
                         c.push({ role: x.role, content: "" });
                         return [...c];
@@ -202,14 +203,8 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
             let pos_i = -1;
             let template: RoleFormat | null = null;
             for (const role of roles) {
-                const temp_i = text.search(RegExp(
-                    role.format.replace("{{prompt}}", ".*") // \/=!.,|?*^-+(){}[]
-                        .replaceAll("\\", "\\\\").replaceAll("/", "\\/").replaceAll("=", "\\=").replaceAll("!", "\\!")
-                        .replaceAll(".", "\\.").replaceAll(",", "\\,").replaceAll("|", "\\|").replaceAll("?", "\\?")
-                        .replaceAll("*", "\\*").replaceAll("^", "\\^").replaceAll("-", "\\-").replaceAll("+", "\\+")
-                        .replaceAll("(", "\\(").replaceAll(")", "\\)").replaceAll("{", "\\{").replaceAll("}", "\\}")
-                        .replaceAll("[", "\\[").replaceAll("]", "\\]")
-                    ));
+                const re = RegExp(normRE(role.format).replace(normRE("{{prompt}}"), ".*"));
+                const temp_i = text.search(re);
                 if (pos_i < 0 && temp_i >=0) {
                     pos_i = temp_i;
                     template = role;
@@ -218,16 +213,21 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
                     pos_i = temp_i;
                     template = role;
                 }
-                console.log({len: text.length, pos_i, temp_i, template, role});
+                console.log({len: text.length, pos_i, temp_i, template, role, re});
             }
             if (pos_i < 0 || pos_i > 0) {
                 parsing.push({role: "", content: text.slice(0, pos_i < 0 ? text.length : pos_i)});
                 text = text.slice(pos_i < 0 ? text.length : pos_i);
             } else {
-                const part1 = template!.format.slice(0,template!.format.search("{{prompt}}"));
+                const part1 = template!.format.slice(0,template!.format.search(RegExp(normRE("{{prompt}}"))));
                 const part2 = template!.format.slice(part1.length + "{{prompt}}".length);
-                parsing.push({ role: template!.role, content: text.slice(part1.length, text.search(part2)) });
-                text = text.slice(text.search(part2) + part2.length);
+                console.log({ part1, part2, text,
+                    p1len: part1.length, 
+                    p2pos:text.search(part2),
+                    c: text.slice(part1.length, text.search(part2)),
+                });
+                parsing.push({ role: template!.role, content: text.slice(part1.length, text.search(RegExp(normRE(part2)))) });
+                text = text.slice(text.search(RegExp(normRE(part2))) + part2.length);
             }
             console.log({len: text.length, parsing});
         }

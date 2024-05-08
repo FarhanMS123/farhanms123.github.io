@@ -6,7 +6,7 @@ export type TNavItemProps = TabListProps & {
   navLinks: INavLink,
 };
 
-export default function NavItem({ navLinks, key, ...props }: TNavItemProps){
+export default function NavItem({ navLinks, ...props }: TNavItemProps){
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export default function NavItem({ navLinks, key, ...props }: TNavItemProps){
     <div {...props}>
       <h3 style={{paddingLeft: '1rem'}}>{navLinks.name}</h3>
       <TabList key={navLinks.name} selectedValue={location.pathname} onTabSelect={onTabSelect} size='medium' vertical>
-        { navLinks.links.map((item) => <Tab value={item.url}>{item.name}</Tab>) }
+        { navLinks.links.map((item) => <Tab key={item.url} value={item.url}>{item.name}</Tab>) }
       </TabList>
     </div>
   );
