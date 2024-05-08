@@ -202,7 +202,14 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
             let pos_i = -1;
             let template: RoleFormat | null = null;
             for (const role of roles) {
-                const temp_i = text.search(RegExp(role.format.replace("{{prompt}}", ".*").replaceAll("|", "\\|")))
+                const temp_i = text.search(RegExp(
+                    role.format.replace("{{prompt}}", ".*") // .,|?*^-+=!/\(){}[]
+                        .replaceAll("\\", "\\\\").replaceAll("/", "\\/").replaceAll("=", "\\=").replaceAll("!", "\\!")
+                        .replaceAll(".", "\\.").replaceAll(",", "\\,").replaceAll("|", "\\|").replaceAll("?", "\\?")
+                        .replaceAll("*", "\\*").replaceAll("^", "\\^").replaceAll("-", "\\-").replaceAll("+", "\\+")
+                        .replaceAll("(", "\\(").replaceAll(")", "\\)").replaceAll("{", "\\{").replaceAll("}", "\\}")
+                        .replaceAll("[", "\\[").replaceAll("]", "\\]")
+                    ));
                 if (pos_i < 0 && temp_i >=0) {
                     pos_i = temp_i;
                     template = role;
