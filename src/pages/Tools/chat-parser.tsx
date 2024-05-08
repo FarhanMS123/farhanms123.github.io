@@ -203,7 +203,7 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
             let template: RoleFormat | null = null;
             for (const role of roles) {
                 const temp_i = text.search(RegExp(
-                    role.format.replace("{{prompt}}", ".*") // .,|?*^-+=!/\(){}[]
+                    role.format.replace("{{prompt}}", ".*") // \/=!.,|?*^-+(){}[]
                         .replaceAll("\\", "\\\\").replaceAll("/", "\\/").replaceAll("=", "\\=").replaceAll("!", "\\!")
                         .replaceAll(".", "\\.").replaceAll(",", "\\,").replaceAll("|", "\\|").replaceAll("?", "\\?")
                         .replaceAll("*", "\\*").replaceAll("^", "\\^").replaceAll("-", "\\-").replaceAll("+", "\\+")
@@ -218,6 +218,7 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
                     pos_i = temp_i;
                     template = role;
                 }
+                console.log({len: text.length, pos_i, temp_i, template, role});
             }
             if (pos_i < 0 || pos_i > 0) {
                 parsing.push({role: "", content: text.slice(0, pos_i < 0 ? text.length : pos_i)});
@@ -228,6 +229,7 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
                 parsing.push({ role: template!.role, content: text.slice(part1.length, text.search(part2)) });
                 text = text.slice(text.search(part2) + part2.length);
             }
+            console.log({len: text.length, parsing});
         }
 
         return parsing;
