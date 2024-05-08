@@ -180,7 +180,7 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
 }) => {
     const [parsed, setParsed] = useState(combine());
     useEffect(() => {
-        // if (JSON.stringify(chat) != JSON.stringify(JSON.parse(parsed))) 
+        if (JSON.stringify(chat) != JSON.stringify(parse())) 
             setParsed(combine());
     }, [chat]);
 
@@ -213,7 +213,6 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
                     pos_i = temp_i;
                     template = role;
                 }
-                console.log({len: text.length, pos_i, temp_i, template, role, re});
             }
             if (pos_i < 0 || pos_i > 0) {
                 parsing.push({role: "", content: text.slice(0, pos_i < 0 ? text.length : pos_i)});
@@ -221,15 +220,9 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
             } else {
                 const part1 = template!.format.slice(0,template!.format.search(RegExp(normRE("{{prompt}}"))));
                 const part2 = template!.format.slice(part1.length + "{{prompt}}".length);
-                console.log({ part1, part2, text,
-                    p1len: part1.length, 
-                    p2pos:text.search(part2),
-                    c: text.slice(part1.length, text.search(part2)),
-                });
                 parsing.push({ role: template!.role, content: text.slice(part1.length, text.search(RegExp(normRE(part2)))) });
                 text = text.slice(text.search(RegExp(normRE(part2))) + part2.length);
             }
-            console.log({len: text.length, parsing});
         }
 
         return parsing;
