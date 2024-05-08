@@ -232,7 +232,7 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
         <div className={styles.chatContainer}>
             <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" value={parsed} onChange={(ev, data) => setParsed(data.value)} />
             <div className={styles.bubbleAddRoleContainer}>
-                <Button appearance="primary" onClick={() => console.log(parse())}>Parse</Button>
+                <Button appearance="primary" onClick={() => setChat(parse())}>Parse</Button>
             </div>
         </div>
     );
