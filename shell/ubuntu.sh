@@ -23,7 +23,7 @@ sudo apt install -y --install-recommends rsyslog systemd systemd-sysv systemd-cr
 sudo apt install -y --install-recommends gnupg iproute2 ca-certificates iptables-persistent # core
 sudo apt install -y --install-recommends gettext locales # additional
 sudo apt install -y --install-recommends nano screen # basic
-sudo apt install -y --install-recommends curl wget aria2 # basic
+sudo apt install -y --install-recommends curl wget aria2 zlib1g-dev libssl-dev libnss3-dev # basic
 sudo dpkg --configure -a
 
 # install network tools, ping, curl, wget, nano, screen, firewall
@@ -36,7 +36,7 @@ git config --global http.sslverify false
 git lfs install
 
 # SETUP GNU C Compiler
-sudo apt install build-essential
+sudo apt install build-essential libncurses5-dev libgdbm-dev libreadline-dev libffi-dev
 
 # SETUP Docker & Kubernetes
 # rancher k3s, vanilla, portainer
@@ -46,6 +46,7 @@ sudo apt install mongodb-org
 # install postgresql, mongodb, mariadb, mysql, mssql, redis, memcache, casandra
 
 # SETUP Python
+sudo apt install python3 python3-pip
 
 # SETUP Golang
 
