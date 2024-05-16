@@ -21,7 +21,7 @@ sudo apt upgrade
 sudo apt install -y --install-recommends coreutils net-tools apt-utils software-properties-common # core & utils
 sudo apt install -y --install-recommends rsyslog systemd systemd-sysv systemd-cron sudo # system
 sudo apt install -y --install-recommends gnupg iproute2 ca-certificates iptables-persistent # core
-sudo apt install -y --install-recommends gettext locales # additional
+sudo apt install -y --install-recommends gettext locales manpages-dev # additional
 sudo apt install -y --install-recommends nano screen # basic
 sudo apt install -y --install-recommends curl wget aria2 zlib1g-dev libssl-dev libnss3-dev # basic
 sudo dpkg --configure -a
@@ -36,7 +36,10 @@ git config --global http.sslverify false
 git lfs install
 
 # SETUP GNU C Compiler
-sudo apt install build-essential libncurses5-dev libgdbm-dev libreadline-dev libffi-dev
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt update
+sudo apt install -y --install-recommends build-essential libncurses5-dev libgdbm-dev libreadline-dev libffi-dev libmpfr-dev \
+        libgmp3-dev libmpc-dev
 
 # SETUP Docker & Kubernetes
 # rancher k3s, vanilla, portainer
