@@ -7,6 +7,7 @@ import Demos from '@/pages/Demos';
 import Libs from '@/pages/Libs';
 import Tools from '@/pages/Tools';
 import ChatParser from '@/pages/Tools/chat-parser';
+import ChatParser2 from '@/pages/Tools/chat-parser-2';
 import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 
 export const routes: RouteObject[] = [
@@ -58,11 +59,19 @@ export const routes: RouteObject[] = [
         path: ETools.chatParser,
         element: (<ChatParser />),
       },
+      {
+        path: ETools.chatParser2,
+        element: (<ChatParser2 />),
+      },
     ],
   },
   {
     path: '/app' + ETools.chatParser,
     element: (<ChatParser />),
+  },
+  {
+    path: '/app' + ETools.chatParser2,
+    element: (<ChatParser2 />),
   },
   {
     path: ERoutes.DEMOS,
