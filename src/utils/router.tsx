@@ -4,6 +4,7 @@ import IFrame from '@/components/Preview/IFrame';
 import Markdown from '@/components/Preview/Markdown';
 import ERoutes, { EDemos, ELibs, ETools } from '@/consts/ERoutes';
 import Demos from '@/pages/Demos';
+import TestTextareaMenu from '@/pages/Demos/test-textarea-menu';
 import Libs from '@/pages/Libs';
 import Tools from '@/pages/Tools';
 import ChatParser from '@/pages/Tools/chat-parser';
@@ -93,7 +94,15 @@ export const routes: RouteObject[] = [
         path: EDemos.micecho,
         element: (<IFrame url={new URL(EDemos.micecho + '.html', import.meta.url).href} source={`https://github.com/FarhanMS123/farhanms123.github.io/blob/gh-pages${EDemos.micecho}.html`} />),
       },
+      {
+        path: EDemos.testTextareaMenu,
+        element: (<TestTextareaMenu />),
+      },
     ],
+  },
+  {
+    path: '/app' + EDemos.testTextareaMenu,
+    element: (<TestTextareaMenu />),
   },
   {
     path: ERoutes.LIBS,

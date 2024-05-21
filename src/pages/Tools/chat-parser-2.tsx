@@ -51,11 +51,11 @@ export type RoleFormat = { role: string; format: string; regex: [string, string]
 export const defaultRoles: RoleFormat[] = [
     {
         is_role: false, role: "alpaca", format: "^Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n", 
-        regex: /Below is an instruction that describes a task. Write a response that appropriately completes the request\.\n\nsystem\:/gs 
+        regex: ["Below is an instruction that describes a task. Write a response that appropriately completes the request\.\n\nsystem\:", "gs"] 
     },
-    { is_role: true, role: "system", format: "system: {{prompt}}\n", regex: ["(?<=system\: ).*(?=\nuser\:)", "gs"] },
-    { is_role: true, role: "user", format: "user: {{prompt}}\n", regex: ["(?<=user\: ).*(?=\nassistant\:)", "gs"] },
-    { is_role: true, role: "assistant", format: "assistant: {{prompt}}\n", regex: ["(?<=sassistant\: ).*(?=\nuser\:)", "gs"] },
+    { is_role: true, role: "system", format: "system: {{prompt}}\n", regex: ["(?<=system: ).*(?=\nuser:)", "gs"] },
+    { is_role: true, role: "user", format: "user: {{prompt}}\n", regex: ["(?<=user: ).*(?=\nassistant:)", "gs"] },
+    { is_role: true, role: "assistant", format: "assistant: {{prompt}}\n", regex: ["(?<=sassistant: ).*(?=\nuser:)", "gs"] },
 ];
 export type ChatFormat = { role: string; content: string; is_role: boolean; };
 
@@ -137,7 +137,7 @@ export const PanelChat = ({ styles, chat, setChat, roles }: {
             {roles.map(x => 
                 <Button key={x.role} appearance="primary" size="small" onClick={() => {
                     setChat(c => {
-                        c.push({ role: x.role, content: "" });
+                        c.push({ role: x.role, content: "", is_role: x.is_role });
                         return [...c];
                     })
                 }}>{x.role}</Button>
@@ -230,12 +230,12 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
                 }
             }
             if (pos_i < 0 || pos_i > 0) {
-                parsing.push({role: "", content: text.slice(0, pos_i < 0 ? text.length : pos_i)});
+                parsing.push({role: "", content: text.slice(0, pos_i < 0 ? text.length : pos_i), is_role: false});
                 text = text.slice(pos_i < 0 ? text.length : pos_i);
             } else {
                 const part1 = template!.format.slice(0,template!.format.search(RegExp(normRE("{{prompt}}"))));
                 const part2 = template!.format.slice(part1.length + "{{prompt}}".length);
-                parsing.push({ role: template!.role, content: text.slice(part1.length, text.search(RegExp(normRE(part2)))) });
+                parsing.push({ role: template!.role, content: text.slice(part1.length, text.search(RegExp(normRE(part2)))), is_role: template!.is_role });
                 text = text.slice(text.search(RegExp(normRE(part2))) + part2.length);
             }
         }

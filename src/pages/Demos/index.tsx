@@ -17,6 +17,10 @@ const links: INavLink[] = [
         name: "Mic Echo",
         url: EDemos.micecho,
       },
+      {
+        name: "Test Textarea Menu",
+        url: EDemos.testTextareaMenu,
+      },
     ],
   }
 ];

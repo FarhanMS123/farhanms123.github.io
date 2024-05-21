@@ -11,6 +11,7 @@ export enum EDemos {
     blank = "/demos/blank",
     GBCS = "/demos/GBCS",
     micecho = "/demos/micecho",
+    testTextareaMenu = "/demos/test-textarea-menu",
 }
 
 export enum ETools {
