@@ -67,6 +67,7 @@ export const useChatParserStyles = makeStyles({
  * ((?<=user\: ).*(?=\nassistant\:)|(?<=user\: ).*$)
  * (?<=user\: ).*((?=\nassistant\:)|(?=\n)$)
  * (?<=user: ).*?(?=\n(assistant:|user:))
+ * (?<=user: ).*?(?=\n(assistant:|user:|$))
  * 
  * (?<=user\: ).*((?=\nassistant\:)|$)
  * (?<=user\: ).*(?=(\nassistant\:|\Z$))
@@ -76,11 +77,11 @@ export type RoleFormat = { role: string; format: string; regex: [string, string]
 export const defaultRoles: RoleFormat[] = [
     {
         is_role: false, role: "alpaca", format: "Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n", 
-        regex: ["Below is an instruction that describes a task. Write a response that appropriately completes the request\.\n\nsystem\:", "gs"] 
+        regex: ["Below is an instruction that describes a task. Write a response that appropriately completes the request\\.\\n\\nsystem:", "gs"] 
     },
-    { is_role: true, role: "system", format: "system: {{prompt}}\n", regex: ["(?<=system: ).*?(?=\\n(assistant:|user:))", "gs"] },
-    { is_role: true, role: "user", format: "user: {{prompt}}\n", regex: ["(?<=user: ).*?(?=\\n(assistant:|user:))", "gs"] },
-    { is_role: true, role: "assistant", format: "assistant: {{prompt}}\n", regex: ["(?<=assistant: ).*?(?=\\n(assistant:|user:))", "gs"] },
+    { is_role: true, role: "system", format: "system: {{prompt}}\n", regex: ["(?<=system: ).*?(?=\\n(assistant:|user:|$))", "gs"] },
+    { is_role: true, role: "user", format: "user: {{prompt}}\n", regex: ["(?<=user: ).*?(?=\\n(assistant:|user:|$))", "gs"] },
+    { is_role: true, role: "assistant", format: "assistant: {{prompt}}\n", regex: ["(?<=assistant: ).*?(?=\\n(assistant:|user:|$))", "gs"] },
 ];
 export type ChatFormat = { role: string; content: string; is_role: boolean; };
 
