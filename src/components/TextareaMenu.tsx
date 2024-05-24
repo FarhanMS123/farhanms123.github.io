@@ -21,7 +21,7 @@ export const useChatParserStyles = makeStyles({
 });
 
 export default function TextareaMenu({ children, attrMenu, menu, className }: {
-    attrMenu?: MenuProps & Pick<MenuTriggerProps, "disableButtonEnhancement">;
+    attrMenu?: Partial<MenuProps & Pick<MenuTriggerProps, "disableButtonEnhancement">>;
     menu?: ReactNode;
 } & React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>) {
     const styles = useChatParserStyles();

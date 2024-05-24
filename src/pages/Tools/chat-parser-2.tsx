@@ -1,7 +1,7 @@
-import { Button, Divider, Dropdown, Input, Option, Tab, TabList, Textarea, makeStyles, mergeClasses } from "@fluentui/react-components";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Button, Divider, Dropdown, Input, MenuItem, MenuItemCheckbox, MenuList, Option, Tab, TabList, Textarea, makeStyles, mergeClasses } from "@fluentui/react-components";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { ArrowSortUpFilled, ArrowSortDownFilled, DeleteRegular } from "@fluentui/react-icons";
-import normRE from "@/utils";
+import TextareaMenu from "@/components/TextareaMenu";
 
 export const useChatParserStyles = makeStyles({
     root: {
@@ -15,6 +15,8 @@ export const useChatParserStyles = makeStyles({
         // marginTop: "1rem",
         width: "calc(100% - 2rem)",
         padding: "1rem",
+        maxHeight: "calc(100vh - 6rem)",
+        overflowY: "auto",
     },
     bubbleContainer: {
         padding: "0.5rem 0rem"
@@ -44,18 +46,35 @@ export const useChatParserStyles = makeStyles({
     },
     mt1rem: {
         marginTop: "1rem",
-    }
+    },
+    w100: {
+        width: "100%",
+    },
 });
+
+/**
+ * v1 simple
+ * v2 regex
+ * v3 stage
+ * ==========
+ * (?<=user\: ).*(?=\nassistant\:)
+ * (?<=user\: ).*(?=\nassistant\:)
+ * ((?<=user\: ).*(?=\nassistant\:)|(?<=user\: ).*$)
+ * (?<=user\: ).*((?=\nassistant\:)|(?=\n)$)
+ * 
+ * (?<=user\: ).*((?=\nassistant\:)|$)
+ * (?<=user\: ).*(?=(\nassistant\:|\Z$))
+ */
 
 export type RoleFormat = { role: string; format: string; regex: [string, string]; is_role: boolean; };
 export const defaultRoles: RoleFormat[] = [
     {
-        is_role: false, role: "alpaca", format: "^Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n", 
+        is_role: false, role: "alpaca", format: "Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n", 
         regex: ["Below is an instruction that describes a task. Write a response that appropriately completes the request\.\n\nsystem\:", "gs"] 
     },
-    { is_role: true, role: "system", format: "system: {{prompt}}\n", regex: ["(?<=system: ).*(?=\nuser:)", "gs"] },
-    { is_role: true, role: "user", format: "user: {{prompt}}\n", regex: ["(?<=user: ).*(?=\nassistant:)", "gs"] },
-    { is_role: true, role: "assistant", format: "assistant: {{prompt}}\n", regex: ["(?<=sassistant: ).*(?=\nuser:)", "gs"] },
+    { is_role: true, role: "system", format: "system: {{prompt}}\n", regex: ["(?<=system: ).*(?=\\nuser:)", "gs"] },
+    { is_role: true, role: "user", format: "user: {{prompt}}\n", regex: ["(?<=user: ).*(?=\\nassistant:)", "gs"] },
+    { is_role: true, role: "assistant", format: "assistant: {{prompt}}\n", regex: ["(?<=assistant: ).*(?=\\nuser:)", "gs"] },
 ];
 export type ChatFormat = { role: string; content: string; is_role: boolean; };
 
@@ -151,41 +170,70 @@ export const PanelRoles = ({ styles, setRoles, setChat, roles }: {
     setRoles: Dispatch<SetStateAction<RoleFormat[]>>;
     setChat: Dispatch<SetStateAction<ChatFormat[]>>;
     roles: RoleFormat[];
-}) => (
-    <div className={styles.chatContainer}>
-        <div className={styles.bubbleAddRoleContainer}>
-            <Button appearance="primary" size="small" onClick={() => {
-                setRoles(r => {
-                    r.push({ role: "new_role", format: "", is_role: true, regex: ["^$", "gs"] });
-                    return [...r];
-                })
-            }}>Add Roles</Button>
-        </div>
-        <Divider className={styles.bubbleDivider} />
-        { roles.map((r, i) => 
-            <div key={i} className={styles.bubbleContainer}>
-                <div className={styles.bubbleHead}>
-                    <Input value={r.role} />
-                    <Button icon={<DeleteRegular />} size="small" className="del" onClick={() => {
-                        setRoles(r => r.filter((r, j) => j != i))
-                    }} />
-                </div>
-                <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" value={r.format} onChange={(ev, data) => {
+}) => {
+    return (
+        <div className={styles.chatContainer}>
+            <div className={styles.bubbleAddRoleContainer}>
+                <Button appearance="primary" size="small" onClick={() => {
                     setRoles(r => {
-                        r[i].format = data.value;
+                        r.push({ role: "new_role", format: "", is_role: true, regex: ["^$", "gs"] });
                         return [...r];
                     })
-                }}/>
-                <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" value={r.format} onChange={(ev, data) => {
-                    setRoles(r => {
-                        r[i].format = data.value;
-                        return [...r];
-                    })
-                }}/>
+                }}>Add Roles</Button>
             </div>
-        ) }
-    </div>
-);
+            <Divider className={styles.bubbleDivider} />
+            { roles.map((r, i) => 
+                <div key={i} className={styles.bubbleContainer}>
+                    <div className={styles.bubbleHead}>
+                        <Input value={r.role} />
+                        <Button icon={<DeleteRegular />} size="small" className="del" onClick={() => {
+                            setRoles(r => r.filter((r, j) => j != i))
+                        }} />
+                    </div>
+                    <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" value={r.format} onChange={(ev, data) => {
+                        setRoles(r => {
+                            r[i].format = data.value;
+                            return [...r];
+                        })
+                    }}/>
+                    <TextareaMenu
+                    className={styles.bubbleTextarea}
+                    attrMenu={{
+                        checkedValues: r.is_role ? {is_role:["is_role"]} : {},
+                        onCheckedValueChange: (e, { name, checkedItems }) => setRoles(ro => {
+                            console.log([r, name, checkedItems, checkedItems.findIndex((v) => v == "is_role")])
+                            if (name == "is_role") {
+                                ro[i].is_role = checkedItems.findIndex((v) => v == "is_role") >= 0;
+                                return [...ro];
+                            }
+                            return ro;
+                        }),
+                    }}
+                    menu={
+                        <MenuList>
+                            <MenuItemCheckbox name="is_role" value="is_role">is_role</MenuItemCheckbox>
+                            <MenuItem persistOnClick={true}>
+                                <Input value={r.regex[1]} onChange={(ev, data) => {
+                                    setRoles(r => {
+                                        r[i].regex[1] = data.value;
+                                        return [...r];
+                                    })
+                                }} />
+                            </MenuItem>
+                        </MenuList>
+                    } >
+                        <Textarea appearance="filled-darker" resize="vertical" className={styles.w100} value={r.regex[0]} onChange={(ev, data) => {
+                            setRoles(r => {
+                                r[i].regex[0] = data.value;
+                                return [...r];
+                            })
+                        }} />
+                    </TextareaMenu>
+                </div>
+            ) }
+        </div>
+    );
+}
 
 export const PanelRaw = ({ styles, chat, setChat, roles }: {
     styles: ReturnType<typeof useChatParserStyles>;
@@ -211,36 +259,21 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
     }
 
     function parse() {
-        let text = parsed;
-        const parsing: ChatFormat[] = [];
-        
-        while (text.length > 0) {
-            let pos_i = -1;
-            let template: RoleFormat | null = null;
-            for (const role of roles) {
-                const re = RegExp(normRE(role.format).replace(normRE("{{prompt}}"), ".*"));
-                const temp_i = text.search(re);
-                if (pos_i < 0 && temp_i >=0) {
-                    pos_i = temp_i;
-                    template = role;
-                }
-                if (temp_i >= 0 && pos_i >= 0 && temp_i < pos_i) {
-                    pos_i = temp_i;
-                    template = role;
-                }
-            }
-            if (pos_i < 0 || pos_i > 0) {
-                parsing.push({role: "", content: text.slice(0, pos_i < 0 ? text.length : pos_i), is_role: false});
-                text = text.slice(pos_i < 0 ? text.length : pos_i);
-            } else {
-                const part1 = template!.format.slice(0,template!.format.search(RegExp(normRE("{{prompt}}"))));
-                const part2 = template!.format.slice(part1.length + "{{prompt}}".length);
-                parsing.push({ role: template!.role, content: text.slice(part1.length, text.search(RegExp(normRE(part2)))), is_role: template!.is_role });
-                text = text.slice(text.search(RegExp(normRE(part2))) + part2.length);
+        const parsing: (ChatFormat & { index: number; })[] = [];
+
+        for (const role of roles) {
+            const matches: RegExpExecArray[] = [...parsed.matchAll(RegExp(role.regex[0], role.regex[1]))];
+            for (const match of matches) {
+                parsing.push({
+                    role: role.role,
+                    is_role: role.is_role,
+                    index: match.index,
+                    content: match[0],
+                });
             }
         }
 
-        return parsing;
+        return parsing.sort((a, b) => a.index - b.index);
     }
 
     return (

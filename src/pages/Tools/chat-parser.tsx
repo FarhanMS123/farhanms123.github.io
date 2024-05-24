@@ -43,6 +43,13 @@ export const useChatParserStyles = makeStyles({
     },
 });
 
+/**
+ * Chat, Raw Row, Raw, JSON Role, Roles Format
+ * 
+ * Chat, Roles Format
+ * Raw, JSON Role
+ */
+
 export type RoleFormat = { role: string; format: string; };
 export type ChatFormat = { role: string; content: string; };
 
