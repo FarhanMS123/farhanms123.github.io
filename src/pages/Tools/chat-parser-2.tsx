@@ -2,6 +2,7 @@ import { Button, Divider, Dropdown, Input, MenuItem, MenuItemCheckbox, MenuList,
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { ArrowSortUpFilled, ArrowSortDownFilled, DeleteRegular } from "@fluentui/react-icons";
 import TextareaMenu from "@/components/TextareaMenu";
+import { sample1_x1, sample2_x4 } from "@/consts/test-chat-parser-2";
 
 export const useChatParserStyles = makeStyles({
     root: {
@@ -50,17 +51,22 @@ export const useChatParserStyles = makeStyles({
     w100: {
         width: "100%",
     },
+    content_space_between: {
+        justifyContent: "space-between",
+    },
 });
 
 /**
  * v1 simple
  * v2 regex
  * v3 stage
+ * https://regex101.com/
  * ==========
  * (?<=user\: ).*(?=\nassistant\:)
  * (?<=user\: ).*(?=\nassistant\:)
  * ((?<=user\: ).*(?=\nassistant\:)|(?<=user\: ).*$)
  * (?<=user\: ).*((?=\nassistant\:)|(?=\n)$)
+ * (?<=user: ).*?(?=\n(assistant:|user:))
  * 
  * (?<=user\: ).*((?=\nassistant\:)|$)
  * (?<=user\: ).*(?=(\nassistant\:|\Z$))
@@ -72,9 +78,9 @@ export const defaultRoles: RoleFormat[] = [
         is_role: false, role: "alpaca", format: "Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n", 
         regex: ["Below is an instruction that describes a task. Write a response that appropriately completes the request\.\n\nsystem\:", "gs"] 
     },
-    { is_role: true, role: "system", format: "system: {{prompt}}\n", regex: ["(?<=system: ).*(?=\\nuser:)", "gs"] },
-    { is_role: true, role: "user", format: "user: {{prompt}}\n", regex: ["(?<=user: ).*(?=\\nassistant:)", "gs"] },
-    { is_role: true, role: "assistant", format: "assistant: {{prompt}}\n", regex: ["(?<=assistant: ).*(?=\\nuser:)", "gs"] },
+    { is_role: true, role: "system", format: "system: {{prompt}}\n", regex: ["(?<=system: ).*?(?=\\n(assistant:|user:))", "gs"] },
+    { is_role: true, role: "user", format: "user: {{prompt}}\n", regex: ["(?<=user: ).*?(?=\\n(assistant:|user:))", "gs"] },
+    { is_role: true, role: "assistant", format: "assistant: {{prompt}}\n", regex: ["(?<=assistant: ).*?(?=\\n(assistant:|user:))", "gs"] },
 ];
 export type ChatFormat = { role: string; content: string; is_role: boolean; };
 
@@ -279,8 +285,14 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
     return (
         <div className={styles.chatContainer}>
             <Textarea className={styles.bubbleTextarea} appearance="filled-darker" resize="vertical" value={parsed} onChange={(ev, data) => setParsed(data.value)} />
-            <div className={styles.bubbleAddRoleContainer}>
-                <Button appearance="primary" onClick={() => setChat(parse())}>Parse</Button>
+            <div className={mergeClasses(styles.bubbleAddRoleContainer, styles.content_space_between)}>
+                <div className={styles.bubbleAddRoleContainer}>
+                    <Button appearance="primary" onClick={() => setParsed(sample1_x1)}>sample1_x1</Button>
+                    <Button appearance="primary" onClick={() => setParsed(sample2_x4)}>sample2_x4</Button>
+                </div>
+                <div className={styles.bubbleAddRoleContainer}>
+                    <Button appearance="primary" onClick={() => setChat(parse())}>Parse</Button>
+                </div>
             </div>
         </div>
     );
