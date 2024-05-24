@@ -269,6 +269,7 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
         const parsing: (ChatFormat & { index: number; })[] = [];
 
         for (const role of roles) {
+            /// @ts-ignore
             const matches: RegExpExecArray[] = [...parsed.matchAll(RegExp(role.regex[0], role.regex[1]))];
             for (const match of matches) {
                 parsing.push({
