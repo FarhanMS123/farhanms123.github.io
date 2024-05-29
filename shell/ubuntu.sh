@@ -18,7 +18,7 @@ nohup sudo apt install -y --install-recommends resolvconf
 # INITIATION for using ubuntu
 
 cd ~ && mkdir Downloads && cd ~/Downloads
-sudo apt install -y --install-recommends curl apt-transport-https # convenience
+sudo apt install -y --install-recommends curl apt-transport-https git # convenience
 sudo install -m 0755 -d /etc/apt/keyrings
 # curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 # sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
@@ -94,6 +94,8 @@ sudo apt install mongodb-org
 # venv, conda, miniconda, jupyter notebook
 # https://virtualenv.pypa.io/en/latest/installation.html
 # https://pypi.org/project/virtualenv/
+# https://serverspace.io/support/help/python-3-virtual-environment-on-ubuntu-22-04/
+# https://medium.com/@AgnesMbiti/creating-a-python-virtual-environment-on-ubuntu-22-04-5efc173ce655
 
 sudo apt -y --install-recommends install python3 python3-pip python3-venv
 pip3 install --upgrade setuptools
