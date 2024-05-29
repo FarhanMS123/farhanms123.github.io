@@ -16,14 +16,24 @@ sudo cp /etc/resolv.conf /etc/resolv.conf.bu0
 nohup sudo apt install -y --install-recommends resolvconf
 
 # INITIATION for using ubuntu
+
+cd ~ && mkdir Downloads && cd ~/Downloads
+sudo apt install -y --install-recommends curl apt-transport-https # convenience
+sudo install -m 0755 -d /etc/apt/keyrings
+# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+# ... add others gpt sources here ...
+
 sudo apt update
 sudo apt upgrade
+
 sudo apt install -y --install-recommends coreutils net-tools apt-utils software-properties-common # core & utils
 sudo apt install -y --install-recommends rsyslog systemd systemd-sysv systemd-cron sudo # system
 sudo apt install -y --install-recommends gnupg iproute2 ca-certificates iptables-persistent # core
-sudo apt install -y --install-recommends gettext locales manpages-dev # additional
+sudo apt install -y --install-recommends gettext locales manpages-dev apt-transport-https # additional
 sudo apt install -y --install-recommends nano screen # basic
 sudo apt install -y --install-recommends curl wget aria2 zlib1g-dev libssl-dev libnss3-dev # basic
+
 sudo dpkg --configure -a
 
 # install network tools, ping, curl, wget, nano, screen, firewall
@@ -43,6 +53,38 @@ sudo apt install -y --install-recommends build-essential libncurses5-dev libgdbm
 
 # SETUP Docker & Kubernetes
 # rancher k3s, vanilla, portainer
+
+# https://docs.docker.com/engine/install/ubuntu/
+# https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
+# https://phoenixnap.com/kb/install-docker-on-ubuntu-20-04
+# https://docs.docker.com/desktop/install/ubuntu/
+
+## 1.1. Docker: Using Default Repositories
+sudo apt install docker.io -y
+sudo snap install docker
+
+## 1.2. Docker: Using Docker Streamline (by digitalocean)
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+## 1.3. Docker: Using Docker Streamline with dockerx (by Docker)
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+## ... 2. continue using docker streamline ...
+sudo apt-get update
+apt-cache policy docker-ce
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+## ... 3. continue setup first use of Docker ...
+sudo systemctl status docker
+sudo usermod -aG docker ${USER}
+su - ${USER}
+groups | grep docker
+docker version
 
 # SETUP databases
 sudo apt install mongodb-org
