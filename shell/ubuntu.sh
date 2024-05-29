@@ -91,7 +91,14 @@ sudo apt install mongodb-org
 # install postgresql, mongodb, mariadb, mysql, mssql, redis, memcache, casandra
 
 # SETUP Python
-sudo apt install python3 python3-pip
+# venv, conda, miniconda, jupyter notebook
+# https://virtualenv.pypa.io/en/latest/installation.html
+# https://pypi.org/project/virtualenv/
+
+sudo apt -y --install-recommends install python3 python3-pip python3-venv
+pip3 install --upgrade setuptools
+# pip3 install virtualenv
+ln /bin/python3 /bin/python
 
 # SETUP Golang
 
