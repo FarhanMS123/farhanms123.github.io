@@ -61,7 +61,7 @@ importers:
         specifier: ^1.2.10
         version: 1.2.10(mime-types@2.1.35)(vite@5.2.13(@types/node@20.14.2))
 
-  src/plugin/vite-multiple-assets:
+  src/vite-multiple-assets:
     dependencies:
       fast-glob:
         specifier: ^3.3.2
