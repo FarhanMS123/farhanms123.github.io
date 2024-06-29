@@ -1,0 +1,6 @@
+- Install Python3
+- Install Visual Studio and Desktop Development with C++
+- Install NodeJS and Additional Tools include Chocolatey (do not forget remove VSBuildTools and Python3 from `.pwsh`)
+- Install JDK, Maven, Gradle
+- Install Winget
+- Intall Oh My Posh and Clink
