@@ -111,3 +111,5 @@ sudo apt install nodejs
 sudo apt install -y --install-recommends -t ${VERSION_CODENAME}-backports cockpit
 sudo service cockpit start
 sudo systemctl enable cockpit.socket
+
+# Chrome, Firefox, Brave, Wine, Waydroid, Cloudflare Warp, VS Code, Nix OS
