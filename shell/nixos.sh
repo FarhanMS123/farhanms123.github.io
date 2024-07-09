@@ -9,5 +9,6 @@ nix-shell -p git neovim nodejs
 nix-shell -p python3
 
 nix-shell -p go
+nix-shell -p vitess
 
 # nix-collect-garbage
