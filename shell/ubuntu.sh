@@ -113,3 +113,5 @@ sudo service cockpit start
 sudo systemctl enable cockpit.socket
 
 # Chrome, Firefox, Brave, Wine, Waydroid, Cloudflare Warp, VS Code, Nix OS
+# https://askubuntu.com/questions/1487117/how-to-change-the-system-fixed-width-font-using-terminal
+# https://elementaryos.stackexchange.com/questions/1149/how-can-i-change-the-default-terminal-font
