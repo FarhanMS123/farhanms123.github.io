@@ -45,7 +45,9 @@ export default function DynamicPublicDirectory(assets: IAssets, opts: IConfig = 
             resolveInternalConfig({ opts, viteConfig });
         },
         async writeBundle(writeBundleOptions) {
+            // @ts-ignore
             resolveInternalConfig({ opts, viteConfig, writeBundleOptions });
+            // @ts-ignore
             buildMiddleWare(writeBundleOptions, assets, opts, viteConfig)
         },
         name: "dynamic assets",
