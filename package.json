@@ -1,36 +1,49 @@
 {
   "name": "farhanms123.github.io",
   "private": true,
-  "version": "0.0.0",
+  "version": "3.0.0",
   "type": "module",
   "workspaces": [
-    "src/**"
+    "src/vite-virtual-file-router",
+    "src/vite-multiple-assets"
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/micromatch": "^4.0.6",
-    "@types/node": "^20.11.25",
-    "@types/react": "^18.2.56",
-    "@types/react-dom": "^18.2.19",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
+    "@types/micromatch": "^4.0.7",
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.56.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.5",
-    "glob": "^10.3.10",
-    "micromatch": "^4.0.5",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "fast-glob": "^3.3.2",
+    "micromatch": "^4.0.7",
     "typescript": "^5.2.2",
-    "vite": "^5.1.4",
-    "vite-multiple-assets": "^1.2.10"
+    "vite": "^5.3.1",
+    "vite-multiple-assets": "workspace:*",
+    "vite-virtual-file-router": "workspace:*"
+  },
+  "peerDependencies": {
+    "scheduler": "^0.23.2"
+  },
+  "dependenciesMeta": {
+    "vite-virtual-file-router": {
+      "injected": true
+    },
+    "vite-multiple-assets": {
+      "injected": true
+    }
   }
 }

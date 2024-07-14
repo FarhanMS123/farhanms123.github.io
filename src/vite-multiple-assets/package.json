@@ -9,6 +9,16 @@
     "type": "git",
     "url": "https://github.com/nguyenbatranvan/vite-multiple-assets"
   },
+  "files": [
+    "**"
+  ],
+  "main": "index.tsx",
+  "types": "index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./index.ts"
+  },
+  "scripts": {},
   "keywords": [
     "vite-multiple-assets",
     "Vite",
