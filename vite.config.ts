@@ -12,8 +12,8 @@ import path from "path";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    DynamicPublicDirectory(["**"], {
-      ignore: [...defaultExcluded],
+    DynamicPublicDirectory(["**", "public/**"], {
+      ignore: [...defaultExcluded, "public"],
    }) as PluginOption,
    virtualRouter(async ({ config, env }) => {
     const files: InputValue[] = [];

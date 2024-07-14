@@ -1,0 +1,181 @@
+<html>
+	<head>
+		<title>Garbage Discharge Count System</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		
+	</head>
+	<body>
+		<h3>In Progress task 1 for 78% complete of 3 tasks</h3>
+		<div id="control1"></div>
+		<div id="cam" style="margin:1em 0em;">
+			<div style="width:100%;max-width:10em;float:left;position:relative;">
+				<video autoplay id="vid" style="width:100%;"></video>
+				<svg id="vsvg" style="position:absolute;top:0px;left:0px;border:solid 1px black;">
+					<line id="vsvgl" x1="0" y1="0" x2="200" y2="200" style="stroke:green;stroke-width:1" />
+				</svg>
+			</div>
+			<div style="float:left;">
+				<canvas id="ccam"></canvas>
+			</div>
+			<div style="float:left;">
+				<canvas id="cv"></canvas>
+			</div>
+		</div>
+		<table style="width:100%;width:100%;">
+			<tr>
+				<td style="min-width:20%;">Base</td>
+				<td style="max-width:80%;"><input type="color" id="colbase"></input></td>
+			</tr>
+			<tr>
+				<td style="min-width:20%;">Count (now)</td>
+				<td style="max-width:80%;">xyz</td>
+			</tr>
+			<tr>
+				<td style="min-width:20%;">Count (begin)</td>
+				<td style="max-width:80%;">xyz</td>
+			</tr>
+			<tr>
+				<td style="min-width:20%;">Data (JSON)</td>
+				<td style="max-width:80%;">
+					<p id="dt" style="word-wrap: break-word;width:12em;"></p>
+				</td>
+			</tr>
+		</table>
+		
+		<script>
+			var _cam, pro, ctx_ccam, ctx_cv, data={};
+			navigator.mediaDevices.enumerateDevices().then(function(dev){
+				_cam = dev;
+				for(i in dev){
+					var but = document.createElement("button");
+					but.setAttribute("onclick", `cam(document.getElementById("vid"), _cam[${i}])`);
+					but.innerHTML = `${dev[i].kind}<br />${dev[i].label}`;
+					document.getElementById("control1").append(but)
+				}
+			});
+			
+			setInterval(function(){
+				vsvg.style.width = vid.offsetWidth;
+				vsvg.style.height = vid.offsetHeight;
+				vsvgl.setAttribute("x1", 0)
+				vsvgl.setAttribute("y1", vsvg.clientHeight - (vsvg.clientHeight / 3));
+				vsvgl.setAttribute("x2", vsvg.clientWidth)
+				vsvgl.setAttribute("y2", vsvg.clientHeight - (vsvg.clientHeight / 3));
+				
+				ccam.style.width = vid.offsetWidth
+				ccam.style.height = vid.offsetHeight
+				cv.style.width = ccam.style.width
+				cv.style.height = ccam.style.height
+				main();
+				dt.innerHTML = JSON.stringify(data);
+			},100);
+			
+			function hex2HSL(hex) {
+				var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+				r = parseInt(result[1], 16);
+				g = parseInt(result[2], 16);
+				b = parseInt(result[3], 16);
+				r /= 255, g /= 255, b /= 255;
+				var max = Math.max(r, g, b), min = Math.min(r, g, b);
+				var h, s, l = (max + min) / 2;
+				if(max == min){
+					h = s = 0; // achromatic
+				}else{
+					var d = max - min;
+					s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+					switch(max){
+						case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+						case g: h = (b - r) / d + 2; break;
+						case b: h = (r - g) / d + 4; break;
+					}
+					h /= 6;
+				}
+				return {h,s,l};
+			}
+			
+			function rgb2hex(r,g,b){
+				var r = r.toString(16);
+				var g = g.toString(16);
+				var b = b.toString(16);
+				return (r.length == 1 ? "0" : "") + r + (g.length == 1 ? "0" : "") + g + (b.length == 1 ? "0" : "") + b
+			}
+			
+			function colDifRGB(hex1, hex2){
+				var res1 = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex1);
+				var res2 = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex2);
+				res1[1] = parseInt(res1[1], 16); res1[2] = parseInt(res1[2], 16); res1[3] = parseInt(res1[3], 16);
+				res2[1] = parseInt(res2[1], 16); res2[2] = parseInt(res2[2], 16); res2[3] = parseInt(res2[3], 16);
+				return [((res1[1]-res2[1])/255), ((res1[2]-res2[2])/255), ((res1[3]-res2[3])/255)];
+			}
+			
+			function getY(x, x1, y1, x2, y2){
+				return ((x-x1)*(y2-y1)/(x2-x1))+y1
+			}
+			
+			function main(){
+				ctx_ccam = ccam.getContext('2d');
+				ctx_ccam.drawImage(vid, 0, 0, ccam.width, ccam.height);
+				
+				ctx_cv = cv.getContext("2d");
+				
+				for(var x=0;x<cv.width;x++){
+					(function(x){
+						var x = x;
+						var y = cv.height - (cv.height/3);
+						
+						setTimeout(function(){
+							if(x==0){
+								ctx_cv.clearRect(0,0,cv.width,cv.height);
+								data.dtnow = [];
+							}
+							var dtimg = ctx_ccam.getImageData(x,y,1,1);
+							var frm = [
+								       x-1 < 0 ? false : ctx_ccam.getImageData(x-1,y,1,1),
+								                         ctx_ccam.getImageData(x,y,1,1),
+								x+1 > cv.width ? false : ctx_ccam.getImageData(x+1,y,1,1)
+							]
+							/*var hex = [
+								frm[0] != false ? rgb2hex(frm[0].data[0], frm[0].data[1], frm[0].data[2]) : false,
+								frm[0] != false ? rgb2hex(frm[1].data[0], frm[1].data[1], frm[1].data[2]) : false,
+								frm[0] != false ? rgb2hex(frm[2].data[0], frm[2].data[1], frm[2].data[2]) : false,
+							];*/
+							var hex = rgb2hex(frm[1].data[0], frm[1].data[1], frm[1].data[2]);
+							
+							//console.log([colbase.value.slice(1), hex[1]])
+							var d1 = colDifRGB(colbase.value.slice(1), hex);
+							d1[0] = Math.abs(d1[0]); d1[1] = Math.abs(d1[1]); d1[2] = Math.abs(d1[2]);
+							if(d1[0] >= 0.6 || d1[1] >= 0.6 || d1[2] >= 0.6){
+								ctx_cv.beginPath();
+								ctx_cv.rect(x, y, 1, 1);
+								ctx_cv.fillStyle = `rgba(${dtimg.data[0]}, ${dtimg.data[1]}, ${dtimg.data[2]}, ${dtimg.data[3]/255})`;
+								ctx_cv.fill();
+								if (typeof data.dtnow !== "object") data.dtnow = [];
+								
+								data.dtnow.push([hex, x]);
+							}
+							
+							data.analysis = d1;
+						}, 1);
+					})(x)
+				}
+			}
+			
+			function cam(_vid, _camDT){
+				if(vid.srcObject !== null){
+					var x = vid.srcObject.getTracks();
+					for(i in x){
+						x[i].stop();
+					}
+				}
+				var _vid=_vid, _camDT=_camDT;
+				pro = navigator.mediaDevices.getUserMedia({
+					video: _camDT
+				}).then(function(stream){
+					_vid.srcObject = stream
+				});
+				console.log(_camDT)
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,69 @@
+<title>Determinan</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+<style>
+	#matrix input, #matrix2 input{max-width:50px;}
+	
+	#matrix{display:inline-block;l;border-left:solid black 1px;padding-left:10px;}
+	#matrix2{display:inline-block;border-left:solid black 1px;padding-left:10px;}
+</style>
+
+<script>
+	function calc(){ //d h l
+		var dt = {
+			a : $("#a").val(), b : $("#b").val(), c : $("#c").val(), d : $("#d").val(),
+			e : $("#e").val(), f : $("#f").val(), g : $("#g").val(), h : $("#h").val(),
+			i : $("#i").val(), j : $("#j").val(), k : $("#k").val(), l : $("#l").val()
+		}
+		var d = `D = <br /> | ${dt.a} ${dt.b} ${dt.c} |<br /> | ${dt.e} ${dt.f} ${dt.g} |<br /> | ${dt.i} ${dt.j} ${dt.k} |`
+		var dx = `Dx = <br /> | ${dt.d} ${dt.b} ${dt.c} |<br /> | ${dt.h} ${dt.f} ${dt.g} |<br /> | ${dt.l} ${dt.j} ${dt.k} |`
+		var dy = `Dy = <br /> | ${dt.a} ${dt.d} ${dt.c} |<br /> | ${dt.e} ${dt.h} ${dt.g} |<br /> | ${dt.i} ${dt.l} ${dt.k} |`
+		var dz = `Dz = <br /> | ${dt.a} ${dt.b} ${dt.d} |<br /> | ${dt.e} ${dt.f} ${dt.h} |<br /> | ${dt.i} ${dt.j} ${dt.l} |`
+		
+		var d2 = `D = ${dt.a}(${dt.f * dt.k} - ${dt.g * dt.j}) - ${dt.e}(${dt.b * dt.k} - ${dt.c * dt.j}) + ${dt.i}(${dt.b * dt.g} - ${dt.c * dt.f})`
+		var dx2 = `Dx = ${dt.d}(${dt.f * dt.k} - ${dt.g * dt.j}) - ${dt.h}(${dt.b * dt.k} - ${dt.c * dt.j}) + ${dt.l}(${dt.b * dt.g} - ${dt.c * dt.f})`
+		var dy2 = `Dy = ${dt.a}(${dt.h * dt.k} - ${dt.g * dt.l}) - ${dt.e}(${dt.d * dt.k} - ${dt.c * dt.l}) + ${dt.i}(${dt.d * dt.g} - ${dt.c * dt.h})`
+		var dz2 = `Dz = ${dt.a}(${dt.f * dt.l} - ${dt.h * dt.j}) - ${dt.e}(${dt.b * dt.l} - ${dt.d * dt.j}) + ${dt.i}(${dt.b * dt.h} - ${dt.d * dt.f})`
+		
+		d2 += `<br /> = ${dt.a * ((dt.f * dt.k) - (dt.g * dt.j))} - ${dt.e * ((dt.b * dt.k) - (dt.c * dt.j))} + ${dt.i * ((dt.b * dt.g) - (dt.c * dt.f))}`
+		dx2 += `<br /> = ${dt.d * ((dt.f * dt.k) - (dt.g * dt.j))} - ${dt.h * ((dt.b * dt.k) - (dt.c * dt.j))} + ${dt.l * ((dt.b * dt.g) - (dt.c * dt.f))}`
+		dy2 += `<br /> = ${dt.a * ((dt.h * dt.k) - (dt.g * dt.l))} - ${dt.e * ((dt.d * dt.k) - (dt.c * dt.l))} + ${dt.i * ((dt.d * dt.g) - (dt.c * dt.h))}`
+		dz2 += `<br /> = ${dt.a * ((dt.f * dt.l) - (dt.h * dt.j))} - ${dt.e * ((dt.b * dt.l) - (dt.d * dt.j))} + ${dt.i * ((dt.b * dt.h) - (dt.d * dt.f))}`
+		
+		d2 += ` = ${(dt.a * ((dt.f * dt.k) - (dt.g * dt.j))) - (dt.e * ((dt.b * dt.k) - (dt.c * dt.j))) + (dt.i * ((dt.b * dt.g) - (dt.c * dt.f)))}`
+		dx2 += ` = ${(dt.d * ((dt.f * dt.k) - (dt.g * dt.j))) - (dt.h * ((dt.b * dt.k) - (dt.c * dt.j))) + (dt.l * ((dt.b * dt.g) - (dt.c * dt.f)))}`
+		dy2 += ` = ${(dt.a * ((dt.h * dt.k) - (dt.g * dt.l))) - (dt.e * ((dt.d * dt.k) - (dt.c * dt.l))) + (dt.i * ((dt.d * dt.g) - (dt.c * dt.h)))}`
+		dz2 += ` = ${(dt.a * ((dt.f * dt.l) - (dt.h * dt.j))) - (dt.e * ((dt.b * dt.l) - (dt.d * dt.j))) + (dt.i * ((dt.b * dt.h) - (dt.d * dt.f)))}`
+		
+		var vd = (dt.a * ((dt.f * dt.k) - (dt.g * dt.j))) - (dt.e * ((dt.b * dt.k) - (dt.c * dt.j))) + (dt.i * ((dt.b * dt.g) - (dt.c * dt.f)));
+		var vdx = (dt.d * ((dt.f * dt.k) - (dt.g * dt.j))) - (dt.h * ((dt.b * dt.k) - (dt.c * dt.j))) + (dt.l * ((dt.b * dt.g) - (dt.c * dt.f)));
+		var vdy = (dt.a * ((dt.h * dt.k) - (dt.g * dt.l))) - (dt.e * ((dt.d * dt.k) - (dt.c * dt.l))) + (dt.i * ((dt.d * dt.g) - (dt.c * dt.h)));
+		var vdz = (dt.a * ((dt.f * dt.l) - (dt.h * dt.j))) - (dt.e * ((dt.b * dt.l) - (dt.d * dt.j))) + (dt.i * ((dt.b * dt.h) - (dt.d * dt.f)));
+		
+		var x = `x = ${vdx}/${vd} = ${vdx/vd}`;
+		var y = `y = ${vdy}/${vd} = ${vdy/vd}`;
+		var z = `z = ${vdz}/${vd} = ${vdz/vd}`;
+
+		var hp = `Hp : {${vdx/vd}, ${vdy/vd}, ${vdz/vd}}`
+		
+		$("#data").html(`${d} <br /><br />${dx} <br /><br />${dy} <br /><br />${dz} <br /><br />${d2} <br /><br />${dx2} <br /><br />${dy2} <br /><br />${dz2} <br /><br />${x} <br />${y} <br />${z} <br /><br />${hp} `)
+	}
+</script>
+
+<div id="matrix">
+	<input id="a" type="text"></input><input id="b" type="text"></input><input id="c" type="text"></input> <br />
+	<input id="e" type="text"></input><input id="f" type="text"></input><input id="g" type="text"></input> <br />
+	<input id="i" type="text"></input><input id="j" type="text"></input><input id="k" type="text"></input>
+</div>
+<div id="matrix2">
+	<input id="d" type="text"></input> <br />
+	<input id="h" type="text"></input> <br />
+	<input id="l" type="text"></input>
+</div>
+
+<br />
+<br />
+
+<button onclick="calc()">Calculate</button>
+
+<div id="data"></div>

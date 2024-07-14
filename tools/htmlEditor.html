@@ -1,0 +1,49 @@
+<html>
+	<head>
+		<title>HTML Editor</title>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<style>
+			*{margin:0px;padding:0px;font-family:"segoe ui";}
+			.con{float:left;width:calc(50%);height:100%;}
+			.ifrm{min-width:100%;max-width:100%;min-height:100%;max-height:100%;}
+		</style>
+		
+	</head>
+	<body style="overflow:hidden;">
+		<div id="left" class="con">
+			<textarea id="txt" style="min-width:100%;max-width:100%;min-height:90%;max-height:90%;"></textarea>
+			<input id="chkaut" type="checkbox" checked>Autorun</input>
+			<button onclick="run()">Run</button>
+		</div>
+		<div id="right" class="con">
+		</div>
+		<script>
+			var dt="";
+			function run(){
+				//var ifr = document.getElementById("ifrm");
+				var ifr = document.createElement("iframe");
+				ifr.setAttribute("class", "ifrm");
+				document.getElementById("right").innerHTML = "";
+				document.getElementById("right").appendChild(ifr);
+				var ifrw = (ifr.contentWindow) ? ifr.contentWindow : (ifr.contentDocument.document) ? ifr.contentDocument.document : ifr.contentDocument;
+				ifrw.document.open();
+				ifrw.document.write(document.getElementById("txt").value);
+				ifrw.document.close();
+				if (ifrw.document.body && !ifrw.document.body.isContentEditable) {
+					ifrw.document.body.contentEditable = true;
+					ifrw.document.body.contentEditable = false;
+				}
+
+			}
+			setInterval(function(){
+				if(document.getElementById("chkaut").checked == true){
+					if(document.getElementById("txt").value != dt){
+						run();
+						dt = document.getElementById("txt").value;
+					}
+				}
+			}, 100);
+			run();
+		</script>
+	</body>
+</html>
