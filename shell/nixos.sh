@@ -8,7 +8,8 @@ nix-shell -p nvim git npm
 nix-shell -p git neovim nodejs
 nix-shell -p python3
 
-nix-shell -p go graphviz
+nix-shell -p go
+nix-shell -p graphviz pprof
 nix-shell -p vitess
 
 # nix-collect-garbage
