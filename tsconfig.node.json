@@ -8,7 +8,9 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["ESNext", "DOM"],
     "strict": true,
-    "noEmit": true
+    "noEmit": true,
+    "baseUrl": ".",
+    "esModuleInterop": true
   },
-  "include": ["vite.config.ts", "src"]
+  "include": ["vite.config.ts", "src", "node_modules/**/*.ts"]
 }

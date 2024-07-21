@@ -21,8 +21,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
   "include": ["**/*.ts", "**/*.js", "**/*.tsx", "**/*.jsx"],
-  "exclude": ["src/**"],
+  "exclude": ["src/**", "node_modules"],
 }

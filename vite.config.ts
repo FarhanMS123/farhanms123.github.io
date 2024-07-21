@@ -69,6 +69,9 @@ export default defineConfig({
         const c = {...config, plugins: []} as UserConfig;
         console.log(inspect(c, true, Infinity));
       },
+      load(id, options) {
+        console.log(id, options);
+      },
     }]
   ],
 
