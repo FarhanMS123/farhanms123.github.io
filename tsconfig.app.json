@@ -23,6 +23,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["."],
+  "include": ["**/*.ts", "**/*.js", "**/*.tsx", "**/*.jsx"],
   "exclude": ["src/**"],
 }

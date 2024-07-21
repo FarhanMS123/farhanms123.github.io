@@ -1,9 +1,10 @@
-import { defineConfig, splitVendorChunkPlugin, type PluginOption } from 'vite'
+import { defineConfig, splitVendorChunkPlugin, type UserConfig, type PluginOption } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { InputValue, __prepare_cbro_input, __push_rollup_input, virtualRouter } from './src/vite-virtual-file-router/files-router'
 import { abs2rel, defaultExcluded, jtx_main, pattern_html, pattern_index_page_html, 
   pattern_js_ts, pattern_jsx_tsx, pattern_out_html, src2page } from './src/vite-virtual-file-router/templates'
 import DynamicPublicDirectory from './src/vite-multiple-assets';
+import { inspect } from "util";
 
 import fg from "fast-glob";
 import mm from "micromatch"
@@ -13,7 +14,7 @@ import path from "path";
 export default defineConfig({
   plugins: [
     DynamicPublicDirectory(["**", "public/**"], {
-      ignore: [...defaultExcluded, "public"],
+      ignore: [...defaultExcluded, "/public"],
    }) as PluginOption,
    virtualRouter(async ({ config, env }) => {
     const files: InputValue[] = [];
@@ -61,7 +62,14 @@ export default defineConfig({
   }),
 
    splitVendorChunkPlugin(),
-    react()
+    react(),
+    [{
+      name: "vite-show-config",
+      config(config, env) {
+        const c = {...config, plugins: []} as UserConfig;
+        console.log(inspect(c, true, Infinity));
+      },
+    }]
   ],
 
   build: {
