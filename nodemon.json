@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "ignore": ["{,**/}node_modules{,/**}", "dist/", ".git/", "vite.config.ts.**"],
+  "exec": "vite build",
+  "legacyWatch": true
+}
