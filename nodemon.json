@@ -1,8 +1,9 @@
 {
   "verbose": true,
-  "ignore": ["{,**/}node_modules{,/**}", "dist/", ".git/", "vite.config.ts.**"],
+  "ignore": ["{,**/}node_modules{,/**}", "dist/", ".git/", "vite.config.ts.**", ".**", "**.json", "**.config.**"],
   "watch": ["{,**/}*.*", "{,**/}.*", "{,**/}*"],
   "ext": "js,ts,tsx,ts,md,html,css,scss,sass,json,png,svg,jpg,jpeg",
   "exec": "vite build",
-  "legacyWatch": true
+  "legacyWatch": true,
+  "pollingInterval": 100
 }
