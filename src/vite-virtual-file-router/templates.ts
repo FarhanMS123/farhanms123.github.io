@@ -1,7 +1,8 @@
 import { readFile } from "fs/promises";
-import { PREFIX, type RawFunc, type InputValue, type Option } from "./files-router";
+import { PREFIX_X00, type RawFunc, type InputValue, type Option, InputValue_Virtual } from "./files-router";
 import {  } from "path/posix";
 import { join, isAbsolute, relative, dirname, basename } from "path";
+import type {Options as FGOptions} from "fast-glob";
 
 // be* is configure the `out` by `script_src`; with no respect to default `out`
 // load* is configure `input` and `return` by `script_src`; respect to/without modifying the `out`
@@ -42,7 +43,7 @@ export const src2page = ({
     labels, virtuals,
 }: {
     raw_html?: RawFunc;
-} & SRC2PAGE_params & Pick<InputValue, "labels" | "virtuals">) => { // handle virtuals, not env vars
+} & SRC2PAGE_params & Pick<InputValue_Virtual, "labels" | "virtuals">) => { // handle virtuals, not env vars
     let ret: InputValue[] = [];
 
     index_out ??= `${abs2rel(cwd, script_src)}.html`;
@@ -50,6 +51,7 @@ export const src2page = ({
     if (main_out) {
         main_out.out ??= `${abs2rel(cwd, script_src)}.ts`;
         ret.push({
+            inject: "virtual_resource",
             out: main_out.out,
             raw: async (...params) => (await main_out.raw(...params))?.replace(/%SCRIPT_SRC%/g, script_src),
             virtuals, labels,
@@ -57,6 +59,7 @@ export const src2page = ({
     }
 
     ret.unshift({
+        inject: "virtual_index",
         out: index_out,
         raw: async (...params) => {
             let raw = await raw_html?.(...params) ?? await readFile(join(__dir, "template/minimal.html"), { encoding: "utf8" })
@@ -81,6 +84,17 @@ export const src2page = ({
 export const pattern_vue = "{,**/}*.page.vue";
 export const vue_main = () => readFile(join(__dir, "template/main_vue.ts"), { encoding: "utf8" });
 
-export const defaultExcluded = ["{,**/}.git/**", "{,**/}*.local{,/**}", "src/**", "dist/**", "node_modules/**", "public/**"];
-export const defaultIncluded = [pattern_html, pattern_jsx_tsx, pattern_js_ts];
-export const extendedIncluded = [pattern_html, pattern_jsx_tsx, pattern_vue, "{,**/}*.md", pattern_js_ts];
+export const defaultExcluded = ["{,**/}.git/**", "{,**/}{,*}.local{,/**}", "src/**", "dist/**", "node_modules/**", "public/**"];
+export const defaultIncluded = [pattern_jsx_tsx, pattern_js_ts, pattern_html];
+export const extendedIncluded = [pattern_jsx_tsx, pattern_vue, "{,**/}*.md", pattern_js_ts, pattern_html,];
+
+export const mmDefaultOpts: FGOptions = {
+    ignore: defaultExcluded,
+    onlyFiles: true,
+    onlyDirectories: false,
+    markDirectories: true,
+    caseSensitiveMatch: false,
+    dot: true,
+    globstar: true,
+    extglob: true,
+};
