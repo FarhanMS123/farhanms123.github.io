@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, FluentProvider, teamsDarkTheme } from "@fluentui/react-components";
+import "../../libs/global_tailwind.css";
 
 export default function Docs() {
     return <>
