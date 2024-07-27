@@ -15,53 +15,53 @@ export default defineConfig({
   plugins: [
     DynamicPublicDirectory(["**", "public/**"], {
       ignore: [...defaultExcluded, "/public"],
-   }) as PluginOption,
-   virtualRouter(async ({ config, env }) => {
-    const files: InputValue[] = [];
-    const cwd = config.root!;
+    }) as PluginOption,
+    virtualRouter(async ({ config, env }) => {
+      const files: InputValue[] = [];
+      const cwd = config.root!;
 
-    const cbro_input = __prepare_cbro_input(config);
+      const cbro_input = __prepare_cbro_input(config);
 
-    const pattern = [pattern_jsx_tsx, pattern_js_ts, pattern_html];
-    const mmOpts: fg.Options = {
-      cwd,
-      ignore: defaultExcluded,
-      onlyFiles: true,
-      onlyDirectories: false,
-      markDirectories: true,
-      caseSensitiveMatch: false,
-      dot: true,
-      globstar: true,
-      extglob: true,
-    };
-    const _files = await fg(pattern, mmOpts);
-    
-    for ( const script_src of _files ) {
-      const __files: InputValue[] = [];
-      if (mm.isMatch(script_src, pattern_js_ts, mmOpts))
-        __files.push(...src2page({ cwd, script_src }));
-      else if (mm.isMatch(script_src, pattern_jsx_tsx, mmOpts))
-        __files.push(...src2page({ cwd, script_src, main_out: { out: `${abs2rel(cwd, script_src)}.tsx`, raw: jtx_main } }))
-      else if (mm.isMatch(script_src, pattern_html, mmOpts))
-        __files.push({ is_virtual: false, out: path.resolve(script_src), raw: () => undefined })
-
-      for (const file of __files)
-        if (file.is_virtual != false) { // file.is_virtual == true || file.is_virtual == ""
-          if (mm.isMatch(file.out, pattern_index_page_html, {...mmOpts, basename: true}))
-            file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}.html`;
-          else if (mm.isMatch(file.out, pattern_out_html, {...mmOpts, basename: true}))
-            file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}/index.html`;
-        }
+      const pattern = [pattern_jsx_tsx, pattern_js_ts, pattern_html];
+      const mmOpts: fg.Options = {
+        cwd,
+        ignore: defaultExcluded,
+        onlyFiles: true,
+        onlyDirectories: false,
+        markDirectories: true,
+        caseSensitiveMatch: false,
+        dot: true,
+        globstar: true,
+        extglob: true,
+      };
+      const _files = await fg(pattern, mmOpts);
       
-      files.push(...__files);
-    }
+      for ( const script_src of _files ) {
+        const __files: InputValue[] = [];
+        if (mm.isMatch(script_src, pattern_js_ts, mmOpts))
+          __files.push(...src2page({ cwd, script_src }));
+        else if (mm.isMatch(script_src, pattern_jsx_tsx, mmOpts))
+          __files.push(...src2page({ cwd, script_src, main_out: { out: `${abs2rel(cwd, script_src)}.tsx`, raw: jtx_main } }))
+        else if (mm.isMatch(script_src, pattern_html, mmOpts))
+          __files.push({ is_virtual: false, out: path.resolve(script_src), raw: () => undefined })
 
-    return {
-      files,
-    };
-  }),
+        for (const file of __files)
+          if (file.is_virtual != false) { // file.is_virtual == true || file.is_virtual == ""
+            if (mm.isMatch(file.out, pattern_index_page_html, {...mmOpts, basename: true}))
+              file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}.html`;
+            else if (mm.isMatch(file.out, pattern_out_html, {...mmOpts, basename: true}))
+              file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}/index.html`;
+          }
+        
+        files.push(...__files);
+      }
 
-   splitVendorChunkPlugin(),
+      return {
+        files,
+      };
+    }),
+
+    splitVendorChunkPlugin(),
     react(),
     [{
       name: "vite-show-config",
