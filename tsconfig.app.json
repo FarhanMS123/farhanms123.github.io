@@ -6,9 +6,12 @@
     "downlevelIteration": true,
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable", "ES2021.String"],
-    "allowJs": false,
+    "allowJs": true,
+    "checkJs": true,
     "module": "ESNext",
     "skipLibCheck": true,
+    "incremental": true,
+    "noUncheckedIndexedAccess": true,
 
     /* Bundler mode */
     "esModuleInterop": false,

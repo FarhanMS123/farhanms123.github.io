@@ -7,6 +7,8 @@ end_of_line = lf
 insert_final_newline = true
 charset = utf-8
 indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
 
 [*.html]
 indent_size = 4
@@ -21,11 +23,20 @@ indent_size = 2
 [*.{js,ts,c,cpp,java}]
 indent_size = 4
 
-[*.json]
+[*.{json,yaml,yml}]
 indent_size = 2
 
 [*.config.*]
 indent_size = 2
 
-[*.sql]
+[.*rc]
+indent_size = 2
+
+[*.{sql,prisma}]
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false
+
+[docker-compose.yml]
 indent_size = 4
