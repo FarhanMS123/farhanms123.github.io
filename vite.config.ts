@@ -23,8 +23,8 @@ export default defineConfig({
 
       const cbro_input = __prepare_cbro_input(config);
 
-      // const pattern = [...defaultIncluded];
-      const pattern = ["demos/Docs/*.page.tsx"];
+      const pattern = [...defaultIncluded];
+      // const pattern = ["demos/Docs/*.page.tsx"];
       const mmOpts: fg.Options = {
         ...mmDefaultOpts,
         cwd,
@@ -55,7 +55,7 @@ export default defineConfig({
         files,
       };
     }),
-    showConfig,
+    // showConfig,
     tsconfigPaths({
       loose: true,
     }),
@@ -63,6 +63,7 @@ export default defineConfig({
     react(),
   ],
 
+  appType: "mpa",
   build: {
     outDir: "dist",
     assetsDir: "chunks",

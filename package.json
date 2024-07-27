@@ -11,6 +11,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:tsc": "tsc -b",
+    "watch:build": "pnpx nodemon --verbose --ignore \"{,**/}node_modules{,/**}\" --ignore \"dist/\" --ignore \".git/\" --ignore \"vite.config.ts.**\" --exec \"vite build\"",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
