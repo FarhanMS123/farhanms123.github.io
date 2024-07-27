@@ -13,7 +13,7 @@ import DynamicPublicDirectory from './src/vite-multiple-assets';
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ command, mode }) => {
-  return {
+  const ret = {
     plugins: [
       DynamicPublicDirectory(["**", "public/**"], {
         ignore: [...defaultExcluded, "/public"],
@@ -81,6 +81,9 @@ export default defineConfig(async ({ command, mode }) => {
       __TIME__: new Date().getTime(),
       "import.meta.env.time": new Date().getTime(),
       VITE_TIME: new Date().getTime(),
+      // CRAWLS: await fg(["{,**/}*"], mmDefaultOpts)
     },
   } as UserConfig;
+
+  return ret;
 });

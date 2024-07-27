@@ -4,7 +4,6 @@ next-auth, prisma, @trpc, bcrypt, firebase-admin, formidable, jsonwebtoken,
 lodash, react-pdf, superjson, zod, prisma-json-types-generator
 
 @chakra-ui/icons, lucide-react, @nanostores/persistent nanostores
-@tailwindcss/typography
 ```
 
 - SHould I also put `.env.example` or related?

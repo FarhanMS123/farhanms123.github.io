@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,body {
+    @apply bg-[#333333] h-dvh
+}
+
+#root {
+    @apply h-full
+}
