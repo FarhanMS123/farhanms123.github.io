@@ -2,7 +2,7 @@ import { PluginOption, defineConfig, splitVendorChunkPlugin } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { InputValue, __prepare_cbro_input, __push_rollup_input, virtualRouter } from './src/vite-virtual-file-router/files-router'
-import Inspect from 'vite-plugin-inspect'
+// import Inspect from 'vite-plugin-inspect'
 import createInspect, { showConfig } from './src/plugin/inspect'
 import fg from "fast-glob";
 import mm from "micromatch"
@@ -23,11 +23,13 @@ export default defineConfig({
 
       const cbro_input = __prepare_cbro_input(config);
 
+      // const pattern = [...defaultIncluded];
+      const pattern = ["demos/Docs/*.page.tsx"];
       const mmOpts: fg.Options = {
         ...mmDefaultOpts,
         cwd,
       };
-      const _files = await fg(defaultIncluded, mmOpts);
+      const _files = await fg(pattern, mmOpts);
       
       for ( const script_src of _files ) {
         const __files: InputValue[] = [];
@@ -53,6 +55,7 @@ export default defineConfig({
         files,
       };
     }),
+    showConfig,
     tsconfigPaths({
       loose: true,
     }),
