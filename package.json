@@ -45,6 +45,7 @@
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "autoprefixer": "^10.4.19",
+    "daisyui": "^4.12.10",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.34.4",
@@ -77,6 +78,7 @@
   "optionalDependencies": {
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
+    "material-icon-theme": "^5.8.0",
     "sort-by": "^1.2.0"
   }
 }
