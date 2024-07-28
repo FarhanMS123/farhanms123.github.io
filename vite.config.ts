@@ -7,9 +7,10 @@ import createInspect, { showConfig } from './src/plugin/inspect'
 import fg from "fast-glob";
 import mm from "micromatch"
 import path from "path";
-import { abs2rel, defaultExcluded, defaultIncluded, jtx_main, mmDefaultOpts, pattern_html, pattern_index_page_html, 
+import { abs2rel, defaultExcluded, defaultIncluded, jtx_main, mmDefaultOpts, pattern_html, pattern_index_page_html,
           pattern_js_ts, pattern_jsx_tsx, pattern_out_html, src2page } from './src/vite-virtual-file-router/templates'
 import DynamicPublicDirectory from './src/vite-multiple-assets';
+import fs from "fs/promises";
 
 // https://vitejs.dev/config/
 export default defineConfig(async ({ command, mode }) => {
@@ -21,9 +22,9 @@ export default defineConfig(async ({ command, mode }) => {
       virtualRouter(async ({ config, env }) => {
         const files: InputValue[] = [];
         const cwd = config.root!;
-  
+
         const cbro_input = __prepare_cbro_input(config);
-  
+
         const pattern = [...defaultIncluded];
         // const pattern = ["demos/Docs/*.page.tsx"];
         const mmOpts: fg.Options = {
@@ -31,7 +32,7 @@ export default defineConfig(async ({ command, mode }) => {
           cwd,
         };
         const _files = await fg(pattern, mmOpts);
-        
+
         for ( const script_src of _files ) {
           const __files: InputValue[] = [];
           if (mm.isMatch(script_src, pattern_js_ts, mmOpts))
@@ -40,7 +41,7 @@ export default defineConfig(async ({ command, mode }) => {
             __files.push(...src2page({ cwd, script_src, main_out: { out: `${abs2rel(cwd, script_src)}.tsx`, raw: jtx_main } }))
           else if (mm.isMatch(script_src, pattern_html, mmOpts))
             __push_rollup_input(cbro_input, path.resolve(script_src))
-  
+
           for (const file of __files)
             if (file.inject != "file") {
               if (mm.isMatch(file.out, pattern_index_page_html, {...mmOpts, basename: true}))
@@ -48,10 +49,10 @@ export default defineConfig(async ({ command, mode }) => {
               else if (mm.isMatch(file.out, pattern_out_html, {...mmOpts, basename: true}))
                 file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}/index.html`;
             }
-          
+
           files.push(...__files);
         }
-  
+
         return {
           files,
         };
@@ -62,8 +63,22 @@ export default defineConfig(async ({ command, mode }) => {
       }),
       splitVendorChunkPlugin(),
       react(),
+      {
+        name: "vite-post-selfbuild",
+        async closeBundle() {
+          const dir_dist = await fg(["{,**/}{.*,*}"], {
+            ...mmDefaultOpts,
+            // ignore: [...mmDefaultOpts.ignore!.filter(v => v.search("public") < 0), "tsconfig.*", "*.config.*", "pnpm*", "package*", "chunks/**"],
+            ignore: ["tsconfig.*", "*.config.*", "pnpm*", "package*", "chunks/**"],
+            cwd: path.resolve("dist"),
+          });
+
+          await fs.writeFile(path.resolve("./dist/.dirs.json"), JSON.stringify(dir_dist, null, 2));
+        },
+
+      },
     ],
-  
+
     appType: "mpa",
     build: {
       outDir: "dist",
@@ -72,16 +87,19 @@ export default defineConfig(async ({ command, mode }) => {
     resolve: {
       preserveSymlinks: true,
     },
-  
+
     root: process.cwd(),
     publicDir: false,
     base: "/",
-  
+
     define: {
       __TIME__: new Date().getTime(),
       "import.meta.env.time": new Date().getTime(),
       VITE_TIME: new Date().getTime(),
-      // CRAWLS: await fg(["{,**/}*"], mmDefaultOpts)
+      // CRAWLS: await fg(["{,**/}{.*,*}"], {
+      //   ...mmDefaultOpts,
+      //   ignore: [...mmDefaultOpts.ignore!.filter(v => v.search("public") > 0), "tsconfig.*", "*.config.*", "pnpm*", "package*"]
+      // })
     },
   } as UserConfig;
 

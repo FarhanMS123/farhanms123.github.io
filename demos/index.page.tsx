@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Card, CardFooter, FluentProvider, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens } from "@fluentui/react-components";
+import { Button, Card, CardFooter, FluentProvider, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout } from "@fluentui/react-components";
 import { ArrowNextFilled, ArrowPreviousFilled, PanelLeftContractFilled, PinFilled, PinRegular } from "@fluentui/react-icons";
 import "../libs/global_tailwind.css";
 import "../libs/fui_docs/main.css"
@@ -37,7 +37,20 @@ export function SidePanel() {
       <header className="sp text-center m-4 mt-8">
         FarhanMS123
       </header>
-      <CardFooter className="sp absolute bottom-0 left-0 w-full p-2" action={
+      <div className="h-full">
+        <Tree>
+          <TreeItem itemType="leaf">
+            <TreeItemLayout>Home</TreeItemLayout>
+          </TreeItem>
+          <TreeItem itemType="leaf">
+            <TreeItemLayout>Github</TreeItemLayout>
+          </TreeItem>
+          <TreeItem itemType="leaf">
+            <TreeItemLayout>Medium</TreeItemLayout>
+          </TreeItem>
+        </Tree>
+      </div>
+      <CardFooter className="sp p-2 mt-auto -mx-2" action={
         <Button icon={<ArrowPreviousFilled />} appearance="transparent" />
       }>
         <ToggleButton checked={true} icon={<PinFilled />} appearance="transparent" />
