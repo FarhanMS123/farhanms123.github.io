@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Button, Card, CardFooter, FluentProvider, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout } from "@fluentui/react-components";
-import { ArrowNextFilled, ArrowPreviousFilled, PanelLeftContractFilled, PinFilled, PinRegular } from "@fluentui/react-icons";
+import { Button, Card, CardFooter, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, FluentProvider, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
+import { ArrowNextFilled, ArrowPreviousFilled, DismissRegular, PanelLeftContractFilled, PinFilled, PinRegular } from "@fluentui/react-icons";
 import "../libs/global_tailwind.css";
 import "../libs/fui_docs/main.css"
 
@@ -31,14 +31,45 @@ export default function Docs() {
 
 export function SidePanel() {
   const classes = useDocsStyles();
+
+  // Overlay Drawer will handle focus by default, but inline Drawers need manual focus restoration attributes, if applicable
+  const restoreFocusTargetAttributes = useRestoreFocusTarget();
+  const restoreFocusSourceAttributes = useRestoreFocusSource();
+
   const [pin, setPin] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
   return <>
-    <Card size="small" className={mergeClasses("h-full w-[320px] max-w-[calc(100%-1rem)] z-20 block relative", classes.cardCNB2)}>
+    {/* <i aria-label="tailwind-reserve-keyword" className="hidden" /> */}
+    <Drawer
+      {...restoreFocusSourceAttributes}
+      className={mergeClasses("!h-full", classes.cardCNB2)}
+      type={pin ? "inline" : "overlay"}
+      separator
+      open={isOpen}
+      onOpenChange={(_, { open }) => setIsOpen(open)}
+    >
+      <DrawerHeader>
+        <DrawerHeaderTitle
+          action={
+            <Button
+              appearance="subtle"
+              aria-label="Close"
+              icon={<DismissRegular />}
+              onClick={() => setIsOpen(false)}
+            />
+          }
+        >
+          Default Drawer
+        </DrawerHeaderTitle>
+      </DrawerHeader>
+
       <header className="sp text-center m-4 mt-8">
         FarhanMS123
       </header>
-      <div className="h-full">
+
+      <DrawerBody>
+        <p>Drawer content</p>
         <Tree>
           <TreeItem itemType="leaf">
             <TreeItemLayout>Home</TreeItemLayout>
@@ -50,15 +81,15 @@ export function SidePanel() {
             <TreeItemLayout>Medium</TreeItemLayout>
           </TreeItem>
         </Tree>
-      </div>
-      <CardFooter className="sp p-2 mt-auto -mx-2" action={
-        <Button icon={<ArrowPreviousFilled />} appearance="transparent" />
-      }>
+      </DrawerBody>
+
+      <DrawerFooter className="flex-row-reverse !justify-between">
+        <Button icon={<ArrowPreviousFilled />} appearance="transparent" onClick={() => setIsOpen(false)} />
         <ToggleButton checked={pin} icon={pin ? <PinFilled /> : <PinRegular />} appearance="transparent" onClick={() => setPin(pin => !pin)} />
-      </CardFooter>
-    </Card>
-    <Button shape="circular" appearance="primary" className="fixed left-4 bottom-4 z-10" icon={
-      <ArrowNextFilled />
-    } />
+      </DrawerFooter>
+    </Drawer>
+    <Button {...restoreFocusTargetAttributes} shape="circular" appearance="primary"
+      className={mergeClasses("fixed left-4 bottom-4 z-10", isOpen ? "!hidden" : "")}
+      icon={ <ArrowNextFilled /> } onClick={() => setIsOpen(true)} hidden={isOpen} />
   </>;
 }
