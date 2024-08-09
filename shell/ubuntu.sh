@@ -30,7 +30,7 @@ sudo apt upgrade
 sudo apt install -y --install-recommends coreutils net-tools apt-utils software-properties-common # core & utils
 sudo apt install -y --install-recommends rsyslog systemd systemd-sysv systemd-cron sudo # system
 sudo apt install -y --install-recommends gnupg iproute2 ca-certificates iptables-persistent # core
-sudo apt install -y --install-recommends gettext locales manpages-dev apt-transport-https # additional
+sudo apt install -y --install-recommends gettext locales manpages-dev apt-transport-https network-manager-openconnect-gnome # additional
 sudo apt install -y --install-recommends nano screen # basic
 sudo apt install -y --install-recommends curl wget aria2 zlib1g-dev libssl-dev libnss3-dev # basic
 
