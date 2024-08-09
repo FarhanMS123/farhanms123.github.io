@@ -13,6 +13,10 @@ RUN echo 'root:root' | chpasswd
 # [ubuntu - How do I ask apt-get to skip any interactive post-install configuration steps? - Server Fault](https://serverfault.com/questions/227190/how-do-i-ask-apt-get-to-skip-any-interactive-post-install-configuration-steps)
 # [apt - DEBIAN_FRONTEND environment variable - Ask Ubuntu](https://askubuntu.com/questions/972516/debian-frontend-environment-variable)
 
+# [Can you convert/build a docker image into a full OS image? - Stack Overflow](https://stackoverflow.com/questions/54412054/can-you-convert-build-a-docker-image-into-a-full-os-image)
+# [iximiuz/docker-to-linux: Make bootable Linux disk image (ab)using Docker](https://github.com/iximiuz/docker-to-linux)
+# [scottyhardy/docker-wine: Docker image that includes Wine and Winetricks for running Windows applications on Linux and macOS](https://github.com/scottyhardy/docker-wine)
+
 # Enable apt repositories.
 RUN sed -i 's/# deb/deb/g' /etc/apt/sources.list
 
