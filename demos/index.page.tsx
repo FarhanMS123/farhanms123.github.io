@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import { Button, Card, CardFooter, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, FluentProvider, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
-import { ArrowNextFilled, ArrowPreviousFilled, DismissRegular, PanelLeftContractFilled, PinFilled, PinRegular } from "@fluentui/react-icons";
+import { Button, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, FluentProvider, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
+import { ArrowNextFilled, ArrowPreviousFilled, DismissRegular, PinFilled, PinRegular } from "@fluentui/react-icons";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+import 'overlayscrollbars/overlayscrollbars.css';
 import "../libs/global_tailwind.css";
 import "../libs/fui_docs/main.css"
 
-const useDocsStyles = makeStyles({
+export type Viewer = {
+  url: string;
+  src?: string;
+};
+
+export const queryClient = new QueryClient();
+
+export const useDocsStyles = makeStyles({
   root: {
     backgroundColor: tokens.colorNeutralBackground3,
   },
@@ -20,12 +30,26 @@ const useDocsStyles = makeStyles({
   }
 });
 
-export default function Docs() {
+export default Viewer;
+
+export function Viewer() {
+  return (
+    <Providers>
+      <SidePanel />
+    </Providers>
+  );
+}
+
+export function Providers({ children }: React.PropsWithChildren) {
   const classes = useDocsStyles();
   return <>
-    <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto block", classes.root)}>
-      <SidePanel />
-    </FluentProvider>
+    <QueryClientProvider client={queryClient}>
+      <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto block", classes.root)}>
+        {/* <OverlayScrollbarsComponent defer> */}
+          { children }
+        {/* </OverlayScrollbarsComponent> */}
+      </FluentProvider>
+    </QueryClientProvider>
   </>;
 }
 
@@ -49,24 +73,11 @@ export function SidePanel() {
       open={isOpen}
       onOpenChange={(_, { open }) => setIsOpen(open)}
     >
-      <DrawerHeader>
-        <DrawerHeaderTitle
-          action={
-            <Button
-              appearance="subtle"
-              aria-label="Close"
-              icon={<DismissRegular />}
-              onClick={() => setIsOpen(false)}
-            />
-          }
-        >
-          Default Drawer
+      <DrawerHeader className="mb-4">
+        <DrawerHeaderTitle className="!justify-center">
+          FarhanMS123
         </DrawerHeaderTitle>
       </DrawerHeader>
-
-      <header className="sp text-center m-4 mt-8">
-        FarhanMS123
-      </header>
 
       <DrawerBody>
         <p>Drawer content</p>
