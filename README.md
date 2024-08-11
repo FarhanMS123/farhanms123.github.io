@@ -6,6 +6,11 @@ react-pdf, yup, prisma-json-types-generator
 @chakra-ui/icons, lucide-react
 ```
 
+https://stackoverflow.com/questions/63775411/is-there-a-way-to-list-all-active-eslint-prettier-rules-in-an-angular-project
+```shell
+npm exec eslint -- --print-config .eslintrc.cjs >> .eslint-list.json
+```
+
 - SHould I also put `.env.example` or related?
 
 # TODO

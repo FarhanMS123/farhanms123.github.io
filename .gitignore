@@ -25,6 +25,8 @@ dist-ssr
 *.sln
 *.sw?
 
+.eslint-list.json
+
 ######################################################################
 
 # Created by https://www.toptal.com/developers/gitignore/api/node
