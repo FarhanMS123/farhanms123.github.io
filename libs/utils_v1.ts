@@ -37,7 +37,7 @@ export function findLongestMatchPaths(a: string, b: string) {
 
 export const _SKIP = Symbol("SKIP");
 export const _DIR = Symbol("DIR")
-export const defaultOrders = ["index.html", "*.md", "*/", "*.html", "*.page.*", "*.*", "*.json", "{.*, *.config.*}"]
+export const defaultOrders = ["index.html", "*.md", "*/", "*.html", "*.page.*", "*.json", "{.*, *.config.*}"]
 export const sortPath = (paths: string[], orders: string[]) => {
     const mmopts: mm.Options = {
         basename: true,
@@ -63,10 +63,11 @@ export const sortPath = (paths: string[], orders: string[]) => {
             b_isort = Infinity;
 
         // from back to front
-        for (let i = orders.length - 1; i > -1; i--) {
+        for (let i = 0; i < orders.length; i++) {
             // mm.isMatch and i would not on -1
-            if (mm.isMatch(a, orders[i]!, mmopts) && (a_isort == Infinity || i < a_isort)) a_isort = i;
-            if (mm.isMatch(b, orders[i]!, mmopts) && (b_isort == Infinity || i < b_isort)) b_isort = i;
+            if (mm.isMatch(a, orders[i]!, mmopts) && a_isort == Infinity) a_isort = i;
+            if (mm.isMatch(b, orders[i]!, mmopts) && b_isort == Infinity) b_isort = i;
+            if (a_isort != Infinity && b_isort != Infinity) continue;
         }
 
         if (a_isort == b_isort) return b.localeCompare(a);
@@ -74,7 +75,7 @@ export const sortPath = (paths: string[], orders: string[]) => {
         // [1, 2] -> 2-1= 1 -> [1, 2]       // expected
         // [3, 2] -> 2-3=-1 -> [2, 3]       // expected
         // [-1, 2] -> [-1, 2]               // no item; not expected
-        // [Ininifty, 2] -> [2, Infinity]   // expected
+        // [Ininifty, 2] -> 2 - Infinity = -Infinity -> [2, Infinity]   // expected
         return b_isort - a_isort;
     });
 }
