@@ -4,7 +4,11 @@ next-auth, prisma, @trpc, bcrypt, firebase-admin, formidable, jsonwebtoken,
 react-pdf, yup, prisma-json-types-generator
 
 @chakra-ui/icons, lucide-react
+beautiful-react-hooks
+
 ```
+
+- https://www.npmjs.com/org/react-useful-hooks
 
 https://stackoverflow.com/questions/63775411/is-there-a-way-to-list-all-active-eslint-prettier-rules-in-an-angular-project
 ```shell
