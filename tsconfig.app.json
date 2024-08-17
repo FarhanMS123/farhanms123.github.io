@@ -39,6 +39,6 @@
       "~vite-virtual-file-router/*": ["./src/vite-virtual-file-router/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.js", "**/*.tsx", "**/*.jsx"],
+  "include": ["**/*.ts", "**/*.js", "**/*.tsx", "**/*.jsx", "**/*.json"],
   "exclude": ["src/**", "node_modules"],
 }

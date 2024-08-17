@@ -37,12 +37,13 @@ export function findLongestMatchPaths(a: string, b: string) {
 
 export const _SKIP = Symbol("SKIP");
 export const _DIR = Symbol("DIR")
-export const defaultOrders = ["index.html", "*.md", "*/", "*.html", "*.page.*", "*.json", "{.*, *.config.*}"]
+export const defaultOrders = ["index.html", "readme.md", "*.md", "*/", ".*/", "*.html", "*.page.*", "*.json", "{.*, *.config.*}"]
 export const sortPath = (paths: string[], orders: string[]) => {
     const mmopts: mm.Options = {
         // basename: true,
-        nocase: false,
+        nocase: true,
         // matchBase: true,
+        dot: true,
     };
 
     return paths.sort((b, a) => {
@@ -64,7 +65,9 @@ export const sortPath = (paths: string[], orders: string[]) => {
             b_isort = Infinity;
 
         // from back to front
-        for (let i = 0; i < orders.length; i++) {
+        for (let i = orders.length - 1; i > -1; i--) {
+        // // from front to back
+        // for (let i = 0; i < orders.length; i++) {
             // mm.isMatch and i would not on -1
             if (mm.isMatch(a, orders[i]!, mmopts) && a_isort == Infinity) a_isort = i;
             if (mm.isMatch(b, orders[i]!, mmopts) && b_isort == Infinity) b_isort = i;

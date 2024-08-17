@@ -3,6 +3,7 @@
     "editorconfig.editorconfig",
     "yzhang.markdown-all-in-one",
     "aaron-bond.better-comments",
-    "exodiusstudios.comment-anchors"
+    "exodiusstudios.comment-anchors",
+    "formulahendry.code-runner"
   ]
 }

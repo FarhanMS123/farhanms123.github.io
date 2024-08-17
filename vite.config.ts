@@ -6,7 +6,7 @@ import createInspect, { showConfig } from './src/plugin/inspect'
 
 // #region VITE ###################################
 
-import { InputValue, __prepare_cbro_input, __push_rollup_input, virtualRouter } from './src/vite-virtual-file-router/files-router'
+import { type InputValue, __prepare_cbro_input, __push_rollup_input, virtualRouter } from './src/vite-virtual-file-router/files-router'
 import fg from "fast-glob";
 import mm from "micromatch"
 import path from "path";
@@ -24,7 +24,7 @@ export default defineConfig(async ({ command, mode }) => {
   const ret = {
     plugins: [
       DynamicPublicDirectory(["**", "public/**"], {
-        ignore: [...defaultExcluded, "/public"],
+        ignore: [...defaultExcluded, "/public", "*lock*"],
       }) as PluginOption,
       virtualRouter(async ({ config, env }) => {
         const files: InputValue[] = [];
@@ -75,7 +75,6 @@ export default defineConfig(async ({ command, mode }) => {
         async closeBundle() {
           let dir_dist = await fg(["{,**/}{.*,*}"], {
             ...mmDefaultOpts,
-            // ignore: [...mmDefaultOpts.ignore!.filter(v => v.search("public") < 0), "tsconfig.*", "*.config.*", "pnpm*", "package*", "chunks/**"],
             ignore: ["tsconfig.*", "*.config.*", "pnpm*", "package*", "chunks/**"],
             cwd: path.resolve("dist"),
           });

@@ -38,11 +38,7 @@ export const components: Partial<Components> = {
 export default function Markdown({ url }: Viewer) {
   const styles = useMarkdownStyles();
   const { data: md_text } = useQuery({
-    queryFn: async () => {
-      const fet = await fetch(url);
-      const data = await fet.text();
-      return data;
-    },
+    queryFn: async () => fetch(url).then((res) => res.text()),
     queryKey: ["md_text"],
   });
 

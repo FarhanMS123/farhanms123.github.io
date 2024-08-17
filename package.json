@@ -12,7 +12,8 @@
     "build": "vite build",
     "build:tsc": "tsc -b",
     "build:nodemon": "pnpx nodemon",
-    "dev:serve": "pnpx live-server --verbose --no-browser --watch=dist/ dist/",
+    "dev:serve": "pnpx serve dist/",
+    "dev:live": "pnpx live-server --verbose --no-browser --watch=dist/ dist/",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -66,7 +67,8 @@
   },
   "peerDependencies": {
     "@chakra-ui/react": "^2.8.2",
-    "scheduler": "^0.23.2"
+    "scheduler": "^0.23.2",
+    "zustand": "^4.5.5"
   },
   "dependenciesMeta": {
     "vite-virtual-file-router": {

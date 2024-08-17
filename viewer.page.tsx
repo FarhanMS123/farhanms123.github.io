@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Button, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, FluentProvider, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
+import { Button, Divider, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, FluentProvider, Link, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
 import { ArrowNextFilled, ArrowPreviousFilled, DismissRegular, PinFilled, PinRegular } from "@fluentui/react-icons";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import useToggle from 'beautiful-react-hooks/useToggle'
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import 'overlayscrollbars/overlayscrollbars.css';
 import "libs/global_tailwind.css";
 import "libs/fui_docs/main.css"
+import type { StructDir } from "./libs/utils_v1";
 
 export type Viewer = {
   url: string;
@@ -60,7 +62,11 @@ export function SidePanel() {
   const restoreFocusTargetAttributes = useRestoreFocusTarget();
   const restoreFocusSourceAttributes = useRestoreFocusSource();
 
-  const [pin, setPin] = useState(true);
+  const { data: dirs } = useQuery({
+    queryFn: async () => fetch("/.dirs.json").then(async (res) => (await res.json()) as StructDir),
+    queryKey: ["dirs"],
+  });
+  const [pin, togglePin] = useToggle(true);
   const [isOpen, setIsOpen] = useState(true);
 
   return <>
@@ -80,7 +86,6 @@ export function SidePanel() {
       </DrawerHeader>
 
       <DrawerBody>
-        <p>Drawer content</p>
         <Tree>
           <TreeItem itemType="leaf">
             <TreeItemLayout>Home</TreeItemLayout>
@@ -91,16 +96,43 @@ export function SidePanel() {
           <TreeItem itemType="leaf">
             <TreeItemLayout>Medium</TreeItemLayout>
           </TreeItem>
+
+          <Divider />
+
+          { dirs && <TreeDirs list={dirs.list} path="/" /> }
         </Tree>
       </DrawerBody>
 
       <DrawerFooter className="flex-row-reverse !justify-between">
         <Button icon={<ArrowPreviousFilled />} appearance="transparent" onClick={() => setIsOpen(false)} />
-        <ToggleButton checked={pin} icon={pin ? <PinFilled /> : <PinRegular />} appearance="transparent" onClick={() => setPin(pin => !pin)} />
+        <ToggleButton checked={pin} icon={pin ? <PinFilled /> : <PinRegular />} appearance="transparent" onClick={() => togglePin()} />
       </DrawerFooter>
     </Drawer>
     <Button {...restoreFocusTargetAttributes} shape="circular" appearance="primary"
-      className={mergeClasses("fixed left-4 bottom-4 z-10", isOpen ? "!hidden" : "")}
-      icon={ <ArrowNextFilled /> } onClick={() => setIsOpen(true)} hidden={isOpen} />
+      className={mergeClasses("fixed left-2 bottom-4 !p-0 !min-w-2 min-h-16 z-10", isOpen ? "!hidden" : "")}
+      onClick={() => setIsOpen(true)} hidden={isOpen} />
   </>;
+}
+
+export function TreeDirs({ list, path }: {
+  list: StructDir["list"];
+  path: string;
+}) {
+  return list.map((v) => {
+    if (typeof v == "object") return (
+      <TreeItem key={`${path}${v.name}/`} itemType="branch">
+        <TreeItemLayout>{v.name}</TreeItemLayout>
+        <Tree>
+          <TreeDirs list={v.list} path={`${path}${v.name}/`} />
+        </Tree>
+      </TreeItem>
+    );
+    else return (
+      <TreeItem key={`${path}${v}`} itemType="leaf">
+        <Link appearance="subtle" href={`${path}${v}`}>
+          <TreeItemLayout>{v}</TreeItemLayout>
+        </Link>
+      </TreeItem>
+    )
+  });
 }
