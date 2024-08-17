@@ -4,8 +4,8 @@ import { ArrowNextFilled, ArrowPreviousFilled, DismissRegular, PinFilled, PinReg
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import 'overlayscrollbars/overlayscrollbars.css';
-import "../libs/global_tailwind.css";
-import "../libs/fui_docs/main.css"
+import "libs/global_tailwind.css";
+import "libs/fui_docs/main.css"
 
 export type Viewer = {
   url: string;

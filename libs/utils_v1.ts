@@ -40,11 +40,12 @@ export const _DIR = Symbol("DIR")
 export const defaultOrders = ["index.html", "*.md", "*/", "*.html", "*.page.*", "*.json", "{.*, *.config.*}"]
 export const sortPath = (paths: string[], orders: string[]) => {
     const mmopts: mm.Options = {
-        basename: true,
+        // basename: true,
         nocase: false,
+        // matchBase: true,
     };
 
-    paths.sort((b, a) => {
+    return paths.sort((b, a) => {
         const islash = findLongestMatchPaths(a, b);
 
         if (islash >= 0) {
@@ -67,7 +68,7 @@ export const sortPath = (paths: string[], orders: string[]) => {
             // mm.isMatch and i would not on -1
             if (mm.isMatch(a, orders[i]!, mmopts) && a_isort == Infinity) a_isort = i;
             if (mm.isMatch(b, orders[i]!, mmopts) && b_isort == Infinity) b_isort = i;
-            if (a_isort != Infinity && b_isort != Infinity) continue;
+            if (a_isort != Infinity && b_isort != Infinity) break;
         }
 
         if (a_isort == b_isort) return b.localeCompare(a);
@@ -78,4 +79,43 @@ export const sortPath = (paths: string[], orders: string[]) => {
         // [Ininifty, 2] -> 2 - Infinity = -Infinity -> [2, Infinity]   // expected
         return b_isort - a_isort;
     });
+}
+
+export type StructDir = {
+    name: string;
+    _list: Record<string, StructDir>;
+    list: (StructDir | string)[];
+};
+
+export const restructor = (paths: string[]) => {
+    const root: StructDir = {
+        name: "root",
+        _list: {},
+        list: [],
+    };
+
+    for (const fullpath of paths) {
+        const dirs = fullpath.split("/");
+
+        let _list = root._list;
+        let list = root.list;
+        for (const [ideep, dir] of Object.entries(dirs)) {
+            if (parseInt(ideep) == dirs.length - 1) {
+                list.push(dir);
+            } else {
+                if (!_list[dir]) {
+                    _list[dir] = {
+                        name: dir,
+                        _list: {},
+                        list: [],
+                    };
+                    list.push(_list![dir]);
+                }
+                list = _list[dir].list;
+                _list = _list[dir]._list;
+            }
+        }
+    }
+
+    return root;
 }

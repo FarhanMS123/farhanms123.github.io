@@ -15,6 +15,8 @@ import { abs2rel, defaultExcluded, defaultIncluded, jtx_main, mmDefaultOpts, pat
 import DynamicPublicDirectory from './src/vite-multiple-assets';
 import fs from "fs/promises";
 
+import { defaultOrders, restructor, sortPath, StructDir } from "./libs/utils_v1";
+
 // #endregion ###################################
 
 // https://vitejs.dev/config/
@@ -71,14 +73,30 @@ export default defineConfig(async ({ command, mode }) => {
       {
         name: "vite-post-selfbuild",
         async closeBundle() {
-          const dir_dist = await fg(["{,**/}{.*,*}"], {
+          let dir_dist = await fg(["{,**/}{.*,*}"], {
             ...mmDefaultOpts,
             // ignore: [...mmDefaultOpts.ignore!.filter(v => v.search("public") < 0), "tsconfig.*", "*.config.*", "pnpm*", "package*", "chunks/**"],
             ignore: ["tsconfig.*", "*.config.*", "pnpm*", "package*", "chunks/**"],
             cwd: path.resolve("dist"),
           });
 
-          await fs.writeFile(path.resolve("./dist/.dirs.json"), JSON.stringify(dir_dist, null, 2));
+          dir_dist = sortPath(dir_dist, defaultOrders);
+
+          const restructured = restructor(dir_dist);
+
+          const rem_List = (_list: StructDir) => {
+            _list._list = {};
+            for (const dir of _list.list) {
+              if (typeof dir == "object") rem_List(dir);
+            }
+          }
+
+          rem_List(restructured);
+
+          await fs.writeFile(path.resolve("./dist/.dirs.json"), JSON.stringify({
+            paths: dir_dist,
+            ...restructured,
+          }, null, 2));
         },
 
       },
