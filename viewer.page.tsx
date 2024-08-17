@@ -3,6 +3,7 @@ import { Button, Divider, Drawer, DrawerBody, DrawerFooter, DrawerHeader, Drawer
 import { ArrowNextFilled, ArrowPreviousFilled, DismissRegular, PinFilled, PinRegular } from "@fluentui/react-icons";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import useToggle from 'beautiful-react-hooks/useToggle'
+import { useLocation, useNavigate, HashRouter } from 'react-router-dom';
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import 'overlayscrollbars/overlayscrollbars.css';
 import "libs/global_tailwind.css";
@@ -38,6 +39,10 @@ export function Viewer() {
   return (
     <Providers>
       <SidePanel />
+      <div className="block w-full h-full flex-1">
+        <p>aaaaaAaaaAaaa</p>
+        <Content />
+      </div>
     </Providers>
   );
 }
@@ -46,11 +51,13 @@ export function Providers({ children }: React.PropsWithChildren) {
   const classes = useDocsStyles();
   return <>
     <QueryClientProvider client={queryClient}>
-      <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto block", classes.root)}>
+      <HashRouter basename="/">
+      <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto flex w-full", classes.root)}>
         {/* <OverlayScrollbarsComponent defer> */}
           { children }
         {/* </OverlayScrollbarsComponent> */}
       </FluentProvider>
+      </HashRouter>
     </QueryClientProvider>
   </>;
 }
@@ -70,7 +77,6 @@ export function SidePanel() {
   const [isOpen, setIsOpen] = useState(true);
 
   return <>
-    {/* <i aria-label="tailwind-reserve-keyword" className="hidden" /> */}
     <Drawer
       {...restoreFocusSourceAttributes}
       className={mergeClasses("!h-full", classes.cardCNB2)}
@@ -118,6 +124,7 @@ export function TreeDirs({ list, path }: {
   list: StructDir["list"];
   path: string;
 }) {
+  const navigate = useNavigate();
   return list.map((v) => {
     if (typeof v == "object") return (
       <TreeItem key={`${path}${v.name}/`} itemType="branch">
@@ -129,10 +136,24 @@ export function TreeDirs({ list, path }: {
     );
     else return (
       <TreeItem key={`${path}${v}`} itemType="leaf">
-        <Link appearance="subtle" href={`${path}${v}`}>
+        <Link appearance="subtle" href={`${path}${v}`} onClick={(ev) => {
+          ev.preventDefault();
+          navigate(`${path}${v}`)
+        }}>
           <TreeItemLayout>{v}</TreeItemLayout>
         </Link>
       </TreeItem>
     )
   });
+}
+
+export function Content() {
+  const location = useLocation();
+  return <>
+    location state: {location.state} <br />
+    location hash: {location.hash} <br />
+    location key: {location.key} <br />
+    location pathname: {location.pathname} <br />
+    location state: {location.search} <br />
+  </>;
 }
