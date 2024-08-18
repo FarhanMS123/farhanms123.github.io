@@ -3,12 +3,15 @@ import { Button, Divider, Drawer, DrawerBody, DrawerFooter, DrawerHeader, Drawer
 import { ArrowNextFilled, ArrowPreviousFilled, DismissRegular, PinFilled, PinRegular } from "@fluentui/react-icons";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import useToggle from 'beautiful-react-hooks/useToggle'
+import mm from "picomatch"
 import { useLocation, useNavigate, HashRouter } from 'react-router-dom';
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 import 'overlayscrollbars/overlayscrollbars.css';
 import "libs/global_tailwind.css";
 import "libs/fui_docs/main.css"
 import type { StructDir } from "./libs/utils_v1";
+import IFrame from "./libs/fui_docs/IFrame";
+import Markdown from "./libs/fui_docs/Markdown";
 
 export type Viewer = {
   url: string;
@@ -51,7 +54,7 @@ export function Providers({ children }: React.PropsWithChildren) {
   const classes = useDocsStyles();
   return <>
     <QueryClientProvider client={queryClient}>
-      <HashRouter basename="/">
+      <HashRouter>
       <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto flex w-full", classes.root)}>
         {/* <OverlayScrollbarsComponent defer> */}
           { children }
@@ -149,11 +152,8 @@ export function TreeDirs({ list, path }: {
 
 export function Content() {
   const location = useLocation();
-  return <>
-    location state: {location.state} <br />
-    location hash: {location.hash} <br />
-    location key: {location.key} <br />
-    location pathname: {location.pathname} <br />
-    location state: {location.search} <br />
-  </>;
+
+  if (mm.isMatch(location.pathname, "*.md", { basename: true }))
+    return (<Markdown url={location.pathname} />);
+  return (<IFrame url={location.pathname} />)
 }

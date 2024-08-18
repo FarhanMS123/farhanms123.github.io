@@ -69,7 +69,9 @@ export default defineConfig(async ({ command, mode }) => {
         loose: true,
       }),
       splitVendorChunkPlugin(),
-      react(),
+      react({
+        devTarget: "esnext"
+      }),
       {
         name: "vite-post-selfbuild",
         async closeBundle() {
@@ -105,14 +107,23 @@ export default defineConfig(async ({ command, mode }) => {
     build: {
       outDir: "dist",
       assetsDir: "chunks",
+      minify: true,
     },
     resolve: {
       preserveSymlinks: true,
+      // alias: {
+      //   'react/jsx-runtime': 'node_modules/react/jsx-runtime.js',
+      //   '@fluentui/react-components': 'node_modules/@fluentui/react-components/lib/index.js'
+      // },
     },
 
     root: process.cwd(),
     publicDir: false,
     base: "/",
+
+    optimizeDeps: {
+      include: ['react/jsx-runtime'],
+    },
 
     define: {
       __TIME__: new Date().getTime(),
