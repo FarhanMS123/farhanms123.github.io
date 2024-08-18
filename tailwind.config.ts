@@ -6,9 +6,12 @@ export default {
     "./**/*.html",
     "./**/*.{js,ts,jsx,tsx}",
   ],
+  plugins: [require("@tailwindcss/typography"),require('daisyui'),],
+  corePlugins: {
+    preflight: true, // https://tailwindcss.com/docs/preflight#disabling-preflight
+  },
   theme: {
     extend: {},
   },
-  plugins: [require("@tailwindcss/typography"),require('daisyui'),],
 } satisfies Config;
 

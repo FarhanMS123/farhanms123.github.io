@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button, Divider, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, FluentProvider, Link, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
-import { ArrowNextFilled, ArrowPreviousFilled, DismissRegular, PinFilled, PinRegular } from "@fluentui/react-icons";
+import { ArrowPreviousFilled, PinFilled, PinRegular } from "@fluentui/react-icons";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import useToggle from 'beautiful-react-hooks/useToggle'
 import mm from "picomatch"
 import { useLocation, useNavigate, HashRouter } from 'react-router-dom';
-import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-import 'overlayscrollbars/overlayscrollbars.css';
-import "libs/global_tailwind.css";
+// import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
+// import 'overlayscrollbars/overlayscrollbars.css';
+import "libs/tailwind_global.css";
 import "libs/fui_docs/main.css"
 import type { StructDir } from "./libs/utils_v1";
 import IFrame from "./libs/fui_docs/IFrame";
@@ -16,7 +16,7 @@ import Markdown from "./libs/fui_docs/Markdown";
 export type Viewer = {
   url: string;
   src?: string;
-};
+} & Pick<React.HTMLAttributes<HTMLDivElement>, "className">;
 
 export const queryClient = new QueryClient();
 
@@ -42,8 +42,7 @@ export function Viewer() {
   return (
     <Providers>
       <SidePanel />
-      <div className="block w-full h-full flex-1">
-        <p>aaaaaAaaaAaaa</p>
+      <div className="block w-full h-full flex-1 overflow-auto">
         <Content />
       </div>
     </Providers>
@@ -53,15 +52,15 @@ export function Viewer() {
 export function Providers({ children }: React.PropsWithChildren) {
   const classes = useDocsStyles();
   return <>
-    <QueryClientProvider client={queryClient}>
-      <HashRouter>
-      <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto flex w-full", classes.root)}>
-        {/* <OverlayScrollbarsComponent defer> */}
-          { children }
-        {/* </OverlayScrollbarsComponent> */}
-      </FluentProvider>
-      </HashRouter>
-    </QueryClientProvider>
+    <HashRouter>
+      <QueryClientProvider client={queryClient}>
+        <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto flex w-full", classes.root)}>
+          {/* <OverlayScrollbarsComponent defer> */}
+            { children }
+          {/* </OverlayScrollbarsComponent> */}
+        </FluentProvider>
+      </QueryClientProvider>
+    </HashRouter>
   </>;
 }
 
@@ -154,6 +153,6 @@ export function Content() {
   const location = useLocation();
 
   if (mm.isMatch(location.pathname, "*.md", { basename: true }))
-    return (<Markdown url={location.pathname} />);
-  return (<IFrame url={location.pathname} />)
+    return (<Markdown key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />);
+  return (<IFrame key={`ifrm:${location.pathname}`} url={location.pathname} />)
 }

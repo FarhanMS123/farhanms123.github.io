@@ -5,5 +5,5 @@
   "ext": "js,ts,tsx,ts,md,html,css,scss,sass,json,png,svg,jpg,jpeg",
   "exec": "vite build",
   "legacyWatch": true,
-  "pollingInterval": 5000
+  "pollingInterval": 10000
 }

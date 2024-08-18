@@ -35,14 +35,14 @@ export const components: Partial<Components> = {
   },
 };
 
-export default function Markdown({ url }: Viewer) {
+export default function Markdown({ url, className }: Viewer) {
   const styles = useMarkdownStyles();
   const { data: md_text } = useQuery({
     queryFn: async () => fetch(url).then((res) => res.text()),
     queryKey: ["md_text"],
   });
 
-  return <div className={mergeClasses(styles.root, "p-2 lg:p-4")}>
+  return <div className={mergeClasses(styles.root, "p-2 lg:p-4", className)}>
     <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>{md_text}</ReactMarkdown>
   </div>;
 }

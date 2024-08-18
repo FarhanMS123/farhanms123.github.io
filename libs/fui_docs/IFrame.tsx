@@ -2,5 +2,5 @@ import React from "react";
 import type { Viewer } from "~/viewer.page";
 
 export default function IFrame({ url }: Viewer) {
-  return <iframe src={url} className="w-full h-full border-none bg-white" />;
+  return <iframe src={url} className="w-full h-full border-none" />;
 }

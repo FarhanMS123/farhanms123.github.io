@@ -1,0 +1,15 @@
+/* https://tailwindcss.com/docs/preflight */
+/* https://tailwindcss.com/docs/using-with-preprocessors#build-time-imports */
+@tailwind base;
+/* @import "tailwindcss/base"; */
+
+@tailwind components;
+@tailwind utilities;
+
+html,body {
+  @apply bg-[#333333] h-dvh
+}
+
+#root {
+  @apply h-full
+}
