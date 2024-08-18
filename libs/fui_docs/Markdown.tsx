@@ -3,7 +3,7 @@ import { Link, makeStyles, mergeClasses, Table, TableBody, TableCell, TableCellL
 import { useQuery } from "@tanstack/react-query";
 import ReactMarkdown, { type Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm';
-import { Viewer } from "~/viewer.page";
+import { Viewer } from "~/viewer.html.page";
 
 export const useMarkdownStyles = makeStyles({
   root: {

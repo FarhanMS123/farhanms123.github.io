@@ -11,7 +11,7 @@ import fg from "fast-glob";
 import mm from "micromatch"
 import path from "path";
 import { abs2rel, defaultExcluded, defaultIncluded, jtx_main, mmDefaultOpts, pattern_html, pattern_index_page_html,
-          pattern_js_ts, pattern_jsx_tsx, pattern_out_html, src2page } from './src/vite-virtual-file-router/templates'
+          pattern_js_ts, pattern_jsx_tsx, pattern_out_html, pattern_out_just_html, src2page } from './src/vite-virtual-file-router/templates'
 import DynamicPublicDirectory from './src/vite-multiple-assets';
 import fs from "fs/promises";
 
@@ -24,7 +24,7 @@ export default defineConfig(async ({ command, mode }) => {
   const ret = {
     plugins: [
       DynamicPublicDirectory(["**", "public/**"], {
-        ignore: [...defaultExcluded, "/public", "*lock*"],
+        ignore: [...defaultExcluded.filter(v => v.search("public") == -1), "/public", "*lock*"],
       }) as PluginOption,
       virtualRouter(async ({ config, env }) => {
         const files: InputValue[] = [];
@@ -53,6 +53,8 @@ export default defineConfig(async ({ command, mode }) => {
             if (file.inject != "file") {
               if (mm.isMatch(file.out, pattern_index_page_html, {...mmOpts, basename: true}))
                 file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}.html`;
+              else if (mm.isMatch(file.out, pattern_out_just_html, {...mmOpts, basename: true}))
+                file.out = `${file.out.replaceAll(/\.html\.page\.\w+\.html$/ig, "")}.html`;
               else if (mm.isMatch(file.out, pattern_out_html, {...mmOpts, basename: true}))
                 file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}/index.html`;
             }

@@ -14,8 +14,6 @@ https://stackoverflow.com/questions/63775411/is-there-a-way-to-list-all-active-e
 npm exec eslint -- --print-config .eslintrc.cjs >> .eslint-list.json
 ```
 
-- SHould I also put `.env.example` or related?
-
 # TODO
 - [x] Create new Vite React SWC
 - [x] Match up to this repo and update
@@ -27,14 +25,27 @@ npm exec eslint -- --print-config .eslintrc.cjs >> .eslint-list.json
   - [x] other existing repo
 - [ ] Create Viewer on Demos
   - [ ] Markdown
-    - [ ] Parse meta to get url and src
-  - [ ] IFrame; implement this first
+    - [ ] ~Parse meta to get url and src~
+    - [ ] Restyle typography and some components tailwind preflight
+  - [x] IFrame; implement this first
   - [ ] CodeViewer
-  - [ ] Router hooks
-  - [ ] Side Panel
-    - [ ] Get vars from vite by fg to .dirs.json
-    - [ ] Get .dirs.json
-    - [ ] Folder first, files second, conf last
-    - [ ] Files: index, md, folder, html, .page.*, {.\*, \*.config.\*}
-  - [ ] Small Toggle
+  - [x] Router hooks
+  - [x] Side Panel
+    - [x] Get vars from vite by fg to .dirs.json
+    - [x] Get .dirs.json
+    - [ ] ~Folder first, files second, conf last~
+    - [x] html first, readme second, then folder, conf last
+      - [x] Files: index, md, folder, html, .page.*, {.\*, \*.config.\*}
+  - [x] Small Toggle
 - [ ] Should I install mime-types?
+- [ ] SHould I also put `.env.example` or related?
+
+# Junks
+
+```
+preview
+code
+doc
+
+index
+```

@@ -20,6 +20,7 @@ export const jtx_main = () => readFile(join(__dir, "template/main_react.tsx"), {
 
 export const __dir = __dirname;
 export const pattern_out_html = "*.page.*.html";
+export const pattern_out_just_html = "*.html.page.*.html";
 export const pattern_index_page_html = "index.page.*.html";
 export const pattern_html = "{,**/}*.html";
 
