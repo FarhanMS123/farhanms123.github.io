@@ -23,7 +23,7 @@ import { defaultOrders, restructor, sortPath, StructDir } from "./libs/utils_v1"
 export default defineConfig(async ({ command, mode }) => {
   const ret = {
     plugins: [
-      DynamicPublicDirectory(["**", "public/**"], {
+      DynamicPublicDirectory(["public/**", "**"], {
         ignore: [...defaultExcluded.filter(v => v.search("public") == -1), "/public", "*lock*"],
       }) as PluginOption,
       virtualRouter(async ({ config, env }) => {
