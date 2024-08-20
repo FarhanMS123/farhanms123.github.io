@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Divider, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, FluentProvider, Link, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
-import { ArrowPreviousFilled, PinFilled, PinRegular } from "@fluentui/react-icons";
+import { ArrowPreviousFilled, ColorBackgroundFilled, ColorBackgroundRegular, PinFilled, PinRegular } from "@fluentui/react-icons";
 import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
 import useToggle from 'beautiful-react-hooks/useToggle'
 import mm from "picomatch"
@@ -12,6 +12,7 @@ import "libs/fui_docs/main.css"
 import type { StructDir } from "./libs/utils_v1";
 import IFrame from "./libs/fui_docs/IFrame";
 import Markdown from "./libs/fui_docs/Markdown";
+import { atom, useAtom } from "jotai";
 
 export type Viewer = {
   url: string;
@@ -19,6 +20,7 @@ export type Viewer = {
 } & Pick<React.HTMLAttributes<HTMLDivElement>, "className">;
 
 export const queryClient = new QueryClient();
+export const $whitefill = atom(false);
 
 export const useDocsStyles = makeStyles({
   root: {
@@ -77,6 +79,7 @@ export function SidePanel() {
   });
   const [pin, togglePin] = useToggle(true);
   const [isOpen, setIsOpen] = useState(true);
+  const [whitefill, setWhitefill] = useAtom($whitefill);
 
   return <>
     <Drawer
@@ -95,15 +98,17 @@ export function SidePanel() {
 
       <DrawerBody>
         <Tree>
-          <TreeItem itemType="leaf">
+          {/* <TreeItem itemType="leaf">
             <TreeItemLayout>Home</TreeItemLayout>
-          </TreeItem>
+          </TreeItem> */}
           <TreeItem itemType="leaf">
-            <TreeItemLayout>Github</TreeItemLayout>
+            <Link appearance="subtle" href={`https://github.com/FarhanMS123`}>
+              <TreeItemLayout>Github</TreeItemLayout>
+            </Link>
           </TreeItem>
-          <TreeItem itemType="leaf">
+          {/* <TreeItem itemType="leaf">
             <TreeItemLayout>Medium</TreeItemLayout>
-          </TreeItem>
+          </TreeItem> */}
 
           <Divider />
 
@@ -113,6 +118,7 @@ export function SidePanel() {
 
       <DrawerFooter className="flex-row-reverse !justify-between">
         <Button icon={<ArrowPreviousFilled />} appearance="transparent" onClick={() => setIsOpen(false)} />
+        <ToggleButton checked={whitefill} icon={whitefill ? <ColorBackgroundFilled /> : <ColorBackgroundRegular />} appearance="transparent" onClick={() => setWhitefill(wf => !wf)} />
         <ToggleButton checked={pin} icon={pin ? <PinFilled /> : <PinRegular />} appearance="transparent" onClick={() => togglePin()} />
       </DrawerFooter>
     </Drawer>

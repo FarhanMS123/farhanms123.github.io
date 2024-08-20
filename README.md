@@ -49,3 +49,13 @@ doc
 
 index
 ```
+
+- https://rollupjs.org/troubleshooting/#error-javascript-heap-out-of-memory
+- https://stackoverflow.com/questions/66207752/a-better-way-to-manage-nodejs-configuration-flags
+- https://github.com/vitejs/vite/issues/2433
+- https://nodejs.org/docs/latest/api/cli.html#environment-variables_1
+
+```sh
+alias node="node --max-old-space-size=4096"
+export NODE_OPTIONS="--max-old-space-size=4096"
+```

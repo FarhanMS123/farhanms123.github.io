@@ -8,7 +8,7 @@ export default {
   ],
   plugins: [require("@tailwindcss/typography"),require('daisyui'),],
   corePlugins: {
-    preflight: true, // https://tailwindcss.com/docs/preflight#disabling-preflight
+    preflight: false, // https://tailwindcss.com/docs/preflight#disabling-preflight
   },
   theme: {
     extend: {},
