@@ -82,6 +82,7 @@
   },
   "optionalDependencies": {
     "@nanostores/persistent": "^0.10.1",
+    "@nanostores/react": "^0.7.3",
     "@types/mime-types": "^2.1.4",
     "framer-motion": "^11.3.24",
     "jotai": "^2.9.1",

@@ -56,6 +56,10 @@ index
 - https://nodejs.org/docs/latest/api/cli.html#environment-variables_1
 
 ```sh
-alias node="node --max-old-space-size=4096"
-export NODE_OPTIONS="--max-old-space-size=4096"
+# 1024, 2048, 4096, 8192, 16384
+# 512, 3072, 5120, 6144, 7168, 9216, 1024, 11264
+# alias node="node --max-old-space-size=4096"
+export NODE_OPTIONS="--max-old-space-size=5120"
+
+npm i --include-optional
 ```

@@ -10,9 +10,11 @@ import { useLocation, useNavigate, HashRouter } from 'react-router-dom';
 import "libs/tailwind_global.css";
 import "libs/fui_docs/main.css"
 import type { StructDir } from "./libs/utils_v1";
-import IFrame from "./libs/fui_docs/IFrame";
+import IFrame, {B} from "./libs/fui_docs/IFrame";
 import Markdown from "./libs/fui_docs/Markdown";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom, Provider as JotaiProvider } from "jotai";
+// import { atom } from 'nanostores'
+import { useStore } from '@nanostores/react'
 
 export type Viewer = {
   url: string;
@@ -45,6 +47,8 @@ export function Viewer() {
     <Providers>
       <SidePanel />
       <div className="block w-full h-full flex-1 overflow-auto">
+        <A />
+        <B />
         <Content />
       </div>
     </Providers>
@@ -57,13 +61,20 @@ export function Providers({ children }: React.PropsWithChildren) {
     <HashRouter>
       <QueryClientProvider client={queryClient}>
         <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto flex w-full", classes.root)}>
-          {/* <OverlayScrollbarsComponent defer> */}
-            { children }
-          {/* </OverlayScrollbarsComponent> */}
+          <JotaiProvider>
+            {/* <OverlayScrollbarsComponent defer> */}
+              { children }
+            {/* </OverlayScrollbarsComponent> */}
+          </JotaiProvider>
         </FluentProvider>
       </QueryClientProvider>
     </HashRouter>
   </>;
+}
+
+export function A() {
+  const [whitefill] = useAtom($whitefill);
+  return <>whitefill: {whitefill.toString()}</>;
 }
 
 export function SidePanel() {
@@ -81,6 +92,8 @@ export function SidePanel() {
   const [isOpen, setIsOpen] = useState(true);
   const [whitefill, setWhitefill] = useAtom($whitefill);
 
+  console.log("whitefill viewer: ", whitefill, $whitefill);
+
   return <>
     <Drawer
       {...restoreFocusSourceAttributes}
@@ -92,7 +105,7 @@ export function SidePanel() {
     >
       <DrawerHeader className="mb-4">
         <DrawerHeaderTitle className="!justify-center">
-          FarhanMS123
+          FarhanMS123 <A /> <B />
         </DrawerHeaderTitle>
       </DrawerHeader>
 
@@ -157,8 +170,13 @@ export function TreeDirs({ list, path }: {
 
 export function Content() {
   const location = useLocation();
+  const whitefill = useAtom($whitefill);
 
-  if (mm.isMatch(location.pathname, "*.md", { basename: true }))
-    return (<Markdown key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />);
-  return (<IFrame key={`ifrm:${location.pathname}`} url={location.pathname} />)
+  return <>
+    <A />
+    <B />
+    { mm.isMatch(location.pathname, "*.md", { basename: true }) ?
+      <Markdown key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />
+      : <IFrame key={`ifrm:${location.pathname}`} url={location.pathname} /> }
+  </>;
 }

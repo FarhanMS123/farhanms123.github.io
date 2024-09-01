@@ -2,5 +2,6 @@
   "files.associations": {
     "*.html": "handlebars"
   },
-  "files.autoSave": "onFocusChange"
+  "files.autoSave": "onFocusChange",
+  "workbench.colorTheme": "Monokai Dimmed"
 }
