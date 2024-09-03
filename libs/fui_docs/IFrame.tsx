@@ -1,18 +1,13 @@
 import { mergeClasses } from "@fluentui/react-components";
-import { useAtom } from "jotai";
-import { useStore } from '@nanostores/react'
+import { atom, useAtom } from "jotai";
 import React from "react";
-import { $whitefill, type Viewer } from "~/viewer.html.page";
+import { type Viewer } from "~/viewer.html.page";
 
-export function B() {
-  const [whitefill] = useAtom($whitefill);
-  return <>whitefill: {whitefill.toString()}</>;
-}
+export const $whitefill = atom(false);
 
 export default function IFrame({ url }: Viewer) {
   const [whitefill] = useAtom($whitefill);
-  console.log("whitefill: ", whitefill, $whitefill);
   return <>
-    <iframe src={url} className={mergeClasses("w-full h-full border-none", whitefill ? "bg-white text-black" : "")} />
+    <iframe src={url} className={mergeClasses("w-full h-full border-none", whitefill ? "bg-white !text-black" : "")} />
   </>;
 }

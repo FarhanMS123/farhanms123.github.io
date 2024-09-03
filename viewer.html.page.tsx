@@ -10,11 +10,9 @@ import { useLocation, useNavigate, HashRouter } from 'react-router-dom';
 import "libs/tailwind_global.css";
 import "libs/fui_docs/main.css"
 import type { StructDir } from "./libs/utils_v1";
-import IFrame, {B} from "./libs/fui_docs/IFrame";
+import IFrame, {$whitefill} from "./libs/fui_docs/IFrame";
 import Markdown from "./libs/fui_docs/Markdown";
-import { atom, useAtom, Provider as JotaiProvider } from "jotai";
-// import { atom } from 'nanostores'
-import { useStore } from '@nanostores/react'
+import { useAtom, Provider as JotaiProvider } from "jotai";
 
 export type Viewer = {
   url: string;
@@ -22,7 +20,6 @@ export type Viewer = {
 } & Pick<React.HTMLAttributes<HTMLDivElement>, "className">;
 
 export const queryClient = new QueryClient();
-export const $whitefill = atom(false);
 
 export const useDocsStyles = makeStyles({
   root: {
@@ -47,8 +44,6 @@ export function Viewer() {
     <Providers>
       <SidePanel />
       <div className="block w-full h-full flex-1 overflow-auto">
-        <A />
-        <B />
         <Content />
       </div>
     </Providers>
@@ -72,11 +67,6 @@ export function Providers({ children }: React.PropsWithChildren) {
   </>;
 }
 
-export function A() {
-  const [whitefill] = useAtom($whitefill);
-  return <>whitefill: {whitefill.toString()}</>;
-}
-
 export function SidePanel() {
   const classes = useDocsStyles();
 
@@ -88,7 +78,7 @@ export function SidePanel() {
     queryFn: async () => fetch("/.dirs.json").then(async (res) => (await res.json()) as StructDir),
     queryKey: ["dirs"],
   });
-  const [pin, togglePin] = useToggle(true);
+  const [pin, togglePin] = useToggle(window.outerWidth >= 500);
   const [isOpen, setIsOpen] = useState(true);
   const [whitefill, setWhitefill] = useAtom($whitefill);
 
@@ -105,7 +95,7 @@ export function SidePanel() {
     >
       <DrawerHeader className="mb-4">
         <DrawerHeaderTitle className="!justify-center">
-          FarhanMS123 <A /> <B />
+          FarhanMS123
         </DrawerHeaderTitle>
       </DrawerHeader>
 
@@ -173,8 +163,6 @@ export function Content() {
   const whitefill = useAtom($whitefill);
 
   return <>
-    <A />
-    <B />
     { mm.isMatch(location.pathname, "*.md", { basename: true }) ?
       <Markdown key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />
       : <IFrame key={`ifrm:${location.pathname}`} url={location.pathname} /> }
