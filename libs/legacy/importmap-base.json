@@ -1,0 +1,25 @@
+{
+    "imports": {
+        "daisyui": "https://ga.jspm.io/npm:daisyui@4.4.2/src/index.js",
+        "daisyui/": "https://ga.jspm.io/npm:daisyui@4.4.2/"
+    },
+    "scopes": {
+        "https://ga.jspm.io/": {
+            "buffer": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/buffer.js",
+            "camelcase-css": "https://ga.jspm.io/npm:camelcase-css@2.0.1/index-es5.js",
+            "css-selector-tokenizer": "https://ga.jspm.io/npm:css-selector-tokenizer@0.8.0/lib/index.js",
+            "cssesc": "https://ga.jspm.io/npm:cssesc@3.0.0/cssesc.js",
+            "culori/require": "https://ga.jspm.io/npm:culori@3.2.0/bundled/culori.cjs",
+            "fastparse": "https://ga.jspm.io/npm:fastparse@1.1.2/lib/Parser.js",
+            "fs": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/fs.js",
+            "nanoid/non-secure": "https://ga.jspm.io/npm:nanoid@3.3.7/non-secure/index.cjs",
+            "path": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/path.js",
+            "picocolors": "https://ga.jspm.io/npm:picocolors@1.0.0/picocolors.browser.js",
+            "postcss": "https://ga.jspm.io/npm:postcss@8.4.31/lib/dev.postcss.js",
+            "postcss-js": "https://ga.jspm.io/npm:postcss-js@4.0.1/index.js",
+            "process": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process.js",
+            "source-map-js": "https://ga.jspm.io/npm:source-map-js@1.0.2/source-map.js",
+            "url": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/url.js"
+        }
+    }
+}

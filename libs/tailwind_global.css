@@ -6,8 +6,16 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
 html,body {
-  @apply bg-[#333333] h-dvh
+  @apply h-dvh
 }
 
 #root {
@@ -15,5 +23,5 @@ html,body {
 }
 
 html, body, #root {
-  @apply m-0 p-0;
+  @apply m-0 p-0 w-full;
 }

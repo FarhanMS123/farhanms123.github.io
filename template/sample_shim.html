@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-base-200" data-theme="nord">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample ES Module Shims</title>
+
+    <script type="importmap-shim" src="../.dist/importmap-base.json"></script>
+    <!--
+        JSPM Generator Import Map
+        Edit URL: https://generator.jspm.io/#U2VgYGBiDs0rySzJSU1hKMgvLikoyk9OLS7OzEt3MNMzNtYzZijJKEpNdTDQMzS10DMAAF2Ioc4yAA
+    -->
+    <script type="importmap">
+    {
+        "imports": {
+            "postprocessing": "https://ga.jspm.io/npm:postprocessing@6.33.3/build/index.js",
+            "three": "https://ga.jspm.io/npm:three@0.158.0/build/three.module.js",
+            "three/": "https://ga.jspm.io/npm:three@0.158.0/"
+        }
+    }
+    </script>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.2/dist/es-module-shims.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module-shim" src="../.dist/js/base.mjs"></script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div id="ccanvas" class="card bg-base-100 shadow-l fixed top-0 left-0 m-4 z-[1]" style="width: calc(100% - 2rem); height: calc(100% - 2rem);"></div>
+
+    <button class="btn btn-circle btn-neutral fixed z-[2] right-8 bottom-8 shadow" onclick="modal_info.showModal()">
+        <i data-lucide="help-circle"></i>
+    </button>
+
+    <dialog id="modal_info" class="modal" open>
+        <div class="modal-box bg-neutral text-neutral-content">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-4">✕</button>
+            </form>
+            <h3 class="font-bold text-lg -mt-2">Example: ES Module Shim with ThreeJS</h3>
+            <p class="mt-2">
+                The code provided for this example is half provided 
+                from <a class="link link-base-200" href="https://github.com/FarhanMS123/ThreeJS_Demo">FarhanMS123/ThreeJS_Demo</a>.
+                The 3D Model used in this example is called I.O.R.A and belongs 
+                to <a class="link link-base-200" href="https://www.linkedin.com/in/alexrai/">Alexander Rainer</a> as the creator, and 
+                BNCC Event Organizer, and Technoscape Team for the use of model.
+            </p>
+            <p class="mt-2">
+                As stated above, you are NOT ALLOWED to use the model for any purpose include private use 
+                without permission.
+            </p>
+        </div>
+        <form method="dialog" class="modal-backdrop">
+            <button class="cursor-default">close</button>
+        </form>
+    </dialog>
+
+    <script type="module" async>
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+        import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls.js';
+        import { EffectComposer, RenderPass, EffectPass } from 'postprocessing';
+
+        lucide.createIcons();
+
+        // These code below are taken from https://github.com/FarhanMS123/ThreeJS_Demo/blob/master/public/Iora.js
+        // If you see there are some variables seems redundant, those are intended as the code is taken directly
+        // from the original repository.
+
+        const ccanvas = document.getElementById("ccanvas");
+        const container = ccanvas;
+        const renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
+        const canvas = renderer.domElement;
+        container.append(renderer.domElement);
+
+        // ##### DEFINE SCENE ###############
+        const gltfLoader = new GLTFLoader();
+        const scene = new THREE.Scene();
+
+        const light = new THREE.AmbientLight( 0xffffff, 1 );
+        
+        const cam1 = new THREE.PerspectiveCamera( 75, container.clientWidth / container.clientHeight, 0.1, 1000 );
+        const camera = cam1;
+        cam1.position.set(0, 1, 4);
+        // cam1.rotation.set(-0.37, -0.8, -0.26);
+
+        const gltfMascot = await new Promise((res, rej) => gltfLoader.load("https://farhanms123.github.io/ThreeJS_Demo/3d/halo.glb", res, undefined, rej));
+        const helper = new THREE.BoxHelper( gltfMascot.scene, 0xff0000 );
+        const gridHelper = new THREE.GridHelper( 10, 10 );
+
+        // You can play with camera with this global window.
+        window.cam1 = cam1;
+        scene.add( light, cam1, gltfMascot.scene, helper, gridHelper );
+
+        // ##### CONTROLLER ###############
+        const trackball = new TrackballControls(camera, canvas);
+        trackball.rotateSpeed = 1.0;
+        trackball.zoomSpeed = 1.2;
+        trackball.panSpeed = 0.8;
+        trackball.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
+
+        // ##### EFFECT & COMPOSER ###############
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        // ##### RENDER SCENE ###############
+        function tick() {
+            requestAnimationFrame(tick);
+
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+
+            trackball.handleResize();
+            trackball.update();
+    
+            renderer.setSize( container.clientWidth, container.clientHeight );
+            renderer.render( scene, camera );
+        }
+        tick();
+    </script>
+</body>
+</html>

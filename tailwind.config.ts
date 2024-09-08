@@ -1,4 +1,6 @@
 import { type Config } from "tailwindcss";
+import daisyui from "daisyui";
+import themes from "daisyui/src/theming/themes.js";
 
 // /** @type {import('tailwindcss').Config} */
 export default {
@@ -6,12 +8,19 @@ export default {
     "./**/*.html",
     "./**/*.{js,ts,jsx,tsx}",
   ],
-  plugins: [require("@tailwindcss/typography"),require('daisyui'),],
+  plugins: [
+    require("@tailwindcss/typography"),
+    daisyui,
+  ],
   corePlugins: {
     preflight: false, // https://tailwindcss.com/docs/preflight#disabling-preflight
   },
   theme: {
     extend: {},
+  },
+  daisyui: {
+    // themes: Object.entries(themes).map(([k, v]) => ({ [k]: v })),
+    // themes: Object.keys(themes),
   },
 } satisfies Config;
 

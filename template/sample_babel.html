@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Babel</title>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script> -->
+</head>
+<body>
+    <script type="text/babel" data-type="module" data-presets="react,typescript" 
+         data-plugins="syntax-import-meta,syntax-import-attributes,syntax-import-reflection">
+         
+        import react from "https://ga.jspm.io/npm:react@18.2.0/index.js";
+        console.log("hello");
+    </script>
+</body>
+</html>
