@@ -104,7 +104,7 @@ export const virtualRouter = async (_opts: Option | OptsFunc) => {
              * This plugin would insert virtual file name such `\x00virtual-prefix:out-file`
              * or something plugind defined into `config.build.rollupOptions.input`.
              * This self defined file name also stored as key and for
-             * identification. As such, this resolveId would only need 
+             * identification. As such, this resolveId would only need
              * to find `source` to related id. No need for `${PREFIX}${source}`
              * As in file, it should reference as prefix without \x00. This also
              * must be handled.
@@ -115,9 +115,11 @@ export const virtualRouter = async (_opts: Option | OptsFunc) => {
                 try {
                     if (virtual) "";
                     else await fsAccess(isAbsolute(ret) ? ret : join(config.root!, ret), fsConst.F_OK)
+                    console.info(`resolveId: ${source} ${ virtual ? '""' : ret }`);
                     return ret;
                 } catch {
-                    return undefined
+                    console.info(`resolveId:: ${source} UNDEFINED`);
+                    return;
                 }
             },
 
@@ -132,6 +134,7 @@ export const virtualRouter = async (_opts: Option | OptsFunc) => {
              */
             async load(id, options) {
                 const _input = input[`${PREFIX_X00}${id}`] as InputValue_Virtual;
+                console.log(`LOAD: ${!!_input} ${id}`)
                 if (!_input) return;
                 _input.labels ??= {};
                 _input.labels.__id = id;

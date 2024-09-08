@@ -1,4 +1,4 @@
-# Collections
+# Collections 
 
 I have many sample or test case which did not need a full solid project management. Sometimes, it just need 
 some HTML, CSS, JS, and compiled on-fly. Even though, sometime I made a backend or kernel code which need be
@@ -12,7 +12,30 @@ refer further more in [template](template/README.md). Later, this documents can 
 In this root of repository, there are a universal configuration files which I intended to be reuse in every 
 project I have. Which means the config files **are** the sample/template/concept I intend to show too.
 
-## Showcase
+## Structure
+
+```css
+.github/
+.devcontainer/
+.vs/
+.vscode/
+
+tools/
+demos
+libs/
+\_ fui_docs
+\_ legacy -> from master_v2 and collections
+\_ components --> React Comps
+\_ assets --> for all graphics and audio
+docker/
+shell/
+template/
+```
+
+<details>
+   <summary><h1>Showcase \[Collections 2023-11-12 18:49 UTC+007]</h1></summary>
+
+## Showcase \[Collections 2023-11-12 18:49 UTC+007]
 
 You may find this project has been structured. So, here are some rules to make it works:
 
@@ -59,12 +82,14 @@ You may find a `package.json` and `node_modules` eventhough this showcase would 
 to do some precompiled assets such as tailwind and daisy ui. The compiled assets would be put in `.dist` as it would be 
 hidden in showcase website.
 
+</details>
 
 
-
+<!-- ################################################################################################################### -->
+<!-- ################################################################################################################### -->
 <hr />
-
-
+<!-- ################################################################################################################### -->
+<!-- ################################################################################################################### -->
 
 
 
@@ -93,9 +118,9 @@ npm exec eslint -- --print-config .eslintrc.cjs >> .eslint-list.json
 - [x] Integrate Vite Multiple Assets
 - [ ] Match up configuration and files: packages, npm/pnpm/yaml rc, eslint, prettier, editorconfig, viteconfig, tsconfig, vscode, devcontainer
   - [ ] master_v2
-    - [ ] create individual provider fluentui
-    - [ ] create base import tsx for setup and boot
-    - [ ] match up `/src/main.tsx` to individual provider fluentui
+    - [x] create individual provider fluentui
+    - [x] create base import tsx for setup and boot
+    - [x] match up `/src/main.tsx` to individual provider fluentui
     - [ ] match up `/src/components/Preview/*`
     - Do not need to match up `/src/pages/*/index.tsx`
   - [x] collections

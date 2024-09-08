@@ -1,30 +1,22 @@
 import React, { useState } from "react";
-import { Button, Divider, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, FluentProvider, Link, makeStyles, mergeClasses, teamsDarkTheme, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
+import { Button, Divider, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, Link, makeStyles, mergeClasses, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
 import { ArrowPreviousFilled, ColorBackgroundFilled, ColorBackgroundRegular, PinFilled, PinRegular } from "@fluentui/react-icons";
-import { QueryClient, QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import useToggle from 'beautiful-react-hooks/useToggle'
 import mm from "picomatch"
-import { useLocation, useNavigate, HashRouter } from 'react-router-dom';
-// import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-// import 'overlayscrollbars/overlayscrollbars.css';
-import "libs/tailwind_global.css";
-import "libs/fui_docs/main.css"
+import { useLocation, useNavigate } from 'react-router-dom';
 import type { StructDir } from "./libs/utils_v1";
 import IFrame, {$whitefill} from "./libs/fui_docs/IFrame";
 import Markdown from "./libs/fui_docs/Markdown";
-import { useAtom, Provider as JotaiProvider } from "jotai";
+import { useAtom } from "jotai";
+import { Providers } from "./libs/fui_docs/Providers";
 
 export type Viewer = {
   url: string;
   src?: string;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, "className">;
 
-export const queryClient = new QueryClient();
-
 export const useDocsStyles = makeStyles({
-  root: {
-    backgroundColor: tokens.colorNeutralBackground3,
-  },
   cardCNB2: {
     "& header.sp": {
       fontSize: tokens.fontSizeBase500,
@@ -48,23 +40,6 @@ export function Viewer() {
       </div>
     </Providers>
   );
-}
-
-export function Providers({ children }: React.PropsWithChildren) {
-  const classes = useDocsStyles();
-  return <>
-    <HashRouter>
-      <QueryClientProvider client={queryClient}>
-        <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto flex w-full", classes.root)}>
-          <JotaiProvider>
-            {/* <OverlayScrollbarsComponent defer> */}
-              { children }
-            {/* </OverlayScrollbarsComponent> */}
-          </JotaiProvider>
-        </FluentProvider>
-      </QueryClientProvider>
-    </HashRouter>
-  </>;
 }
 
 export function SidePanel() {

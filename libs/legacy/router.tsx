@@ -1,21 +1,21 @@
-import Executor from '@/components/Executor';
+import Executor from '~/libs/Executor';
 import Codeview from '@/components/Preview/Codeview';
 import IFrame from '@/components/Preview/IFrame';
 import Markdown from '@/components/Preview/Markdown';
-import ERoutes, { EDemos, ELibs, ETools } from '@/consts/ERoutes';
+import ERoutes, { EDemos, ELibs, ETools } from '~/libs/legacy/ERoutes';
 import Demos from '@/pages/Demos';
-import TestTextareaMenu from '@/pages/Demos/test-textarea-menu';
+import TestTextareaMenu from '~/demos/test-textarea-menu.page';
 import Libs from '@/pages/Libs';
 import Tools from '@/pages/Tools';
-import ChatParser from '@/pages/Tools/chat-parser';
-import ChatParser2 from '@/pages/Tools/chat-parser-2';
+import ChatParser from '~/tools/ChatParser/chat-parser';
+import ChatParser2 from '~/tools/ChatParser/chat-parser-2';
 import { createHashRouter, Navigate, RouteObject } from 'react-router-dom';
 
 export const routes: RouteObject[] = [
   {
     path: ERoutes.HOME,
     element: (<Executor func={() => window.location.replace('https://github.com/FarhanMS123')} />),
-  }, 
+  },
   {
     path: ERoutes.TOOLS,
     element: (<Tools />),

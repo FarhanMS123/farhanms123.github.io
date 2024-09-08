@@ -36,6 +36,7 @@ export default defineConfig(async ({ command, mode }) => {
         // const pattern = ["demos/Docs/*.page.tsx"];
         const mmOpts: fg.Options = {
           ...mmDefaultOpts,
+          ignore: [...(mmDefaultOpts.ignore ?? []), "template/**"],
           cwd,
         };
         const _files = await fg(pattern, mmOpts);
@@ -69,6 +70,8 @@ export default defineConfig(async ({ command, mode }) => {
       // showConfig,
       tsconfigPaths({
         loose: true,
+        // tsconfigPaths: ["./tsconfig.app.json"],
+        configNames: ["tsconfig.app.json"]
       }),
       splitVendorChunkPlugin(),
       react({
@@ -99,7 +102,7 @@ export default defineConfig(async ({ command, mode }) => {
           await fs.writeFile(path.resolve("./dist/.dirs.json"), JSON.stringify({
             paths: dir_dist,
             ...restructured,
-          }, null, 2));
+          }, null, 2)).catch((e) => true); //.catch((e) => console.error(e));
         },
 
       },

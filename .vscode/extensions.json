@@ -4,6 +4,7 @@
     "yzhang.markdown-all-in-one",
     "aaron-bond.better-comments",
     "exodiusstudios.comment-anchors",
-    "formulahendry.code-runner"
+    "formulahendry.code-runner",
+    "eamodio.gitlens"
   ]
 }
