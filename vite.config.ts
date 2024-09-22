@@ -33,7 +33,6 @@ export default defineConfig(async ({ command, mode }) => {
         const cbro_input = __prepare_cbro_input(config);
 
         const pattern = [...defaultIncluded];
-        // const pattern = ["demos/Docs/*.page.tsx"];
         const mmOpts: fg.Options = {
           ...mmDefaultOpts,
           ignore: [...(mmDefaultOpts.ignore ?? []), "template/**"],
@@ -71,7 +70,7 @@ export default defineConfig(async ({ command, mode }) => {
       tsconfigPaths({
         loose: true,
         // tsconfigPaths: ["./tsconfig.app.json"],
-        configNames: ["tsconfig.app.json"]
+        // configNames: ["tsconfig.app.json"]
       }),
       splitVendorChunkPlugin(),
       react({
@@ -113,6 +112,9 @@ export default defineConfig(async ({ command, mode }) => {
       outDir: "dist",
       assetsDir: "chunks",
       minify: true,
+      rollupOptions: {
+        // input: ["./demos/test-import.html"]
+      }
     },
     resolve: {
       preserveSymlinks: true,

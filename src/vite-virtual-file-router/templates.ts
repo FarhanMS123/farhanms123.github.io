@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
-import { PREFIX_X00, type RawFunc, type InputValue, type Option, InputValue_Virtual } from "./files-router";
+import { type RawFunc, type InputValue, InputValue_Virtual } from "./files-router";
 import {  } from "path/posix";
-import { join, isAbsolute, relative, dirname, basename } from "path";
+import { join, isAbsolute, relative } from "path";
 import type {Options as FGOptions} from "fast-glob";
 
 // be* is configure the `out` by `script_src`; with no respect to default `out`

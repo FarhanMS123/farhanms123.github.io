@@ -110,8 +110,15 @@ export const virtualRouter = async (_opts: Option | OptsFunc) => {
              * must be handled.
              */
             async resolveId(source, importer, options) {
-                const virtual = input[source]?.out ?? input[`\0${source}`]?.out;
-                const ret = virtual ?? source;
+                const virtual = input[source] ?? input[`\0${source}`] ?? input[`${PREFIX_X00}${source}`];
+                
+                // if (!virtual || virtual.inject == "file") return;
+                if (!(virtual && (virtual.inject == "virtual_index" || virtual.inject == "virtual_resource" || !virtual.inject))) return;
+                return virtual.out ?? source;
+
+                const ret = virtual.out ?? source;
+
+                console.log({source, importer, options})
                 try {
                     if (virtual) "";
                     else await fsAccess(isAbsolute(ret) ? ret : join(config.root!, ret), fsConst.F_OK)
@@ -134,7 +141,7 @@ export const virtualRouter = async (_opts: Option | OptsFunc) => {
              */
             async load(id, options) {
                 const _input = input[`${PREFIX_X00}${id}`] as InputValue_Virtual;
-                console.log(`LOAD: ${!!_input} ${id}`)
+                // console.log(`LOAD: ${!!_input} ${id}`)
                 if (!_input) return;
                 _input.labels ??= {};
                 _input.labels.__id = id;
