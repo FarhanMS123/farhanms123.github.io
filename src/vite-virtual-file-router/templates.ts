@@ -54,7 +54,7 @@ export const src2page = ({
         ret.push({
             inject: "virtual_resource",
             out: main_out.out,
-            raw: async (...params) => (await main_out.raw(...params))?.replace(/%SCRIPT_SRC%/g, script_src),
+            raw: async (...params) => (await main_out.raw(...params))?.replace(/%SCRIPT_SRC%/g, join(cwd, script_src)),
             virtuals, labels,
         });
     }
@@ -64,7 +64,7 @@ export const src2page = ({
         out: index_out,
         raw: async (...params) => {
             let raw = await raw_html?.(...params) ?? await readFile(join(__dir, "template/minimal.html"), { encoding: "utf8" })
-            if (!main_out?.out) raw = raw.replaceAll(/%SCRIPT_SRC%/g, script_src);
+            if (!main_out?.out) raw = raw.replaceAll(/%SCRIPT_SRC%/g, join(cwd, script_src));
             return raw;
         },
         virtuals: {

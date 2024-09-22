@@ -110,24 +110,14 @@ export const virtualRouter = async (_opts: Option | OptsFunc) => {
              * must be handled.
              */
             async resolveId(source, importer, options) {
-                const virtual = input[source] ?? input[`\0${source}`] ?? input[`${PREFIX_X00}${source}`];
-                
+                const virtual = input[source] ?? input[`\0${source}`];
+
+                // if (source.match(/(\.tsx|\.html)/i)) console.log({source, importer, options})
+
                 // if (!virtual || virtual.inject == "file") return;
                 if (!(virtual && (virtual.inject == "virtual_index" || virtual.inject == "virtual_resource" || !virtual.inject))) return;
-                return virtual.out ?? source;
-
-                const ret = virtual.out ?? source;
-
-                console.log({source, importer, options})
-                try {
-                    if (virtual) "";
-                    else await fsAccess(isAbsolute(ret) ? ret : join(config.root!, ret), fsConst.F_OK)
-                    console.info(`resolveId: ${source} ${ virtual ? '""' : ret }`);
-                    return ret;
-                } catch {
-                    console.info(`resolveId:: ${source} UNDEFINED`);
-                    return;
-                }
+                // console.log({source, importer, options})
+                return virtual.out ?? undefined;
             },
 
             /**
