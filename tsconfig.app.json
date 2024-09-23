@@ -35,7 +35,6 @@
     "outDir": "./dist",
     "paths": {
       "~/*": ["./*"],
-      "~o/*": ["./*"],
       "~vite-multiple-assets/*": ["./src/vite-multiple-assets/*"],
       "~vite-virtual-file-router/*": ["./src/vite-virtual-file-router/*"]
     }

@@ -1,4 +1,4 @@
-import TextareaMenu from "~o/libs/TextareaMenu";
+import TextareaMenu from "~/libs/TextareaMenu";
 import { Input, MenuItem, MenuItemCheckbox, MenuList, Textarea, makeStyles } from "@fluentui/react-components";
 import { Providers } from "~/libs/fui_docs/Providers";
 

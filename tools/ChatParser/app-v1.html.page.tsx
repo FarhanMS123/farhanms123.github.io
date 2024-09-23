@@ -1,7 +1,8 @@
 import { Button, Divider, Dropdown, Input, Option, Tab, TabList, Textarea, makeStyles } from "@fluentui/react-components";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ArrowSortUpFilled, ArrowSortDownFilled, DeleteRegular } from "@fluentui/react-icons";
-import normRE from "@/utils";
+import { normRE } from "~/libs/utils_v1";
+import { Providers } from "~/libs/fui_docs/Providers";
 
 export const useChatParserStyles = makeStyles({
     root: {
@@ -64,24 +65,26 @@ export default function ChatParser() {
     ]);
     const [chat, setChat] = useState<ChatFormat[]>([]);
 
-    return <div className={styles.root}>
-        <div className={styles.panel}>
-            <TabList selectedValue={leftPanel} onTabSelect={(ev, data) => setLeftPanel(data.value as typeof leftPanel)}>
-                <Tab value="chat">Chat</Tab>
-                <Tab value="roles">Roles</Tab>
-            </TabList>
-            { leftPanel == "chat" && <PanelChat {...{chat, setChat, styles, roles}} /> }
-            { leftPanel == "roles" && <PanelRoles {...{setRoles, setChat, styles, roles}} /> }
+    return <Providers>
+        <div className={styles.root}>
+            <div className={styles.panel}>
+                <TabList selectedValue={leftPanel} onTabSelect={(ev, data) => setLeftPanel(data.value as typeof leftPanel)}>
+                    <Tab value="chat">Chat</Tab>
+                    <Tab value="roles">Roles</Tab>
+                </TabList>
+                { leftPanel == "chat" && <PanelChat {...{chat, setChat, styles, roles}} /> }
+                { leftPanel == "roles" && <PanelRoles {...{setRoles, setChat, styles, roles}} /> }
+            </div>
+            <div className={styles.panel}>
+                <TabList selectedValue={rightPanel} onTabSelect={(ev, data) => setRightPanel(data.value as typeof rightPanel)}>
+                    <Tab value="raw">Raw</Tab>
+                    <Tab value="json">JSON Role</Tab>
+                </TabList>
+                { rightPanel == "raw" && <PanelRaw {...{chat, setChat, styles, roles}} /> }
+                { rightPanel == "json" && <PanelJsonRole {...{chat, setChat, styles}} /> }
+            </div>
         </div>
-        <div className={styles.panel}>
-            <TabList selectedValue={rightPanel} onTabSelect={(ev, data) => setRightPanel(data.value as typeof rightPanel)}>
-                <Tab value="raw">Raw</Tab>
-                <Tab value="json">JSON Role</Tab>
-            </TabList>
-            { rightPanel == "raw" && <PanelRaw {...{chat, setChat, styles, roles}} /> }
-            { rightPanel == "json" && <PanelJsonRole {...{chat, setChat, styles}} /> }
-        </div>
-    </div>;
+    </Providers>;
 }
 
 export const PanelChat = ({ styles, chat, setChat, roles }: {

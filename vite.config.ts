@@ -43,22 +43,23 @@ export default defineConfig(async ({ command, mode }) => {
         for ( const script_src of _files ) {
           const __files: InputValue[] = [];
           if (mm.isMatch(script_src, pattern_js_ts, mmOpts))
-            __files.push(...src2page({ cwd, script_src }));
+            __files.push(...await src2page({ cwd, script_src }));
           else if (mm.isMatch(script_src, pattern_jsx_tsx, mmOpts))
-            __files.push(...src2page({ cwd, script_src, main_out: { out: `${abs2rel(cwd, script_src)}.tsx`, raw: jtx_main } }))
+            __files.push(...await src2page({ cwd, script_src, main_out: { out: `${abs2rel(cwd, script_src)}.tsx`, raw: jtx_main } }))
           else if (mm.isMatch(script_src, pattern_html, mmOpts))
             __push_rollup_input(cbro_input, path.resolve(script_src))
 
+          const _mmOpts = {...mmOpts, basename: true};
           for (const file of __files)
             if (file.inject != "file") {
-              if (mm.isMatch(file.out, pattern_index_page_html, {...mmOpts, basename: true}))
+              if (mm.isMatch(file.out, pattern_index_page_html, _mmOpts))
                 file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}.html`;
-              else if (mm.isMatch(file.out, pattern_out_just_html, {...mmOpts, basename: true}))
+              else if (mm.isMatch(file.out, pattern_out_just_html, _mmOpts))
                 file.out = `${file.out.replaceAll(/\.html\.page\.\w+\.html$/ig, "")}.html`;
-              else if (mm.isMatch(file.out, pattern_out_html, {...mmOpts, basename: true}))
+              else if (mm.isMatch(file.out, pattern_out_html, _mmOpts))
                 file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}/index.html`;
             }
-
+          
           files.push(...__files);
         }
 

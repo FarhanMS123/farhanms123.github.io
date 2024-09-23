@@ -4,7 +4,7 @@ import IFrame from '@/components/Preview/IFrame';
 import Markdown from '@/components/Preview/Markdown';
 import ERoutes, { EDemos, ELibs, ETools } from '~/libs/legacy/ERoutes';
 import Demos from '@/pages/Demos';
-import TestTextareaMenu from '~/demos/test-textarea-menu.page';
+import TestTextareaMenu from '~/demos/test-textarea-menu.html.page';
 import Libs from '@/pages/Libs';
 import Tools from '@/pages/Tools';
 import ChatParser from '~/tools/ChatParser/chat-parser';
