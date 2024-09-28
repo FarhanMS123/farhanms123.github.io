@@ -27,13 +27,13 @@ export function Providers({ children, fluent }: {
   return <>
     <HashRouter>
       <QueryClientProvider client={queryClient}>
-        <FluentProvider theme={teamsDarkTheme} {...fluent} className={mergeClasses("h-full overflow-auto w-full", classes.root, fluent?.className)}>
-          <JotaiProvider>
+        <JotaiProvider>
+          <FluentProvider theme={teamsDarkTheme} {...fluent} className={mergeClasses("[&:not([data-portal-node])]:h-full [&:not([data-portal-node])]:overflow-auto w-full", classes.root, fluent?.className)}>
             {/* <OverlayScrollbarsComponent defer> */}
               { children }
             {/* </OverlayScrollbarsComponent> */}
-          </JotaiProvider>
-        </FluentProvider>
+          </FluentProvider>
+        </JotaiProvider>
       </QueryClientProvider>
     </HashRouter>
   </>;
