@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './test-textarea-menu.page'
+import App from './simple-app.html.page'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

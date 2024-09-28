@@ -12,7 +12,7 @@ import mm from "micromatch"
 import path from "path";
 import { abs2rel, defaultExcluded, defaultIncluded, jtx_main, mmDefaultOpts, pattern_html, pattern_index_page_html,
           pattern_js_ts, pattern_jsx_tsx, pattern_out_html, pattern_out_just_html, src2page } from './src/vite-virtual-file-router/templates'
-import DynamicPublicDirectory from './src/vite-multiple-assets';
+import DynamicPublicDirectory from 'vite-multiple-assets';
 import fs from "fs/promises";
 
 import { defaultOrders, restructor, sortPath, StructDir } from "./libs/utils_v1";
@@ -32,7 +32,13 @@ export default defineConfig(async ({ command, mode }) => {
 
         const cbro_input = __prepare_cbro_input(config);
 
-        const pattern = [...defaultIncluded];
+        const pattern = [
+          ...defaultIncluded,
+          // "{\x01,demos,docker,libs,shell}/**",
+          // "{index,viewer.html}.page.tsx",
+          // "tools/**/*.html",
+          // "tools/Chat*/app-v1*"
+        ];
         const mmOpts: fg.Options = {
           ...mmDefaultOpts,
           ignore: [...(mmDefaultOpts.ignore ?? []), "template/**"],
@@ -59,7 +65,7 @@ export default defineConfig(async ({ command, mode }) => {
               else if (mm.isMatch(file.out, pattern_out_html, _mmOpts))
                 file.out = `${file.out.replaceAll(/\.page\.\w+\.html$/ig, "")}/index.html`;
             }
-          
+
           files.push(...__files);
         }
 
@@ -69,13 +75,13 @@ export default defineConfig(async ({ command, mode }) => {
       }),
       // showConfig,
       tsconfigPaths({
-        loose: true,
+        // loose: true,
         // tsconfigPaths: ["./tsconfig.app.json"],
         // configNames: ["tsconfig.app.json"]
       }),
       splitVendorChunkPlugin(),
       react({
-        devTarget: "esnext"
+        // devTarget: "esnext"
       }),
       {
         name: "vite-post-selfbuild",
@@ -114,6 +120,7 @@ export default defineConfig(async ({ command, mode }) => {
       assetsDir: "chunks",
       minify: true,
       rollupOptions: {
+        // external: ["util", "path"],
         // input: ["./demos/test-import.html"]
       }
     },

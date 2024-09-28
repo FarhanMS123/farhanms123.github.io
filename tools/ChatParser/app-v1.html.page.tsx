@@ -1,7 +1,7 @@
 import { Button, Divider, Dropdown, Input, Option, Tab, TabList, Textarea, makeStyles } from "@fluentui/react-components";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ArrowSortUpFilled, ArrowSortDownFilled, DeleteRegular } from "@fluentui/react-icons";
-import { normRE } from "~/libs/utils_v1";
+import { normRE } from "~/libs/utils_v1_safe";
 import { Providers } from "~/libs/fui_docs/Providers";
 
 export const useChatParserStyles = makeStyles({
@@ -46,7 +46,7 @@ export const useChatParserStyles = makeStyles({
 
 /**
  * Chat, Raw Row, Raw, JSON Role, Roles Format
- * 
+ *
  * Chat, Roles Format
  * Raw, JSON Role
  */
@@ -94,14 +94,14 @@ export const PanelChat = ({ styles, chat, setChat, roles }: {
     roles: RoleFormat[];
 }) => (
     <div className={styles.chatContainer}>
-        { chat.map((c, i) => 
+        { chat.map((c, i) =>
             <div key={i} className={styles.bubbleContainer}>
                 <div className={styles.bubbleHead}>
                     <Dropdown size="small" value={c.role} onOptionSelect={(ev, data) => setChat(c => {
                         c[i].role = data.optionValue!;
                         return [...c];
                     })}>
-                        {roles.map(x => 
+                        {roles.map(x =>
                             <Option key={x.role}>{x.role}</Option>
                         )}
                     </Dropdown>
@@ -135,7 +135,7 @@ export const PanelChat = ({ styles, chat, setChat, roles }: {
         ) }
         <Divider className={styles.bubbleDivider} />
         <div className={styles.bubbleAddRoleContainer}>
-            {roles.map(x => 
+            {roles.map(x =>
                 <Button key={x.role} appearance="primary" size="small" onClick={() => {
                     setChat(c => {
                         c.push({ role: x.role, content: "" });
@@ -163,7 +163,7 @@ export const PanelRoles = ({ styles, setRoles, setChat, roles }: {
             }}>Add Roles</Button>
         </div>
         <Divider className={styles.bubbleDivider} />
-        { roles.map((r, i) => 
+        { roles.map((r, i) =>
             <div key={i} className={styles.bubbleContainer}>
                 <div className={styles.bubbleHead}>
                     <Input value={r.role} />
@@ -190,7 +190,7 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
 }) => {
     const [parsed, setParsed] = useState(combine());
     useEffect(() => {
-        if (JSON.stringify(chat) != JSON.stringify(parse())) 
+        if (JSON.stringify(chat) != JSON.stringify(parse()))
             setParsed(combine());
     }, [chat]);
 
@@ -208,7 +208,7 @@ export const PanelRaw = ({ styles, chat, setChat, roles }: {
     function parse() {
         let text = parsed;
         const parsing: ChatFormat[] = [];
-        
+
         while (text.length > 0) {
             let pos_i = -1;
             let template: RoleFormat | null = null;
@@ -256,7 +256,7 @@ export const PanelJsonRole = ({ styles, chat, setChat }: {
     const [parsed, setParsed] = useState(JSON.stringify(chat, null, 2));
 
     useEffect(() => {
-        if (JSON.stringify(chat) != JSON.stringify(JSON.parse(parsed))) 
+        if (JSON.stringify(chat) != JSON.stringify(JSON.parse(parsed)))
             setParsed(JSON.stringify(chat, null, 2));
     }, [chat]);
 

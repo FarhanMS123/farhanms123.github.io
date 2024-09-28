@@ -33,7 +33,7 @@ export default Viewer;
 
 export function Viewer() {
   return (
-    <Providers>
+    <Providers fluent={{ className: "flex" }}>
       <SidePanel />
       <div className="block w-full h-full flex-1 overflow-auto">
         <Content />

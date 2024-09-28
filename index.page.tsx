@@ -5,14 +5,15 @@ export default function Home() {
   // window.location.replace('https://github.com/FarhanMS123');
 
   return (
-    <Providers>
+    <Providers fluent={{
+      className: "pl-8"
+    }}>
       {/* <meta http-equiv="refresh" content="6; URL='https://github.com/FarhanMS123'"> */}
       <meta http-equiv="refresh" content="6; URL='/viewer#/README.md'" />
       <p style={{
         fontSize: tokens.fontSizeHero800,
         fontWeight: tokens.fontWeightSemibold,
-        textAlign:'center',
-        marginTop:'8rem'}}>FarhanMS123</p>
+        }} className="mt-32">FarhanMS123</p>
 
       <p>You will be redirected in 6 seconds...</p>
       <p><a href="https://github.com/FarhanMS123">https://github.com/FarhanMS123</a></p>

@@ -1,5 +1,5 @@
 import React from "react";
-import { FluentProvider, makeStyles, mergeClasses, teamsDarkTheme, tokens } from "@fluentui/react-components";
+import { FluentProvider, type FluentProviderProps, makeStyles, mergeClasses, teamsDarkTheme, tokens } from "@fluentui/react-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HashRouter } from "react-router-dom";
 import { Provider as JotaiProvider } from "jotai";
@@ -20,12 +20,14 @@ export const useProvidersStyles = makeStyles({
 
 export const queryClient = new QueryClient();
 
-export function Providers({ children }: React.PropsWithChildren) {
+export function Providers({ children, fluent }: {
+  fluent?: Partial<FluentProviderProps>;
+} & React.PropsWithChildren) {
   const classes = useProvidersStyles();
   return <>
     <HashRouter>
       <QueryClientProvider client={queryClient}>
-        <FluentProvider theme={teamsDarkTheme} className={mergeClasses("h-full overflow-auto flex w-full", classes.root)}>
+        <FluentProvider theme={teamsDarkTheme} {...fluent} className={mergeClasses("h-full overflow-auto w-full", classes.root, fluent?.className)}>
           <JotaiProvider>
             {/* <OverlayScrollbarsComponent defer> */}
               { children }
