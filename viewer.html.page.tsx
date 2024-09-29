@@ -138,13 +138,33 @@ export function Content() {
   const location = useLocation();
   const whitefill = useAtom($whitefill);
 
-  if (mime.getType(location.pathname)?.match(/(image|video|audio)\//i))
+  /* {
+    "application": 1817,
+    "audio": 187,
+    "chemical": 7,
+    "font": 6,
+    "image": 103,
+    "message": 24,
+    "model": 43,
+    "multipart": 16,
+    "text": 132,
+    "video": 108,
+    "x-conference": 1,
+    "x-shader": 2
+  } */
+
+  const mimeGetType = mime.getType(location.pathname);
+  const mmIsMatch = (patt: string | string[]) => mm.isMatch(location.pathname, patt, { basename: true, dot: true })
+
+  if (mimeGetType?.match(/(image|video|audio|font)\//i) && !mmIsMatch("*.ts"))
     return <IFrame key={`ifrm-media:${location.pathname}`} url={location.pathname} />;
-  if (mime.getType(location.pathname)?.match(/markdown/i))
+  if (mimeGetType?.match(/markdown/i))
     return <MarkdownURL key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />;
-  if (mime.getType(location.pathname)?.match(/(text\/(?!html)|(?<!svg.*)xml|json)/i))
+
+  if (mimeGetType?.match(/(text\/(?!html)|xml|json)/i))
     return <MarkdownCode key={`md-code:${location.pathname}`} url={location.pathname} className="min-h-full" />;
-  if (mm.isMatch(location.pathname, ["*.{tsx,vue,gitignore,*rc}", "*jekyll*"], { basename: true, dot: true }))
+  if (mmIsMatch(["*.{ts,tsx,vue,gitignore,*rc}", "*{jekyll,dockerfile}*"]))
     return <MarkdownCode key={`md-code-custom:${location.pathname}`} url={location.pathname} className="min-h-full" />;
+
   return <IFrame key={`ifrm:${location.pathname}`} url={location.pathname} />;
 }

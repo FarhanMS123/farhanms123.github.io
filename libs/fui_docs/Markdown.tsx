@@ -13,9 +13,12 @@ import rehypeReact from "rehype-react";
 import rehypeRaw from "rehype-raw";
 
 import hljs from 'highlight.js';
+import dockerfile from "highlight.js/lib/languages/dockerfile"
 import "highlight.js/styles/an-old-hope.css"
 
 import { Viewer } from "~/viewer.html.page";
+
+hljs.registerLanguage("dockerfile", dockerfile);
 
 export const useMarkdownStyles = makeStyles({
   root: {
