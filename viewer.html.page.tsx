@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { Button, Divider, Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerHeaderTitle, Link, makeStyles, mergeClasses, ToggleButton, tokens, Tree, TreeItem, TreeItemLayout, useRestoreFocusSource, useRestoreFocusTarget } from "@fluentui/react-components";
-import { ArrowPreviousFilled, ColorBackgroundFilled, ColorBackgroundRegular, PinFilled, PinRegular } from "@fluentui/react-icons";
+import { ArrowPreviousFilled, ColorBackgroundFilled, ColorBackgroundRegular, PinFilled, PinRegular, MoreVerticalRegular } from "@fluentui/react-icons";
 import { useQuery } from "@tanstack/react-query";
 import useToggle from 'beautiful-react-hooks/useToggle'
 import mm from "picomatch"
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { StructDir } from "./libs/utils_v1";
 import IFrame, {$whitefill} from "./libs/fui_docs/IFrame";
-import Markdown from "./libs/fui_docs/Markdown";
+import { MarkdownURL, MarkdownCode } from "./libs/fui_docs/Markdown";
 import { useAtom } from "jotai";
 import { Providers } from "./libs/fui_docs/Providers";
+import mime from "mime";
 
 export type Viewer = {
   url: string;
   src?: string;
+  content?: string;
 } & Pick<React.HTMLAttributes<HTMLDivElement>, "className">;
 
 export const useDocsStyles = makeStyles({
@@ -57,8 +59,6 @@ export function SidePanel() {
   const [isOpen, setIsOpen] = useState(true);
   const [whitefill, setWhitefill] = useAtom($whitefill);
 
-  console.log("whitefill viewer: ", whitefill, $whitefill);
-
   return <>
     <Drawer
       {...restoreFocusSourceAttributes}
@@ -96,6 +96,7 @@ export function SidePanel() {
 
       <DrawerFooter className="flex-row-reverse !justify-between">
         <Button icon={<ArrowPreviousFilled />} appearance="transparent" onClick={() => setIsOpen(false)} />
+        <Button icon={<MoreVerticalRegular />} appearance="transparent" />
         <ToggleButton checked={whitefill} icon={whitefill ? <ColorBackgroundFilled /> : <ColorBackgroundRegular />} appearance="transparent" onClick={() => setWhitefill(wf => !wf)} />
         <ToggleButton checked={pin} icon={pin ? <PinFilled /> : <PinRegular />} appearance="transparent" onClick={() => togglePin()} />
       </DrawerFooter>
@@ -137,9 +138,13 @@ export function Content() {
   const location = useLocation();
   const whitefill = useAtom($whitefill);
 
-  return <>
-    { mm.isMatch(location.pathname, "*.md", { basename: true }) ?
-      <Markdown key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />
-      : <IFrame key={`ifrm:${location.pathname}`} url={location.pathname} /> }
-  </>;
+  if (mime.getType(location.pathname)?.match(/(image|video|audio)\//i))
+    return <IFrame key={`ifrm-media:${location.pathname}`} url={location.pathname} />;
+  if (mime.getType(location.pathname)?.match(/markdown/i))
+    return <MarkdownURL key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />;
+  if (mime.getType(location.pathname)?.match(/(text\/(?!html)|(?<!svg.*)xml|json)/i))
+    return <MarkdownCode key={`md-code:${location.pathname}`} url={location.pathname} className="min-h-full" />;
+  if (mm.isMatch(location.pathname, ["*.{tsx,vue,gitignore,*rc}", "*jekyll*"], { basename: true, dot: true }))
+    return <MarkdownCode key={`md-code-custom:${location.pathname}`} url={location.pathname} className="min-h-full" />;
+  return <IFrame key={`ifrm:${location.pathname}`} url={location.pathname} />;
 }
