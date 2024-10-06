@@ -10,12 +10,11 @@
   ],
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && npm run cp:prism-grammar",
+    "build": "vite build",
     "build:tsc": "tsc -b",
     "build:nodemon": "pnpx nodemon",
     "dev:serve": "pnpx serve dist/",
     "dev:live": "pnpx live-server --verbose --no-browser --watch=dist/ dist/",
-    "cp:prism-grammar": "mkdir -p dist/chunks/components && cp node_modules/prismjs/components/*.min.js dist/chunks/components/",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -29,6 +28,7 @@
     "beautiful-react-hooks": "^5.0.2",
     "firebase": "^10.12.4",
     "highlight.js": "^11.10.0",
+    "monaco-editor": "^0.52.0",
     "overlayscrollbars": "^2.9.2",
     "overlayscrollbars-react": "^0.5.6",
     "react": "^18.3.1",
@@ -39,6 +39,7 @@
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
+    "@monaco-editor/react": "^4.6.0",
     "@tailwindcss/typography": "^0.5.13",
     "@types/micromatch": "^4.0.7",
     "@types/node": "^20.14.10",

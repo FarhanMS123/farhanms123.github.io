@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, makeStyles, mergeClasses, Table, TableBody, TableCell, TableCellLayout, TableHeader, TableHeaderCell, TableRow, tokens } from "@fluentui/react-components";
 import { useQuery } from "@tanstack/react-query";
 
@@ -8,33 +8,39 @@ import remarkGfm from 'remark-gfm';
 import remarkYamlConfig from "remark-yaml-config";
 import remarkFrontmatter from "remark-frontmatter";
 // import remarkMdx from "remark-mdx";
-// import rehypeHighlight from "rehype-highlight";
 // import rehypeReact from "rehype-react";
 import rehypeRaw from "rehype-raw";
 
-// import rehypeHighlight from "rehype-highlight";
-// import hljs from 'highlight.js';
-// import dockerfile from "highlight.js/lib/languages/dockerfile"
-// import "highlight.js/styles/an-old-hope.css"
+import Editor, { DiffEditor, useMonaco, loader } from '@monaco-editor/react';
+import * as monaco from 'monaco-editor';
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 
-// import remarkPrism from "remark-prism";
-import prism from 'prismjs';
-import "prismjs/themes/prism-okaidia.min.css";
-/// @ts-ignore
-import "prismjs/plugins/line-numbers/prism-line-numbers.js";
-import "prismjs/plugins/line-numbers/prism-line-numbers.min.css";
-/// @ts-ignore
-import "prismjs/plugins/autoloader/prism-autoloader.js";
+self.MonacoEnvironment = {
+  getWorker(_, label) {
+    if (label === 'json') {
+      return new jsonWorker();
+    }
+    if (label === 'css' || label === 'scss' || label === 'less') {
+      return new cssWorker();
+    }
+    if (label === 'html' || label === 'handlebars' || label === 'razor') {
+      return new htmlWorker();
+    }
+    if (label === 'typescript' || label === 'javascript') {
+      return new tsWorker();
+    }
+    return new editorWorker();
+  },
+};
+
+loader.config({ monaco });
+loader.init();
 
 import { Viewer } from "~/viewer.html.page";
-
-// hljs.registerLanguage("dockerfile", dockerfile);
-window.Prism = prism;
-/// @ts-ignore
-window.document.Prism = prism;
-console.log(prism);
-prism.plugins.autoloader ??= {};
-prism.plugins.autoloader.languages_path = "chunks/components/";
 
 export const useMarkdownStyles = makeStyles({
   root: {
@@ -65,7 +71,14 @@ export const components: Partial<Components> = {
     </TableCell>
   },
   pre ({ node, children, ...props }) {
-    return <pre {...props} className={`${ props?.className ?? "" } line-numbers`}>{ children }</pre>
+    const code_Props = (children as any)?.props;
+    const code = code_Props?.children as string;
+    console.log({node,children,props}, code.split("\n").length, `${code.split("\n").length + 4}rm`);
+
+    if ((children as any)?.["type"] == "code") {
+      return <Editor defaultValue={code} defaultLanguage={ code_Props.className?.match(/(?<=language-).*?(?=\s|$)/i)?.[0] } height={`${code.split("\n").length + 4}rem`} theme="vs-dark" />
+    }
+    return <pre {...props}>{ children }</pre>
   }
 };
 
@@ -82,38 +95,30 @@ export function MarkdownCode({ url, className }: Viewer) {
     queryFn: async () => fetch(url).then((res) => res.text()),
     queryKey: ["md_text"]
   });
-  return <Markdown content={`
+
+  if (md_text) {
+    const content = `
 File: \`${url}\`
 ${"```"}
 ${md_text}
 ${"```"}
-  `} className={className} />
+`;
+    return <Markdown content={content} className={className} />
+  }
+  return <></>;
 }
 
 export function Markdown({ className, content }: Omit<Viewer, "url">) {
   const styles = useMarkdownStyles();
-
-  /// @ts-ignore
-  Prism?.highlightAll();
 
   return <div className={mergeClasses(styles.root, "p-2 lg:p-4", className)}>
     <ReactMarkdown remarkPlugins={[
       remarkFrontmatter,
       remarkYamlConfig,
       // remarkHTML,
-      /// @ts-ignore
-      // [remarkPrism, {
-      //   plugins: [
-      //     'line-numbers',
-      //     'autoloader',
-      //     // prism_lineNumbers,
-      //     // prism_autoloader,
-      //   ],
-      // }],
       remarkGfm,
       // remarkMdx,
     ]} rehypePlugins={[
-      // [rehypeHighlight, {detect: true}],
       // rehypeReact,
       rehypeRaw,
     ]} components={components} skipHtml={false}>{content}</ReactMarkdown>

@@ -11,6 +11,7 @@ import { MarkdownURL, MarkdownCode } from "./libs/fui_docs/Markdown";
 import { useAtom } from "jotai";
 import { Providers } from "./libs/fui_docs/Providers";
 import mime from "mime";
+import { Code } from "./libs/Code";
 
 export type Viewer = {
   url: string;
@@ -162,9 +163,9 @@ export function Content() {
     return <MarkdownURL key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />;
 
   if (mimeGetType?.match(/(text\/(?!html)|xml|json)/i))
-    return <MarkdownCode key={`md-code:${location.pathname}`} url={location.pathname} className="min-h-full" />;
-  if (mmIsMatch(["*.{ts,tsx,vue,gitignore,*rc}", "*{jekyll,dockerfile}*"]))
-    return <MarkdownCode key={`md-code-custom:${location.pathname}`} url={location.pathname} className="min-h-full" />;
+    return <Code key={`md-code:${location.pathname}`} url={location.pathname} className="min-h-full" />;
+  if (mmIsMatch(["*.{ts,tsx,vue,gitignore,*rc,env*}", "*{jekyll,dockerfile}*", ".{git*,*ignore,no*}", "*conf*"]))
+    return <Code key={`md-code-custom:${location.pathname}`} url={location.pathname} className="min-h-full" />;
 
   return <IFrame key={`ifrm:${location.pathname}`} url={location.pathname} />;
 }
