@@ -162,7 +162,7 @@ export function Content() {
   if (mimeGetType?.match(/markdown/i))
     return <MarkdownURL key={`md:${location.pathname}`} url={location.pathname} className="min-h-full" />;
 
-  if (mimeGetType?.match(/(text\/(?!html)|xml|json)/i))
+  if (mimeGetType?.match(/(text\/(?!html)|xml|json|sh)/i))
     return <Code key={`md-code:${location.pathname}`} url={location.pathname} className="min-h-full" />;
   if (mmIsMatch(["*.{ts,tsx,vue,gitignore,*rc,env*}", "*{jekyll,dockerfile}*", ".{git*,*ignore,no*}", "*conf*"]))
     return <Code key={`md-code-custom:${location.pathname}`} url={location.pathname} className="min-h-full" />;
