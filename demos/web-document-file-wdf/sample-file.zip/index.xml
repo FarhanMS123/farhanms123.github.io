@@ -2,33 +2,58 @@
     <templates>
         <template>
             <link rel="stylesheet" href="" />
+            <table>
+                <thead>
+                    <tr>
+                        <th>TL</th>
+                        <th>TM</th>
+                        <th>TR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ML</td>
+                        <td>MM</td>
+                        <td>MR</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>BL</td>
+                        <td>BM</td>
+                        <td>BR</td>
+                    </tr>
+                </tfoot>
+            </table>
             <view></view>
         </template>
     </templates>
 
-    <metadata view="read|app|write"></metadata>
+    <!--
+        https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes
+        x-* v-*
+        on-* ng-* on:* bind:* ng*
+        aria-* data-*
+
+        x-* x-src x-id; anything that can clash the HTML Attr
+    -->
     <meta name="" charset="" http-equiv="" content="" />
     <meta name="view" content="read|app|review|write" />
     <meta name="allow_comment" content="false" />
+    <link name="extension" href="ext-id-000000@1.0.0" />
 
     <pages>
-        <page title="" content-src="./pages/YYYYMMdd-HHmmss-zzz.xml" view="hide|show" pageless="false" frameless="true" xpages="false" borderless="false" fullwidth="false">
-            <tags>
-                <tag>slide</tag>
-                <tag>doc</tag>
-                <tag>draw</tag>
-                <tag>sheet</tag>
-                <tag extention="ext_name">func_name</tag> <!-- extention:drawer -->
-            </tags>
+        <section title="" data-src="./pages/YYYYMMdd-HHmmss-zzz.xml" view="hide|show" pageless="false" frameless="true" xpages="false" borderless="false" fullwidth="false">
             <meta name="tag" content="slide" />
             <meta name="tag" content="doc" />
             <meta name="tag" content="draw" />
             <meta name="tag" content="sheet" />
+            <meta name="tag" data-extention="ext_name" content="func_name" />
 
             <aside key="header"></aside>
             <aside key="pin1"></aside>
             <main></main>
             <aside key="footer"></aside>
-        </page>
+        </section>
     </pages>
 </root>
