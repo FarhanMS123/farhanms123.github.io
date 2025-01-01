@@ -5,6 +5,8 @@
     "aaron-bond.better-comments",
     "exodiusstudios.comment-anchors",
     "formulahendry.code-runner",
-    "eamodio.gitlens"
+    "eamodio.gitlens",
+    "redhat.vscode-xml",
+    "dotjoshjohnson.xml"
   ]
 }
