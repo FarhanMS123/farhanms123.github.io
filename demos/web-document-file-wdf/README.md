@@ -17,6 +17,19 @@
 - Template, Content
 - Section, Page Break, Header
 
+.
+
+- multipages
+- templates
+- visible
+- element-intext
+- position-move
+
+.
+
+- limitation
+- intercontainer
+
 ## Scheme
 
 ```yaml
@@ -61,3 +74,27 @@ root:
 - Productivity: Trello, Jira, 
 - Form: GForm, 
 - Blog: Sharepoint
+
+## Structure
+
+- Show Preview
+- Filter: 
+- Preview as slides like Powerpoint, or as tabs like spreadsheet, or as group like Notion
+
+```
+-- Section Group --------- #11 ---
+               Heading 6   #12
+         Heading 4         #13
+-- Section Name ---------- #14 ---
+Title
+Subtitle in gray and has no page number
+Heading 1
+   Heading 2               #15
+      Heading 3
+         Heading 4         #16
+            Heading 5
+               Heading 6
+         Heading 4         #17
+      Heading 3
+Heading 1                  #18
+```
