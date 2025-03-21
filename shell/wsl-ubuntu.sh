@@ -17,8 +17,10 @@ curl -o ~/montys.omp.json https://github.com/FarhanMS123/farhanms123.github.io/r
 # echo "eval \"\$(oh-my-posh init bash)\"" >> ~/.bashrc
 # echo "eval \"\$(oh-my-posh init bash --config ~/montys.omp.json)\"" >> ~/.bashrc
 
-echo "eval \"\$(oh-my-posh init bash --config '~/montys.omp.json')\"" >> ~/.bashrc
-echo "(sleep 3s && wget -q -O ~/montys.omp.json https://github.com/FarhanMS123/farhanms123.github.io/raw/refs/heads/master_v3/shell/montys.omp.json) &" >> ~/.bashrc
+# echo "eval \"\$(oh-my-posh init bash --config '~/montys.omp.json')\"" >> ~/.bashrc
+# echo '(&>/dev/null /bin/bash -c "sleep 3s && wget -q -O ~/montys.omp.json https://github.com/FarhanMS123/farhanms123.github.io/raw/refs/heads/master_v3/shell/montys.omp.json" &)' >> ~/.bashrc
+
+cat ./append-bashrc.sh > ~/.bashrc
 
 exec bash
 . ~/.profile

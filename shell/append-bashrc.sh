@@ -1,0 +1,2 @@
+eval "$(oh-my-posh init bash --config '~/montys.omp.json')"
+(&>/dev/null /bin/bash -c "sleep 3s && wget -q -O ~/montys.omp.json https://github.com/FarhanMS123/farhanms123.github.io/raw/refs/heads/master_v3/shell/montys.omp.json" &)
