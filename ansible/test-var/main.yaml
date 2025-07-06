@@ -11,6 +11,12 @@
           - 'all'
       when: setup is defined and setup == true
 
+
+    - name: Debug msg heeh
+      ansible.builtin.debug:
+        msg: "{{ heeh | template }}"
+      when: heeh is defined
+
     ####################################################
     
     - name: Print vars
@@ -43,9 +49,3 @@
       when: debug_var is defined
       with_ansible.builtin.items: "{{ debug_var | list }}"
       ignore_errors: true
-
-    ####################################################
-
-    - name: hold time
-      ansible.builtin.pause:
-        seconds: "{{ pause_time }}"
