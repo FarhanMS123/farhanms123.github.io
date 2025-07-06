@@ -1,0 +1,51 @@
+- name: Getter artifact
+  hosts: "{{ target_hosts }}"
+  gather_facts: false
+  
+  tasks:
+
+    # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html
+    - name: Collect only facts returned by facter
+      ansible.builtin.setup:
+        gather_subset:
+          - 'all'
+      when: setup is defined and setup == true
+
+    ####################################################
+    
+    - name: Print vars
+      ansible.builtin.debug:
+        var: vars
+    
+    ####################################################
+
+    - name: Read printenv
+      ansible.builtin.shell:
+        cmd: printenv
+    
+    - name: Debug msg template
+      ansible.builtin.debug:
+        msg: "{{ item | template }}"
+      when: debug_msg is defined
+      with_ansible.builtin.items: "{{ debug_msg | list }}"
+      ignore_errors: true
+
+    - name: Debug msg
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      when: debug_msg is defined
+      with_ansible.builtin.items: "{{ debug_msg | list }}"
+      ignore_errors: true
+
+    - name: Debug var
+      ansible.builtin.debug:
+        var: "{{ item }}"
+      when: debug_var is defined
+      with_ansible.builtin.items: "{{ debug_var | list }}"
+      ignore_errors: true
+
+    ####################################################
+
+    - name: hold time
+      ansible.builtin.pause:
+        seconds: "{{ pause_time }}"

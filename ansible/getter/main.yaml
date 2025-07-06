@@ -1,0 +1,148 @@
+- name: Getter artifact
+  hosts: "{{ target_hosts }}"
+  gather_facts: false
+
+  vars:
+    ghijk: "/tmp/job_{{ awx_job_id }}"
+    cert_name_g: asdfghjkl
+    pause_time: 0
+  
+  tasks:
+
+    # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_vars_facts.html
+    - name: Collect only facts returned by facter
+      ansible.builtin.setup:
+        gather_subset:
+          - 'all'
+      when: setup is defined and setup == true
+
+    # https://docs.ansible.com/ansible/latest/reference_appendices/special_variables.html
+    - name: Print all available facts
+      ansible.builtin.debug:
+        msg: ansible_facts
+    
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/setup_module.html
+    - name: Print all groups
+      ansible.builtin.debug:
+        var: groups
+
+    - name: Lookup env
+      ansible.builtin.debug:
+        msg: "{{ lookup('ansible.builtin.env') }}"
+    
+    - name: Lookup env ghijk
+      ansible.builtin.debug:
+        msg: "{{ lookup('ansible.builtin.env', 'ghijk') }}"
+    
+    - name: Lookup var ghijk
+      ansible.builtin.debug:
+        msg: "{{ lookup('ansible.builtin.vars', 'ghijk') }}"
+
+    - name: Lookup template heeh
+      ansible.builtin.debug:
+        msg: "{{ lookup('template', _inline_template) }}"
+      vars:
+        _inline_template: "{{ heeh }}"
+      ignore_errors: true
+
+    - name: Debug msg heeh
+      ansible.builtin.debug:
+        msg: "{{ heeh | template }}"
+      when: heeh is defined
+
+    - name: Debug msg ghijk
+      ansible.builtin.debug:
+        msg: "{{ ghijk }}"
+    
+    - name: Debug msg heeh
+      ansible.builtin.debug:
+        msg: "{{ templar.template(heeh) }}"
+      when: heeh is defined
+      ignore_errors: true
+
+    ####################################################
+    
+    - name: Special variables - hostvars
+      ansible.builtin.debug:
+        var: hostvars
+    
+    - name: Print all ansible_local
+      ansible.builtin.debug:
+        var: ansible_local
+    
+    - name: Print vars
+      ansible.builtin.debug:
+        var: vars
+    
+    - name: Print all environment
+      ansible.builtin.debug:
+        # var: env
+        var: environment
+    
+    - name: Print ansible_config
+      ansible.builtin.debug:
+        # var: config
+        var: ansible_config
+
+    - name: Print ansible_config_file
+      ansible.builtin.debug:
+        # var: config
+        var: ansible_config_file
+
+    ####################################################
+    
+    - name: Print lookup ansible.builtin.vars
+      ansible.builtin.debug:
+        msg: "{{ lookup('ansible.builtin.vars') }}"
+    
+    - name: Print lookup ansible.builtin.config
+      ansible.builtin.debug:
+        msg: "{{ lookup('ansible.builtin.config') }}"
+    
+    - name: Print ansible.builtin.vars
+      ansible.builtin.debug:
+        var: ansible.builtin.vars
+    
+    - name: Print ansible.builtin.config
+      ansible.builtin.debug:
+        var: ansible.builtin.config
+    
+    ####################################################
+    
+    - name: Print ansible_python_interpreter
+      ansible.builtin.debug:
+        var: ansible_python_interpreter
+    
+    - name: Print ansible_user
+      ansible.builtin.debug:
+        var: ansible_user
+
+    - name: Read printenv
+      ansible.builtin.shell:
+        cmd: printenv
+    
+    - name: Debug msg
+      ansible.builtin.debug:
+        msg: "{{ debug_msg | list }}"
+      when: debug_msg is defined
+      ignore_errors: true
+
+    - name: Debug msg
+      ansible.builtin.debug:
+        msg: "{{ item }}"
+      when: debug_msg is defined
+      with_ansible.builtin.items: "{{ debug_msg | list }}"
+      ignore_errors: true
+
+    - name: Debug var
+      ansible.builtin.debug:
+        var: "{{ item }}"
+      when: debug_var is defined
+      with_ansible.builtin.items: "{{ debug_var | list }}"
+      ignore_errors: true
+
+    ####################################################
+
+    - name: hold time
+      ansible.builtin.pause:
+        seconds: "{{ pause_time }}"
