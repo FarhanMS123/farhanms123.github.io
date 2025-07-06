@@ -16,6 +16,7 @@
       ansible.builtin.debug:
         msg: "{{ heeh | template }}"
       when: heeh is defined
+      ignore_errors: true
 
     ####################################################
     
