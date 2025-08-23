@@ -2,18 +2,18 @@
 
 | .                            | Docker         | WSL            | Installable    |
 |------------------------------|----------------|----------------|----------------|
-| Ubuntu 24.04 LTS             |                | (x) 17/08/2025 |                |
-| Kali (Rolling) 2025.2        |                | (v) 17/08/2025 |                |
+| Ubuntu 24.04 LTS             | (x) 23/08/2025 | (x) 17/08/2025 |                |
+| Kali (Rolling) 2025.2        | (v) 23/08/2025 | (v) 17/08/2025 |                |
 | Kali Purple                  |                | (-) 17/08/2025 |                |
 | MacOS                        | (-) 17/08/2025 | (-) 17/08/2025 | (x) 17/08/2025 |
-| Debian 13                    |                | (x) 17/08/2025 |                |
+| Debian 13                    | (x) 23/08/2025 | (x) 17/08/2025 |                |
 | ElementaryOS                 |                | (-) 17/08/2025 |                |
 | Raspbian                     |                | (-) 17/08/2025 |                |
-| SUSE Linux Enterprise 15 SP7 |                | (x) 18/08/2025 |                |
-| openSUSE Tumbleweed          |                | (x) 18/08/2025 |                |
-| RHEL                         |                |                |                |
-| CentOS                       |                |                |                |
-| Fedora Linux 42              |                | (x) 17/08/2025 |                |
+| SUSE Linux Enterprise 15 SP7 | (x) 23/08/2025 | (x) 18/08/2025 |                |
+| openSUSE Tumbleweed          | (x) 23/08/2025 | (x) 18/08/2025 |                |
+| RHEL                         | (x) 23/08/2025 |                |                |
+| CentOS                       | (x) 23/08/2025 |                |                |
+| Fedora Linux 42              | (x) 23/08/2025 | (x) 17/08/2025 |                |
 
 ## Resources
 - oh-my-zsh, oh-my-posh, 
@@ -44,3 +44,10 @@ autoload -Uz zsh-newuser-install
 - and I tried archlinux (WSL) and nothing interesting
 - and I tried OracleLinux_9_5 and not interedted. There is csh and tcsh instead
 - seems already everything I need.
+
+### Log 23/08/2024
+
+- Ubuntu docker; try to find all version from 18-25
+- Debian docker; try to find all version from 11-15 (forked, duke)
+- RHEL try to find on UBI 10 and UBI 10 Init
+- SLES try to find bsi-base 15.7, OpenJDK Dev, and OpenJDK Runtime
