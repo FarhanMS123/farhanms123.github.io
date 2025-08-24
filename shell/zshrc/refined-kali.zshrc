@@ -1,5 +1,25 @@
 # https://gitlab.com/kalilinux/packages/kali-defaults/-/blob/kali/master/etc/skel/.zshrc
 
+# autoload -Uz zsh-newuser-install
+#   zsh-newuser-install -f
+
+
+
+
+
+
+# ~/.zprofile: user-specific .zprofile file for zsh(1).
+#
+# This file is sourced only for login shells (i.e. shells
+# invoked with "-" as the first character of argv[0], and
+# shells invoked with the -l flag.)
+#
+# Global Order: zshenv, zprofile, zshrc, zlogin
+
+if [ -f "$HOME/.profile" ]; then
+    emulate sh -c '. "$HOME/.profile"'
+fi
+
 
 
 
@@ -20,10 +40,13 @@ setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 
-WORDCHARS='_-' # Don't consider certain characters part of the word
+# WORDCHARS='_-' # Don't consider certain characters part of the word
 
 # hide EOL sign ('%')
 PROMPT_EOL_MARK=""
+
+USR_SHARE_PLUGINS=/usr/share
+# USR_SHARE_PLUGINS=~/.oh-my-zsh/plugins
 
 # configure key keybindings
 bindkey -e                                        # emacs key bindings
@@ -88,7 +111,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-force_color_prompt=yes
+# force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -102,6 +125,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 configure_prompt() {
+}
+
+configure_prompt_uncall() {
     prompt_symbol=㉿
     # Skull emoji for root terminal
     #[ "$EUID" -eq 0 ] && prompt_symbol=💀
@@ -137,8 +163,8 @@ if [ "$color_prompt" = yes ]; then
     configure_prompt
 
     # enable syntax-highlighting
-    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-        . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    if [ -f ${USR_SHARE_PLUGINS}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+        . ${USR_SHARE_PLUGINS}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
         ZSH_HIGHLIGHT_STYLES[default]=none
         ZSH_HIGHLIGHT_STYLES[unknown-token]=underline
@@ -183,7 +209,7 @@ if [ "$color_prompt" = yes ]; then
         ZSH_HIGHLIGHT_STYLES[cursor-matchingbracket]=standout
     fi
 else
-    PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%(#.#.$) '
+    # PROMPT='${debian_chroot:+($debian_chroot)}%n@%m:%~%(#.#.$) '
 fi
 unset color_prompt force_color_prompt
 
@@ -196,11 +222,11 @@ toggle_oneline_prompt(){
     configure_prompt
     zle reset-prompt
 }
-zle -N toggle_oneline_prompt
-bindkey ^P toggle_oneline_prompt
+# zle -N toggle_oneline_prompt
+# bindkey ^P toggle_oneline_prompt
 
 # If this is an xterm set the title to user@host:dir
-case "$TERM" in
+case "$TERM_uncall" in
 xterm*|rxvt*|Eterm|aterm|kterm|gnome*|alacritty)
     TERM_TITLE=$'\e]0;${debian_chroot:+($debian_chroot)}${VIRTUAL_ENV:+($(basename $VIRTUAL_ENV))}%n@%m: %~\a'
     ;;
@@ -256,8 +282,8 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # enable auto-suggestions based on the history
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f ${USR_SHARE_PLUGINS}/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    . ${USR_SHARE_PLUGINS}/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 fi
