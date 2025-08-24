@@ -35,10 +35,15 @@ setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
 setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
-setopt nonomatch           # hide error message if there is no match for the pattern
+# setopt nonomatch           # hide error message if there is no match for the pattern
 setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
+
+# SELF IMPLEMENT: mock match to zsh-newuser-install
+# Lines configured by zsh-newuser-install
+setopt beep extendedglob nomatch
+# End of lines configured by zsh-newuser-install
 
 # WORDCHARS='_-' # Don't consider certain characters part of the word
 
@@ -65,9 +70,10 @@ bindkey '^[[Z' undo                               # shift + tab undo last action
 # enable completion features
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
+
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete
+zstyle ':completion:*' completer _expand _complete      # _ignored _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-colors ''
@@ -78,6 +84,11 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# SELF IMPLEMENT: mock match to zsh-newuser-install
+# The following lines were added by compinstall
+# zstyle :compinstall filename '/home/username/.zshrc'
+# End of lines added by compinstall
 
 # History configurations
 HISTFILE=~/.zsh_history
