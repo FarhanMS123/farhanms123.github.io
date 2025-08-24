@@ -296,6 +296,9 @@ alias l='ls -CF'
 if [ -f ${USR_SHARE_PLUGINS}/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     . ${USR_SHARE_PLUGINS}/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
+    # ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
+
+    # on docker 23/08/2025
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=244'
 fi
 
