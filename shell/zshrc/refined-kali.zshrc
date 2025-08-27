@@ -31,22 +31,6 @@ fi
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
-# SELF IMPLEMENT: mock match to zsh-newuser-install
-# Lines configured by zsh-newuser-install
-
-setopt autocd              # change directory just by typing its name
-#setopt correct            # auto correct mistakes
-setopt interactivecomments # allow comments in interactive mode
-setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
-# setopt nonomatch           # hide error message if there is no match for the pattern
-setopt notify              # report the status of background jobs immediately
-setopt numericglobsort     # sort filenames numerically when it makes sense
-setopt promptsubst         # enable command substitution in prompt
-
-setopt beep extendedglob nomatch
-bindkey -e                                        # emacs key bindings
-# End of lines configured by zsh-newuser-install
-
 # WORDCHARS='_-' # Don't consider certain characters part of the word
 
 # hide EOL sign ('%')
@@ -69,6 +53,7 @@ bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
 
 # enable completion features
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # SELF IMPLEMENT: mock match to zsh-newuser-install
 # The following lines were added by compinstall
 
@@ -93,6 +78,25 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 autoload -Uz compinit
 compinit -d ~/.cache/zcompdump
 # End of lines added by compinstall
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# SELF IMPLEMENT: mock match to zsh-newuser-install
+# Lines configured by zsh-newuser-install
+
+setopt autocd              # change directory just by typing its name
+#setopt correct            # auto correct mistakes
+setopt interactivecomments # allow comments in interactive mode
+setopt magicequalsubst     # enable filename expansion for arguments of the form ‘anything=expression’
+# setopt nonomatch           # hide error message if there is no match for the pattern
+setopt notify              # report the status of background jobs immediately
+setopt numericglobsort     # sort filenames numerically when it makes sense
+setopt promptsubst         # enable command substitution in prompt
+
+setopt beep extendedglob nomatch
+bindkey -e                                        # emacs key bindings
+# End of lines configured by zsh-newuser-install
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 # History configurations
 HISTFILE=~/.zsh_history
