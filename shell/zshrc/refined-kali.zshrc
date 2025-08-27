@@ -31,6 +31,9 @@ fi
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
+# SELF IMPLEMENT: mock match to zsh-newuser-install
+# Lines configured by zsh-newuser-install
+
 setopt autocd              # change directory just by typing its name
 #setopt correct            # auto correct mistakes
 setopt interactivecomments # allow comments in interactive mode
@@ -40,9 +43,8 @@ setopt notify              # report the status of background jobs immediately
 setopt numericglobsort     # sort filenames numerically when it makes sense
 setopt promptsubst         # enable command substitution in prompt
 
-# SELF IMPLEMENT: mock match to zsh-newuser-install
-# Lines configured by zsh-newuser-install
 setopt beep extendedglob nomatch
+bindkey -e                                        # emacs key bindings
 # End of lines configured by zsh-newuser-install
 
 # WORDCHARS='_-' # Don't consider certain characters part of the word
@@ -54,7 +56,6 @@ USR_SHARE_PLUGINS=/usr/share
 # USR_SHARE_PLUGINS=~/.oh-my-zsh/plugins
 
 # configure key keybindings
-bindkey -e                                        # emacs key bindings
 bindkey ' ' magic-space                           # do history expansion on space
 bindkey '^U' backward-kill-line                   # ctrl + U
 bindkey '^[[3;5~' kill-word                       # ctrl + Supr
@@ -68,12 +69,14 @@ bindkey '^[[F' end-of-line                        # end
 bindkey '^[[Z' undo                               # shift + tab undo last action
 
 # enable completion features
-autoload -Uz compinit
-compinit -d ~/.cache/zcompdump
+# SELF IMPLEMENT: mock match to zsh-newuser-install
+# The following lines were added by compinstall
 
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
+
 zstyle ':completion:*' completer _expand _complete      # _ignored _correct _approximate
+
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-colors ''
@@ -85,9 +88,10 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-# SELF IMPLEMENT: mock match to zsh-newuser-install
-# The following lines were added by compinstall
 # zstyle :compinstall filename '/home/username/.zshrc'
+
+autoload -Uz compinit
+compinit -d ~/.cache/zcompdump
 # End of lines added by compinstall
 
 # History configurations
