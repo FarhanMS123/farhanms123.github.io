@@ -1,3 +1,13 @@
+# export Path, setup installation: MacPort, HomeBrew
+
+
+
+
+
+
+
+
+# start of refined-kali.zshrc >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # https://gitlab.com/kalilinux/packages/kali-defaults/-/blob/kali/master/etc/skel/.zshrc
 
 # autoload -Uz zsh-newuser-install
@@ -314,3 +324,13 @@ fi
 if [ -f /etc/zsh_command_not_found ]; then
     . /etc/zsh_command_not_found
 fi
+
+# end of refined-kali.zshrc <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+# ZSH4Humans
+
+# oh-my-posh
+
+# Golang, Conda, Python, Docker
+
+# iTerm2
