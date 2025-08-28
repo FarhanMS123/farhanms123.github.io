@@ -1,9 +1,9 @@
+# install TMux, direnv,
+
+
+
+# common binaries / os level package manager
 # export Path, setup installation: MacPort, HomeBrew
-
-
-
-
-
 
 
 
@@ -12,7 +12,6 @@
 
 # autoload -Uz zsh-newuser-install
 #   zsh-newuser-install -f
-
 
 
 
@@ -329,8 +328,14 @@ fi
 
 # ZSH4Humans
 
-# oh-my-posh
+# disable PowerLevel10k ########################
+powerlevel10k_plugin_unload
+# export PS1='$ '
+# export PS1='%m%#'
 
-# Golang, Conda, Python, Docker
+# oh-my-posh ###################################
 
-# iTerm2
+# Golang, Conda, Python, Docker ################
+# Install Taskfile
+
+# iTerm2: seeting [alt+select] experimental-advanced:mouse-scroll
