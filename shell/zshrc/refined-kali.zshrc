@@ -329,6 +329,7 @@ fi
 # ZSH4Humans
 
 # disable PowerLevel10k ########################
+# https://stackoverflow.com/questions/75674243/how-can-i-disable-powerlevel10k-p10k-temporarily-in-a-shell
 powerlevel10k_plugin_unload
 # export PS1='$ '
 # export PS1='%m%#'
