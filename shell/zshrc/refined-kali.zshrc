@@ -326,7 +326,7 @@ fi
 
 # end of refined-kali.zshrc <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-# ZSH4Humans
+# zsh4humans oh-my-zsh >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # disable PowerLevel10k ########################
 # https://stackoverflow.com/questions/75674243/how-can-i-disable-powerlevel10k-p10k-temporarily-in-a-shell
