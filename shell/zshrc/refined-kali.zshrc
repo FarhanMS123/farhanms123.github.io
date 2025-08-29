@@ -1,5 +1,5 @@
 # install TMux, direnv,
-
+# Example configuration has been installed to: /opt/homebrew/opt/tmux/share/tmux
 
 
 # common binaries / os level package manager
@@ -335,8 +335,14 @@ powerlevel10k_plugin_unload
 # export PS1='%m%#'
 
 # oh-my-posh ###################################
+# wget -q -O ~/montys.omp.json https://github.com/FarhanMS123/farhanms123.github.io/raw/refs/heads/master_v3/shell/montys.omp.json
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+    eval "$(oh-my-posh init zsh --config '~/.cache/montys.omp.json')"
+fi
 
 # Golang, Conda, Python, Docker ################
 # Install Taskfile
 
 # iTerm2: seeting [alt+select] experimental-advanced:mouse-scroll
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
