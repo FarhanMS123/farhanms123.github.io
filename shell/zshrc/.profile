@@ -21,9 +21,7 @@ export GOBIN=$GOPATH/bin
 
 export PATH=$PATH:$GOPATH
 export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
 export PATH=${HOME}/miniforge3/bin:$PATH
-export CLOUDSDK_PYTHON="${HOME}/miniforge3/bin/python"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -54,6 +52,8 @@ fi
 unset __mamba_setup
 # <<< mamba initialize <<<
 
+# export CLOUDSDK_PYTHON="${HOME}/miniforge3/bin/python"
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '${HOME}/.cache/google-cloud-sdk/path.zsh.inc' ]; then . '${HOME}/.cache/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -67,5 +67,6 @@ if [ -f '${HOME}/.cache/google-cloud-sdk/completion.zsh.inc' ]; then . '${HOME}/
 # export LDFLAGS="-L/opt/homebrew/opt/curl/lib"
 # export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
 
-export LESS='$LESS --mouse -+X'
+export LESS="$LESS --mouse -+X"
+# export LESS="$LESS -iRFXMx4 --mouse -+X"
 # export LESS='$LESS mouse-wheel --mouse -X'
