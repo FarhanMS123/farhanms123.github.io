@@ -3,6 +3,16 @@
 # zsh4humans has built-in tmux
 
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 # common binaries / os level package manager >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # export Path, setup installation: MacPort, HomeBrew
 # .zprofile
