@@ -125,17 +125,17 @@ powerlevel10k_plugin_unload
 # SELF IMPLEMENT: mock match to zsh-newuser-install
 # The following lines were added by compinstall
 
-zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
-zstyle :compinstall filename '/home/farha/.zshrc'
+# zstyle ':completion:*' completer _expand _complete      # _ignored _correct _approximate
+zstyle :compinstall filename "${HOME}/.zshrc"
 
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
 # Lines configured by zsh-newuser-install
-HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
+# HISTFILE=~/.zsh_history
+# HISTSIZE=100000
+# SAVEHIST=100000
 # setopt autocd notify
 setopt beep extendedglob nomatch
 # bindkey -e
