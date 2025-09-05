@@ -1,22 +1,11 @@
-
-
-
 # start of refined-kali.zshrc >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # https://gitlab.com/kalilinux/packages/kali-defaults/-/blob/kali/master/etc/skel/.zshrc
-
-# autoload -Uz zsh-newuser-install
-#   zsh-newuser-install -f
-
-
-
-
-
-
-
 # ~/.zshrc file for zsh interactive shells.
 # see /usr/share/doc/zsh/examples/zshrc for examples
 
 # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# autoload -Uz zsh-newuser-install
+#   zsh-newuser-install -f
 # SELF IMPLEMENT: mock match to zsh-newuser-install
 # Lines configured by zsh-newuser-install
 
@@ -39,8 +28,8 @@ bindkey -e                                        # emacs key bindings
 # hide EOL sign ('%')
 PROMPT_EOL_MARK=""
 
-USR_SHARE_PLUGINS=/usr/share
-# USR_SHARE_PLUGINS=~/.oh-my-zsh/plugins
+# USR_SHARE_PLUGINS=/usr/share
+USR_SHARE_PLUGINS=~/.oh-my-zsh/plugins
 
 # configure key keybindings
 bindkey ' ' magic-space                           # do history expansion on space
