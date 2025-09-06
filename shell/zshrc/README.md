@@ -1,5 +1,24 @@
 # zshrc-all
 
+## Order of Setup
+
+1. .profile
+2. .zprofile
+2. skel-kali.zshrc
+3. .zshrc (to put skel-kali.zshrc)
+4. .zshrc -> to put few config outside zsh4humans, oh-my-posh
+5. install zsh4humans (and oh-my-zsh as addition)
+
+## Precautions!
+
+- zsh4humans would generate and override `.zshenv` and `.zshrc`
+- zsh4humans would backup existing to `zsh-backup/`. You may wish to git init after.
+- use hardlink and relink everytime it changed
+
+---
+
+# zshrc-all
+
 | .                            | Docker         | WSL            | Installable    |
 |------------------------------|----------------|----------------|----------------|
 | Ubuntu 24.04 LTS             | (x) 23/08/2025 | (x) 17/08/2025 |                |
@@ -45,9 +64,12 @@ autoload -Uz zsh-newuser-install
 - and I tried OracleLinux_9_5 and not interedted. There is csh and tcsh instead
 - seems already everything I need.
 
-### Log 23/08/2024
+### Log 23/08/2025
 
 - Ubuntu docker; try to find all version from 18-25
 - Debian docker; try to find all version from 11-15 (forked, duke)
 - RHEL try to find on UBI 10 and UBI 10 Init
 - SLES try to find bsi-base 15.7, OpenJDK Dev, and OpenJDK Runtime
+
+### Log 06/09/2025
+- splitted

@@ -35,13 +35,17 @@ powerlevel10k_plugin_unload
 # autoload -Uz zsh-newuser-install
 #   zsh-newuser-install -f
 # SELF IMPLEMENT: mock match to zsh-newuser-install
+# Self define must be last to override skel kali.
+# Add features of Alt+Arrow/jump-move, Shift+Arrow/text-select,
+#   tab-filename matching autocomplete, ... 
+
 # The following lines were added by compinstall
 
 # zstyle ':completion:*' completer _expand _complete      # _ignored _correct _approximate
 zstyle :compinstall filename "${HOME}/.zshrc"
 
-autoload -Uz compinit
-compinit
+# autoload -Uz compinit
+# compinit
 # End of lines added by compinstall
 
 # Lines configured by zsh-newuser-install
@@ -56,10 +60,8 @@ setopt beep extendedglob nomatch
 
 # oh-my-posh >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # wget -q -O ~/.cache/montys.omp.json https://github.com/FarhanMS123/farhanms123.github.io/raw/refs/heads/master_v3/shell/montys.omp.json
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-    eval "$(oh-my-posh init zsh --config '~/.cache/montys.omp.json')"
-fi
 
+# gcloud sdk here as it import zsh instead common shell >>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 # End of Docker CLI completions
