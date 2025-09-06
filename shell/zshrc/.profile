@@ -34,18 +34,12 @@ export PATH=$PATH:$GOROOT/bin
 
 export PATH=${HOME}/miniforge3/bin:$PATH
 
-# >>> conda initialize >>>
-# <<< conda initialize <<<
-
-
-# >>> mamba initialize >>>
-# <<< mamba initialize <<<
-
 # export CLOUDSDK_PYTHON="${HOME}/miniforge3/bin/python"
 
 # export LDFLAGS="-L/opt/homebrew/opt/curl/lib"
 # export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
 
-export LESS="$LESS --mouse -+X"
+export profile_LESS="$LESS --mouse -+X"
+export LESS="$LESS $profile_LESS"
 # export LESS="$LESS -iRFXMx4 --mouse -+X"
 # export LESS='$LESS mouse-wheel --mouse -X'

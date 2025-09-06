@@ -8,12 +8,20 @@
 3. .zshrc (to put skel-kali.zshrc)
 4. .zshrc -> to put few config outside zsh4humans, oh-my-posh
 5. install zsh4humans (and oh-my-zsh as addition)
+6. drop termux, powerlevel10k, ssh, and many things
+7. install oh-my-posh, add zsh config
 
 ## Precautions!
 
 - zsh4humans would generate and override `.zshenv` and `.zshrc`
 - zsh4humans would backup existing to `zsh-backup/`. You may wish to git init after.
 - use hardlink and relink everytime it changed
+
+## iTerm2 settings
+- do not save state of alternate screen (LESS issue)
+- mouse wheel for LESS
+- window scroll (toggle), hightlight stdin area,
+- no hope. LESS still saved. Seems something intervere between z4h and tmux
 
 ---
 

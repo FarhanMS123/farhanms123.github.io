@@ -1,9 +1,9 @@
+### Added by Zinit's installer
+### End of Zinit's installer chunk
+
 # start of refined-kali.zshrc >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # https://gitlab.com/kalilinux/packages/kali-defaults/-/blob/1c08cff486bee1bc677172fd3137ccdc19d485c3/etc/skel/.zshrc
-
-. ./skel-kali.zshrc
-
-# end of refined-kali.zshrc <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+. ${HOME}/skel-kali.zshrc
 
 # zsh4humans oh-my-zsh >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Documentation: https://github.com/romkatv/zsh4humans/blob/v5/README.md.
@@ -61,11 +61,19 @@ setopt beep extendedglob nomatch
 # oh-my-posh >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # wget -q -O ~/.cache/montys.omp.json https://github.com/FarhanMS123/farhanms123.github.io/raw/refs/heads/master_v3/shell/montys.omp.json
 
+# >>> conda initialize >>>
+# <<< conda initialize <<<
+
+
+# >>> mamba initialize >>>
+# <<< mamba initialize <<<
+
 # gcloud sdk here as it import zsh instead common shell >>>>>>>>>>>>>>>>>>>>>>>>>>
 
 # The following lines have been added by Docker Desktop to enable Docker CLI completions.
 # End of Docker CLI completions
 
 # iTerm2: seeting [alt+select] experimental-advanced:mouse-scroll
+export LESS="$LESS $profile_LESS"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
