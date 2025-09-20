@@ -1,4 +1,4 @@
-# install TMux, direnv, ps, pstree, htop
+# install TMux, direnv, ps, pstree, htop, bash (upgrade)
 # Example configuration has been installed to: /opt/homebrew/opt/tmux/share/tmux
 # zsh4humans has built-in tmux
 
@@ -20,9 +20,10 @@ fi
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
 # Finished adapting your PATH environment variable for use with MacPorts.
 
-export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
-# Golang, Conda, Python, Docker >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Golang >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # Install Taskfile
 
 export GOPATH=$HOME/go
@@ -39,7 +40,7 @@ export PATH=${HOME}/miniforge3/bin:$PATH
 # export LDFLAGS="-L/opt/homebrew/opt/curl/lib"
 # export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
 
-export profile_LESS="$LESS --mouse -+X"
+export profile_LESS="$LESS --mouse -+X -+F"
 export LESS="$LESS $profile_LESS"
 # export LESS="$LESS -iRFXMx4 --mouse -+X"
 # export LESS='$LESS mouse-wheel --mouse -X'

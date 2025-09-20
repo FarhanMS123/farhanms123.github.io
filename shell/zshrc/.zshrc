@@ -61,6 +61,7 @@ setopt beep extendedglob nomatch
 # oh-my-posh >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # wget -q -O ~/.cache/montys.omp.json https://github.com/FarhanMS123/farhanms123.github.io/raw/refs/heads/master_v3/shell/montys.omp.json
 
+# Conda, Python, Docker >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 # >>> conda initialize >>>
 # <<< conda initialize <<<
 
