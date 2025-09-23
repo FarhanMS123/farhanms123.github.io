@@ -24,7 +24,12 @@ zstyle ':z4h:ssh:*'                   enable 'no'
 
 # zsh4humans oh-my-zsh <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-# disable PowerLevel10k >>>>>>>>>>>>>>>>>>>>>>>>
+# PowerLevel10k >>>>>>>>>>>>>>>>>>>>>>>>
+# >~/.tmux.conf <<<'set -g default-terminal screen-256color'
+# TERM=screen-256color exec zsh
+# ~/.p10k-8color.zsh
+# ~/.p10k.zsh
+
 # https://stackoverflow.com/questions/75674243/how-can-i-disable-powerlevel10k-p10k-temporarily-in-a-shell
 # POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 powerlevel10k_plugin_unload
