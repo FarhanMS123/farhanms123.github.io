@@ -26,7 +26,7 @@
     "@tanstack/react-query": "^5.51.11",
     "axios": "^1.7.2",
     "beautiful-react-hooks": "^5.0.2",
-    "firebase": "^10.12.4",
+    "firebase": "^12.7.0",
     "highlight.js": "^11.10.0",
     "monaco-editor": "^0.52.0",
     "overlayscrollbars": "^2.9.2",
