@@ -44,3 +44,4 @@ export profile_LESS="$LESS --mouse -+X -+F"
 export LESS="$LESS $profile_LESS"
 # export LESS="$LESS -iRFXMx4 --mouse -+X"
 # export LESS='$LESS mouse-wheel --mouse -X'
+export SYSTEMD_LESS="FRXMK"
